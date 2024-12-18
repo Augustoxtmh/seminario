@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cuota {
+  NumCuota         Int         @id
+  FechaVencimiento DateTime?   @db.Date
+  Monto            Decimal?    @db.Decimal(10, 2)
+  PedidoID         Int?
+  pedidogrua       pedidogrua? @relation(fields: [PedidoID], references: [PedidoID], onDelete: Restrict, onUpdate: Restrict, map: "cuota_ibfk_1")
+
+  @@index([PedidoID], map: "PedidoID")
+}
+
+model gruero {
+  GrueroID          Int                 @id
+  NombreGruero      String?             @db.VarChar(50)
+  TelefonoGruero    String?             @db.VarChar(15)
+  gruero_pedidogrua gruero_pedidogrua[]
+}
+
+model gruero_pedidogrua {
+  GrueroID   Int
+  PedidoID   Int
+  gruero     gruero     @relation(fields: [GrueroID], references: [GrueroID], onUpdate: Restrict, map: "gruero_pedidogrua_ibfk_1")
+  pedidogrua pedidogrua @relation(fields: [PedidoID], references: [PedidoID], onUpdate: Restrict, map: "gruero_pedidogrua_ibfk_2")
+
+  @@id([GrueroID, PedidoID])
+  @@index([PedidoID], map: "PedidoID")
+}
+
+model pedidogrua {
+  PedidoID          Int                 @id
+  FechaHoraPedido   DateTime?           @db.DateTime(0)
+  NombreCliente     String?             @db.VarChar(50)
+  Patente           String?             @db.VarChar(10)
+  cuota             cuota[]
+  gruero_pedidogrua gruero_pedidogrua[]
+  vehiculo          vehiculo?           @relation(fields: [Patente], references: [Patente], onDelete: Restrict, onUpdate: Restrict, map: "pedidogrua_ibfk_1")
+
+  @@index([Patente], map: "Patente")
+}
+
+model poliza {
+  NumeroPoliza Int       @id
+  Vigencia     DateTime? @db.Date
+  Telefono     String?   @db.VarChar(15)
+  Patente      String?   @db.VarChar(10)
+  vehiculo     vehiculo? @relation(fields: [Patente], references: [Patente], onDelete: Restrict, onUpdate: Restrict, map: "poliza_ibfk_1")
+
+  @@index([Patente], map: "Patente")
+}
+
+model vehiculo {
+  Patente    String       @id @db.VarChar(10)
+  Marca      String?      @db.VarChar(50)
+  Color      String?      @db.VarChar(30)
+  TipoPlan   String?      @db.VarChar(20)
+  Modelo     String?      @db.VarChar(50)
+  DeAlta     Boolean      @default(true)
+  pedidogrua pedidogrua[]
+  poliza     poliza[]
+}
+
+enum TipoUsuario {
+  A
+  U
+}
+
+model Usuario {
+  Id          Int      @id @default(autoincrement())
+  Nombre      String
+  Contra      String
+  Autoridad   TipoUsuario  @default(U)
+}
