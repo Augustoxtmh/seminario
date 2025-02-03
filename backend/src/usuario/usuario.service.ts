@@ -7,17 +7,23 @@ export class UsuarioService {
   constructor(private readonly prisma: PrismaService){}
 
     async createUsuario(data: Usuario) {
-      return await this.prisma.usuario.create({data});
+      let status = 'error';
+      if(!this.getUsuarioByNombre(data.Nombre))
+      {
+        status = 'success';
+        await this.prisma.usuario.create({data})
+      }
+      return status;
     }
   
     async getUsuarios(): Promise<Usuario[]> {
       return await this.prisma.usuario.findMany();
     }
   
-    async getUsuarioByNombre(Id: number): Promise<Usuario> {
-      return await this.prisma.usuario.findUnique({
+    async getUsuarioByNombre(Nombre: string): Promise<Usuario> {
+      return await this.prisma.usuario.findFirst({
         where: {
-          Id
+          Nombre
         }
       })
     }

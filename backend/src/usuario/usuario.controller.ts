@@ -2,27 +2,27 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '@prisma/client';
 
-@Controller('vehiculos')
+@Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
   @Post()
-  async createVehiculo(@Body() data: Usuario) {
+  async createUsuario(@Body() data: Usuario) {
     return this.usuarioService.createUsuario(data);
   }
 
   @Get()
-  async getVehiculos() {
+  async getUsuarios() {
     return this.usuarioService.getUsuarios();
   }
 
-  @Get(':patente')
-  async getVehiculoById(@Param(':id') Id: number) {
-    return this.usuarioService.getUsuarioByNombre(Id);
+  @Get(':nombre')
+  async getUsuarioByNombre(@Param(':nombre') usuario: string) {
+    return this.usuarioService.getUsuarioByNombre(usuario);
   }
 
-  @Put(':patente')
-  async unableVehiculoByPatente(@Param(':id') Id: number): Promise<Usuario> {
+  @Put(':id')
+  async unableUsuarioById(@Param(':id') Id: number): Promise<Usuario> {
     return this.usuarioService.unableUsuarioById(Id);
   } 
 }

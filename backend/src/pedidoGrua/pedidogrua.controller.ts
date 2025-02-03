@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common'
 import { PedidogruaService } from './pedidogrua.service';
 import { pedidogrua as PedidogruaModel } from '@prisma/client';
 
-@Controller('pedidogrua')
+@Controller('pedidosgrua')
 export class PedidogruaController {
   constructor(private readonly pedidogruaService: PedidogruaService) {}
 

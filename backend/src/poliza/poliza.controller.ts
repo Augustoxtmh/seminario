@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common'
 import { PolizaService } from './poliza.service';
 import { poliza as PolizaModel } from '@prisma/client';
 
-@Controller('poliza')
+@Controller('polizas')
 export class PolizaController {
   constructor(private readonly polizaService: PolizaService) {}
 
