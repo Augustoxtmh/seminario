@@ -1,0 +1,16 @@
+.navbar-on {
+    min-width: 25%;
+}
+
+.navbar-off {
+    display: none;
+}
+
+.flex-on {
+    display: flex;
+}
+
+.flex-off {
+    display: block;
+    width: 100%;
+}
