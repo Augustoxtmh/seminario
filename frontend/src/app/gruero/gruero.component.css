@@ -1,0 +1,12 @@
+:host {
+    justify-items: center;
+    min-width: 55%;
+}
+
+form {
+    text-align: center;
+}
+
+.form-div {
+    justify-content: center;
+}

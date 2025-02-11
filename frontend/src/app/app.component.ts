@@ -8,14 +8,16 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'proyecto-seminario';
-  showNavbar: boolean = true;
+  showNavbar: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.showNavbar = !this.router.url.includes('/login');
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.showNavbar = !event.url.includes('/login');
+        this.showNavbar = !this.router.url.includes('/login');
       }
     });
   }

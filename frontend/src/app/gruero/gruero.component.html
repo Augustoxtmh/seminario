@@ -1,0 +1,40 @@
+<h1>Grueros</h1>
+<form [formGroup]="formularioVehiculo">
+    <div class="row mb-4 my-3 form-div">
+      <div class="col-md-4 my-2">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre"
+        name="nombre">
+      </div>
+      <div class="col-md-4 my-2">
+        <label for="telefono" class="form-label">Teléfono:</label>
+        <input type="text" class="form-control" id="telefono" 
+        name="telefono" formControlName="telefono">
+      </div>
+    </div>
+    <button class="btn btn-success my-3">Guardar</button>
+</form>
+
+<h2>Lista de grueros</h2>
+
+<div class="contenedor">
+    <div class="container">
+      <div style="margin: 20px;">
+        <table style="border: 1px solid rgb(184, 184, 184); color: rgb(48, 45, 56);" class="table table-bordered table-striped table-hover" datatable [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let gruero of grueros" (click)="onRowClick(gruero)">
+              <td>{{gruero['id']}}</td>
+              <td>{{gruero['nombre']}}</td>
+              <td>{{gruero['telefono']}}</td>
+            </tr>
+          </tbody>
+        </table> 
+      </div>
+    </div>
+  </div>

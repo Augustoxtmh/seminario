@@ -7,20 +7,54 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from "angular-datatables";
 import { NavbarComponent } from './navbar/navbar.component';
+import { AgregarPGruaComponent } from './pedidoGrua/agregar-pgrua/agregar-pgrua.component';
+import { ModificarPGruaComponent } from './pedidoGrua/modificar-pgrua/modificar-pgrua.component';
+import { VerPGruaComponent } from './pedidoGrua/ver-pgrua/ver-pgrua.component';
+import { VerPGruasComponent } from './pedidoGrua/ver-pgruas/ver-pgruas.component';
+import { AgregarVehiculoComponent } from './vehiculo/agregar-vehiculo/agregar-vehiculo.component';
+import { ModificarVehiculoComponent } from './vehiculo/modificar-vehiculo/modificar-vehiculo.component';
+import { VerVehiculoComponent } from './vehiculo/ver-vehiculo/ver-vehiculo.component';
+import { VerVehiculosComponent } from './vehiculo/ver-vehiculos/ver-vehiculos.component';
+import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.component';
+import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
+import { VerPolizaComponent } from './poliza/ver-poliza/ver-poliza.component';
+import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
+import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
+import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
+import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
+import { GrueroComponent } from './gruero/gruero.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    AgregarPGruaComponent,
+    ModificarPGruaComponent,
+    VerPGruaComponent,
+    VerPGruasComponent,
+    AgregarVehiculoComponent,
+    ModificarVehiculoComponent,
+    VerVehiculoComponent,
+    VerVehiculosComponent,
+    AgregarPolizaComponent,
+    ModificarPolizaComponent,
+    VerPolizaComponent,
+    VerPolizasComponent,
+    ReportesDeGruasComponent,
+    ReportesDeVehiculosComponent,
+    ReportesDePolizasComponent,
+    GrueroComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule  
   ],
   providers: [],
   bootstrap: [AppComponent]
