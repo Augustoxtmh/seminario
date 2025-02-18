@@ -7,7 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DataTablesModule } from "angular-datatables";
 import { NavbarComponent } from './navbar/navbar.component';
 import { AgregarPGruaComponent } from './pedidoGrua/agregar-pgrua/agregar-pgrua.component';
 import { ModificarPGruaComponent } from './pedidoGrua/modificar-pgrua/modificar-pgrua.component';
@@ -25,6 +24,11 @@ import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/rep
 import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -54,7 +58,11 @@ import { GrueroComponent } from './gruero/gruero.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule  
+    BrowserAnimationsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

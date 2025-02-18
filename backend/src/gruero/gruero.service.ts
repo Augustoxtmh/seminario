@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { gruero as GrueroModel } from '@prisma/client';
+import { Gruero as GrueroModel } from '@prisma/client';
 
 @Injectable()
 export class GrueroService {

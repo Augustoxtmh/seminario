@@ -1,14 +1,13 @@
-export class gruero{
+export class Gruero{
 
-    id: Number;
-    nombre: String;
-    telefono: String;
+    GrueroId?: Number;
+    NombreGruero: String;
+    TelefonoGruero: String;
 
 
-    constructor(id:Number, nombre: String, telefono: String){
+    constructor(nombre: String, telefono: String){
         
-        this.id = id;
-        this.nombre = nombre;
-        this.telefono = telefono;
+        this.NombreGruero = nombre;
+        this.TelefonoGruero = telefono;
     }
 }

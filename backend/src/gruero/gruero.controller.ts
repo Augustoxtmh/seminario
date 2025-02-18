@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { GrueroService } from './gruero.service';
-import { gruero as GrueroModel } from '@prisma/client';
+import { Gruero as GrueroModel } from '@prisma/client';
 
 @Controller('grueros')
 export class GrueroController {

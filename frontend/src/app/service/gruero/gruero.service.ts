@@ -1,36 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { gruero } from 'src/app/models/gruero';
+import { Gruero } from 'src/app/models/gruero';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrueroService {
-  url = "http://localhost:9090/gruero"
+  url = "http://localhost:3000/grueros"
   
   constructor(private http: HttpClient) { }
 
-  public getAllGrueros(): Observable<gruero[]> {
-    return this.http.get<gruero[]>(this.url);
+  public getAllGrueros(): Observable<Gruero[]> {
+    return this.http.get<Gruero[]>(this.url);
   }
 
 
-  public getGrueroPorId(Id: number): Observable<gruero> {
+  public getGrueroPorId(Id: number): Observable<Gruero> {
     const params = { Id };
-    return this.http.get<gruero>(this.url, { params });
+    return this.http.get<Gruero>(this.url, { params });
   }
 
-  public updateGruero(caja_agrosalta: gruero): Observable<any>{
-    return this.http.put<any>(this.url, caja_agrosalta);
+  public updateGruero(gruero: Gruero): Observable<any>{
+    return this.http.put<any>(this.url, gruero);
   }
 
-  public createGruero(caja_agrosalta: gruero): Observable<any>{
-    return this.http.post<any>(this.url, caja_agrosalta)
+  public createGruero(gruero: Gruero): Observable<any>{
+    return this.http.post<any>(this.url, gruero)
   }
 
-  public deleteGruero(caja_agrosalta: gruero): Observable<any>{
-    return this.http.delete<any>(this.url + caja_agrosalta.id);
+  public deleteGruero(gruero: Gruero): Observable<any>{
+    return this.http.delete<any>(this.url + gruero.GrueroId);
   }
   
 }

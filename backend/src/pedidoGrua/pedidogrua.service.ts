@@ -1,36 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { pedidogrua as PedidogruaModel } from '@prisma/client';
+import { PedidoGrua as PedidogruaModel } from '@prisma/client';
 
 @Injectable()
 export class PedidogruaService {
   constructor(private prisma: PrismaService) {}
 
   async createPedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
-    return this.prisma.pedidogrua.create({
+    return this.prisma.pedidoGrua.create({
       data,
     });
   }
 
   async getAllPedidogruas(): Promise<PedidogruaModel[]> {
-    return this.prisma.pedidogrua.findMany();
+    return this.prisma.pedidoGrua.findMany();
   }
 
   async getPedidogrua(id: number): Promise<PedidogruaModel> {
-    return this.prisma.pedidogrua.findUnique({
+    return this.prisma.pedidoGrua.findUnique({
       where: { PedidoID: id },
     });
   }
 
   async updatePedidogrua(id: number, data: PedidogruaModel): Promise<PedidogruaModel> {
-    return this.prisma.pedidogrua.update({
+    return this.prisma.pedidoGrua.update({
       where: { PedidoID: id },
       data,
     });
   }
 
   async deletePedidogrua(id: number): Promise<PedidogruaModel> {
-    return this.prisma.pedidogrua.delete({
+    return this.prisma.pedidoGrua.delete({
       where: { PedidoID: id },
     });
   }

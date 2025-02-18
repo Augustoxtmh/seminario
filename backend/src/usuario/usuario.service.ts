@@ -34,7 +34,7 @@ export class UsuarioService {
           Id,
         },
         data: {
-          Activo: false,
+          DeAlta: false,
         },
       });
     } 

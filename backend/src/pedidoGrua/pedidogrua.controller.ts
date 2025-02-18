@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { PedidogruaService } from './pedidogrua.service';
-import { pedidogrua as PedidogruaModel } from '@prisma/client';
+import { PedidoGrua as PedidogruaModel } from '@prisma/client';
 
 @Controller('pedidosgrua')
 export class PedidogruaController {

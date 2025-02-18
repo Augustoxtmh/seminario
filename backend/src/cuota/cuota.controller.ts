@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { CuotaService } from './cuota.service';
-import { cuota as CuotaModel } from '@prisma/client';
+import { Cuota as CuotaModel } from '@prisma/client';
 
 @Controller('cuota')
 export class CuotaController {

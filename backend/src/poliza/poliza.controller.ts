@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { PolizaService } from './poliza.service';
-import { poliza as PolizaModel } from '@prisma/client';
+import { Poliza as PolizaModel } from '@prisma/client';
 
 @Controller('polizas')
 export class PolizaController {
@@ -16,19 +16,19 @@ export class PolizaController {
     return this.polizaService.getAllPolizas();
   }
 
-  @Get(':id')
+  @Get(':nPoliza')
   async getPoliza(@Param('id') id: string): Promise<PolizaModel> {
-    return this.polizaService.getPoliza(Number(id));
+    return this.polizaService.getPoliza(id);
   }
 
-  @Put(':id')
+  @Put(':nPoliza')
   async updatePoliza(@Param('id') id: string, @Body() data: PolizaModel): Promise<PolizaModel> {
-    return this.polizaService.updatePoliza(Number(id), data);
+    return this.polizaService.updatePoliza(id, data);
   }
 
-  @Delete(':id')
+  @Delete(':nPoliza')
   async deletePoliza(@Param('id') id: string): Promise<PolizaModel> {
-    return this.polizaService.deletePoliza(Number(id));
+    return this.polizaService.deletePoliza(id);
   }
 }
 

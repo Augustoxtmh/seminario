@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { GrueroService } from '../service/gruero/gruero.service';
-import { gruero } from '../models/gruero'
+import { Gruero } from '../models/gruero'
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-gruero',
@@ -10,10 +12,15 @@ import { gruero } from '../models/gruero'
   styleUrls: ['./gruero.component.css']
 })
 export class GrueroComponent {
-  formularioVehiculo: FormGroup;
-  grueros: gruero[] = [];
-  dtTrigger: Subject<any> = new Subject<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  formularioVehiculo: FormGroup;
+  grueros: Gruero[] = [];
+  displayedColumns: string[] = ['nombre', 'telefono'];
+  dataSource = new MatTableDataSource<Gruero>([]);
+  
   constructor(private fb: FormBuilder, private grueroServ: GrueroService)
   {
     this.formularioVehiculo = this.fb.group({
@@ -26,13 +33,38 @@ export class GrueroComponent {
         [Validators.required],
       ],}
     )
-    this.grueroServ.getAllGrueros().subscribe(grueros => {
-      this.dtTrigger.next(grueros);
-    });
-
   }
 
-  onRowClick(gruero: gruero) {
+  ngAfterViewInit() {
+    this.grueroServ.getAllGrueros().subscribe((res) => {
+      this.grueros = res;
+      this.dataSource.data = res;
+    });
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onSubmit() {
+    console.log('creando');
+  
+    const nombre = this.formularioVehiculo.controls['nombre'].value;
+    const telefono = this.formularioVehiculo.controls['telefono'].value;
+  
+    this.grueroServ.createGruero(new Gruero(nombre, telefono)).subscribe((res) => {
+      console.log(res);
+
+      console.log(this.grueros)
+      this.grueros = [...this.grueros, res];
+      this.dataSource.data = this.grueros; 
+    });
+  }  
+
+  onRowClick(gruero: Gruero) {
     /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
       vehiculoRecibido => {
         if (vehiculo.empresa == 1){

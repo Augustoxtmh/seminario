@@ -1,3 +1,7 @@
 body {
     background-color: rgb(223, 223, 223);
 }
+  
+.mat-elevation-z8 {
+    box-shadow: none !important;
+}
