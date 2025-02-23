@@ -1,1 +1,35 @@
-<p>agregar-pgrua works!</p>
+
+<div class="col-md-4 title-div my-3">
+    <h1>Pedido de grúa</h1> 
+</div>
+
+<form [formGroup]="formularioPoliza" (ngSubmit)="onSubmit()">
+    <div class="row mb-4 my-3 form-div">
+
+        <div class="col-md-3 my-2">
+            <label for="poliza" class="form-label">Gruero:</label>
+                <button type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza"
+                name="poliza">Seleccionar</button>
+        </div>
+
+        <div class="col-md-3 my-2">
+            <label for="poliza" class="form-label">Nombre del cliente:</label>
+            <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza"
+            name="poliza">
+        </div>
+
+        <div class="col-md-3 my-2">
+            <label for="patente" class="form-label">Patente:</label>
+            <input type="text" class="form-control" id="patente" 
+            name="patente" formControlName="patente">
+        </div>
+
+        <div class="col-md-3 my-2">
+            <label for="patente" class="form-label">Fecha de emisión:</label>
+            <input type="date" class="form-control" id="fecha" formControlName="fecha">
+        </div>
+    </div>
+    <button class="btn btn-success my-3">Guardar</button>
+</form>
+
+<a class="btn btn-dark" href="verPolizas">Ver todos las polizas</a> 

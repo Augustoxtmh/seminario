@@ -16,14 +16,14 @@ export class GrueroComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  formularioVehiculo: FormGroup;
+  formularioGruero: FormGroup;
   grueros: Gruero[] = [];
   displayedColumns: string[] = ['nombre', 'telefono'];
   dataSource = new MatTableDataSource<Gruero>([]);
   
   constructor(private fb: FormBuilder, private grueroServ: GrueroService)
   {
-    this.formularioVehiculo = this.fb.group({
+    this.formularioGruero = this.fb.group({
       nombre: [
         '',
         [Validators.required],
@@ -52,8 +52,8 @@ export class GrueroComponent {
   onSubmit() {
     console.log('creando');
   
-    const nombre = this.formularioVehiculo.controls['nombre'].value;
-    const telefono = this.formularioVehiculo.controls['telefono'].value;
+    const nombre = this.formularioGruero.controls['nombre'].value;
+    const telefono = this.formularioGruero.controls['telefono'].value;
   
     this.grueroServ.createGruero(new Gruero(nombre, telefono)).subscribe((res) => {
       console.log(res);

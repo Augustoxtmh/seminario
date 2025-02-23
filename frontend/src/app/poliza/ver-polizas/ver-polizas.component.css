@@ -1,0 +1,14 @@
+:host {
+    justify-items: center;
+    min-width: 55%;
+}
+
+.mat-table {
+    background-color: rgb(223, 223, 223);
+}
+
+.changeColor{
+    color: black;
+    border: solid 1px black;
+    min-width: 12vw;
+}
