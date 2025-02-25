@@ -22,6 +22,22 @@ export class VehiculoService {
     })
   }
 
+  async getVehiculosByPatente(Patente: string): Promise<string[]> {
+    const vehiculos = await this.prisma.vehiculo.findMany({
+      where: {
+        Patente: {
+          startsWith: Patente,
+        },
+      },
+      select: {
+        Patente: true,
+      },
+      take: 7,
+    });
+  
+    return vehiculos.map(v => v.Patente);
+  }
+
   async unableVehiculoByPatente(Patente: string): Promise<Vehiculo> {
     return await this.prisma.vehiculo.update({
       where: {
