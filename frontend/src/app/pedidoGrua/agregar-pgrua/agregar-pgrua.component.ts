@@ -45,7 +45,7 @@ export class AgregarPGruaComponent {
     const fecha = this.formularioPoliza.controls['fecha'].value;
     const patente = this.formularioPoliza.controls['patente'].value;
 
-    this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fecha, patente, true, gruero, 0)
+    this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fecha, patente, true, gruero, 1)
     ).subscribe((res) => {
       console.log('Pedido creado:', res);
     });

@@ -15,9 +15,19 @@ url = "http://localhost:3000/vehiculos"
     return this.http.get<Vehiculo[]>(this.url);
   }
 
-  public getVehiculoPorId(Id: number): Observable<Vehiculo> {
-    const params = { Id };
+  public getVehiculoPorId(DPatente: number): Observable<Vehiculo> {
+    const params = { DPatente };
     return this.http.get<Vehiculo>(this.url, { params });
+  }
+
+  public getVehiculoPorPatente(SPatente: string): Observable<Vehiculo[]> {
+    const params = { SPatente };
+    return this.http.get<Vehiculo[]>(this.url, { params });
+  }
+
+  public getVehiculosPorPatente(MPatente: string): Observable<String[]> {
+    const params = { MPatente };
+    return this.http.get<String[]>(this.url, { params });
   }
 
   public updateVehiculo(vehiculo: Vehiculo): Observable<any>{

@@ -1,31 +1,44 @@
-
 <div class="col-md-4 title-div my-3">
-    <h1>Polizas</h1> 
+  <h1>Polizas</h1> 
 </div>
 <div class="col-md-4 title-div">
-    <label>Fecha de emisión:</label>
-    <p type="text" class="mx-3">{{date | date:'dd/MM/yyyy'}}</p>
+  <label>Fecha de emisión:</label>
+  <p type="text" class="mx-3">{{date | date:'dd/MM/yyyy'}}</p>
 </div>
 
 <form [formGroup]="formularioPoliza" (ngSubmit)="onSubmit()">
-    <div class="row mb-4 my-3 form-div">
-      <div class="col-md-4 my-2">
-        <label for="poliza" class="form-label">Num. de Poliza:</label>
-        <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza"
-        name="poliza">
-      </div>
-      <div class="col-md-4 my-2">
-        <label for="telefono" class="form-label">Teléfono:</label>
-        <input type="text" class="form-control" id="telefono" 
-        name="telefono" formControlName="telefono">
-      </div>
-      <div class="col-md-4 my-2">
-        <label for="patente" class="form-label">Patente:</label>
-        <input type="text" class="form-control" id="patente" 
-        name="patente" formControlName="patente">
+  <div class="row mb-4 my-3 form-div">
+    <div class="col-md-4 my-2">
+      <label for="poliza" class="form-label">Num. de Poliza:</label>
+      <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza">
+    </div>
+    <div class="col-md-4 my-2">
+      <label for="telefono" class="form-label">Teléfono:</label>
+      <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono">
+    </div>
+    <div class="col-md-4 my-2 position-relative">
+      <label for="patente" class="form-label">Patente:</label>
+      <input type="text" 
+             class="form-control" 
+             id="patente" 
+             name="patente" 
+             formControlName="patente" 
+             (input)="onPatenteInput($event)">
+    
+      <!-- Lista de sugerencias -->
+      <div *ngIf="patentesSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+        <button *ngFor="let patente of patentesSugeridas"
+                type="button"
+                class="list-group-item list-group-item-action"
+                (click)="setValuePatente(patente)">
+          {{ patente }}
+        </button>
       </div>
     </div>
-    <button class="btn btn-success my-3">Guardar</button>
+    
+    
+  </div>
+  <button class="btn btn-success my-3">Guardar</button>
 </form>
 
-<a class="btn btn-dark" href="verPolizas">Ver todos las polizas</a> 
+<a class="btn btn-dark" href="verPolizas">Ver todos las polizas</a>

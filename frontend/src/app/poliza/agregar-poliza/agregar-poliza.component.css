@@ -16,3 +16,12 @@ form {
     display: flex;
     justify-content: center;
 }
+
+datalist {
+    display: block;
+}
+
+option {
+    display: block;
+    padding: 5px;
+}

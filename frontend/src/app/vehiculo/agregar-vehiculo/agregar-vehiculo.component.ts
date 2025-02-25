@@ -47,7 +47,7 @@ export class AgregarVehiculoComponent {
     const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
     const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
-    this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 0)).subscribe((res) => {
+    this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).subscribe((res) => {
       console.log(res);
     }); 
   }  
