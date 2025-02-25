@@ -28,10 +28,10 @@ export class UsuarioService {
       })
     }
   
-    async unableUsuarioById(Id: number): Promise<Usuario> {
+    async unableUsuarioById(UsuarioId: number): Promise<Usuario> {
       return await this.prisma.usuario.update({
         where: {
-          Id,
+          UsuarioId,
         },
         data: {
           DeAlta: false,
