@@ -1,0 +1,22 @@
+:host {
+    justify-items: center;
+    min-width: 55%;
+}
+
+form {
+    text-align: center;
+}
+
+.form-div {
+    justify-content: center;
+}
+
+
+.title-div{
+    display: flex;
+    justify-content: center;
+}
+
+.changeColor{
+    min-width: 14vw;
+}

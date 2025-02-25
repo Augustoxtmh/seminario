@@ -57,9 +57,15 @@ export class VerPolizaComponent {
     const FechaV = this.formularioCuota.controls['FechaV'].value;
     const Monto = this.formularioCuota.controls['Monto'].value;
     const poliza = this.formularioCuota.controls['poliza'].value;
+    let idUsuario = 0;
+
+    if(this.polizaRecibida != undefined)
+    {
+      idUsuario = Number(this.polizaRecibida.UsuarioId)
+    }
 
     for (let index = 0; index < Cantidad; index++) {
-      this.cuotaServ.createCuota(new Cuota(nCuota, FechaV, Monto, poliza)).subscribe((res) => {
+      this.cuotaServ.createCuota(new Cuota(nCuota, FechaV, Monto, poliza, idUsuario)).subscribe((res) => {
         console.log(res)
       });
     }

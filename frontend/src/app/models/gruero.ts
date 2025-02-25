@@ -6,7 +6,6 @@ export class Gruero{
 
 
     constructor(nombre: String, telefono: String){
-        
         this.NombreGruero = nombre;
         this.TelefonoGruero = telefono;
     }

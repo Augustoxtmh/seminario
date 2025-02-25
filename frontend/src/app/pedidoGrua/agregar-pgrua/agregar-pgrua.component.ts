@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
+import { PGrua } from 'src/app/models/pgrua';
 import { Poliza } from 'src/app/models/poliza';
-import { PolizaService } from 'src/app/service/poliza/poliza.service';
+import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 
 @Component({
   selector: 'app-agregar-pgrua',
@@ -15,16 +15,18 @@ export class AgregarPGruaComponent {
   polizas: Poliza[] = [];
   date: Date = new Date();
 
-  constructor(private fb: FormBuilder, private polizaServ: PolizaService
-    , private router: Router
-  )
+  constructor(private fb: FormBuilder, private pGruaServ: PgruaService)
   {
     this.formularioPoliza = this.fb.group({
-      poliza: [
+      gruero: [
+        '',
+        [Validators.required]
+      ],
+      nCliente: [
         '',
         [Validators.required],
       ],
-      telefono: [
+      fecha: [
         '',
         [Validators.required],
       ],
@@ -37,20 +39,15 @@ export class AgregarPGruaComponent {
 
   onSubmit() {
     console.log('creando');
-  
-    const poliza = this.formularioPoliza.controls['poliza'].value;
-    const telefono = this.formularioPoliza.controls['telefono'].value;
-    const patente = this.formularioPoliza.controls['patente'].value;
-    const date = new Date();
 
-    this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date)).subscribe((res) => {
-      console.log('Póliza creada:', res);
-  
-      const navigationExtras: NavigationExtras = {
-        state: { poliza: res }
-      };
-  
-      this.router.navigate(['/verPoliza'], navigationExtras);
+    const gruero = (this.formularioPoliza.controls['gruero'].value).GrueroID;
+    const nombreCliente = this.formularioPoliza.controls['nCliente'].value;
+    const fecha = this.formularioPoliza.controls['fecha'].value;
+    const patente = this.formularioPoliza.controls['patente'].value;
+
+    this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fecha, patente, true, gruero, 0)
+    ).subscribe((res) => {
+      console.log('Pedido creado:', res);
     });
-  } 
+  }
 }

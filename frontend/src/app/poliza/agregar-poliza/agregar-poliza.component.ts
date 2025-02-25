@@ -43,7 +43,7 @@ export class AgregarPolizaComponent {
     const patente = this.formularioPoliza.controls['patente'].value;
     const date = new Date();
 
-    this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date)).subscribe((res) => {
+    this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 0)).subscribe((res) => {
       console.log('Póliza creada:', res);
   
       const navigationExtras: NavigationExtras = {
