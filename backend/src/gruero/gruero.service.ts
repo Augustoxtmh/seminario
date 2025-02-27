@@ -16,9 +16,15 @@ export class GrueroService {
     return this.prisma.gruero.findMany();
   }
 
-  async getGruero(id: number): Promise<GrueroModel> {
+  async getGrueroById(id: number): Promise<GrueroModel> {
     return this.prisma.gruero.findUnique({
       where: { GrueroID: id },
+    });
+  }
+
+  async getGrueroByNombre(nombre: string): Promise<GrueroModel> {
+    return this.prisma.gruero.findUnique({
+      where: { NombreGruero: nombre },
     });
   }
 

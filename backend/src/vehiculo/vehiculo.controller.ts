@@ -13,13 +13,19 @@ export class VehiculoController {
   
   @Get()
   async getVehiculos(@Query('SPatente') patente: string, @Query('MPatente') patente2: string) {
+    let res;
+    
     if (patente) {
-      return this.vehiculoService.getVehiculosByPatente(patente);
+      res = this.vehiculoService.getVehiculoByPatente(patente);
     } else if (patente2) {
-      return this.vehiculoService.getVehiculosByPatente(patente2);
+      res = this.vehiculoService.getVehiculosByPatente(patente2);
+    } else {
+      res = this.vehiculoService.getVehiculos();
     }
-    return this.vehiculoService.getVehiculos();
+
+    return res;
   }
+
   @Put(':DPatente')
   async unableVehiculoByPatente(@Param('patente') patente: string): Promise<Vehiculo> {
     return this.vehiculoService.unableVehiculoByPatente(patente);

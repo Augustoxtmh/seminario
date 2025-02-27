@@ -9,7 +9,7 @@ datasource db {
 
 model Gruero {
   GrueroID       Int         @id @default(autoincrement())
-  NombreGruero   String
+  NombreGruero   String      @unique
   TelefonoGruero String
   DeAlta         Boolean     @default(true)
   pedidos        PedidoGrua[]

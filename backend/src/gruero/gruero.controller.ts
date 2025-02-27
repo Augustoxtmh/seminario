@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { GrueroService } from './gruero.service';
 import { Gruero as GrueroModel } from '@prisma/client';
 
@@ -12,15 +12,22 @@ export class GrueroController {
   }
 
   @Get()
-  async getAllGrueros(): Promise<GrueroModel[]> {
-    return this.grueroService.getAllGrueros();
-  }
+  async getAllGrueros(@Query('IGruero') id: number, @Query('NGruero') nombre: string): Promise<GrueroModel[]> {
+    let res;
+    if (id) {
+      res = this.grueroService.getGrueroById(id);
+    } 
+    else if (nombre) 
+      {
+      res = this.grueroService.getGrueroByNombre(nombre);
+    } 
+    else {
+      res = this.grueroService.getAllGrueros();
+    }
 
-  @Get(':id')
-  async getGruero(@Param('id') id: string): Promise<GrueroModel> {
-    return this.grueroService.getGruero(Number(id));
+    return res
   }
-
+  
   @Put(':id')
   async updateGruero(@Param('id') id: string, @Body() data: GrueroModel): Promise<GrueroModel> {
     return this.grueroService.updateGruero(Number(id), data);
