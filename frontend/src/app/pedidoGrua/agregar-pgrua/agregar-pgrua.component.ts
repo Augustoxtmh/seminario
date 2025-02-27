@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { Poliza } from 'src/app/models/poliza';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
@@ -32,7 +33,7 @@ export class AgregarPGruaComponent {
         [Validators.required],
       ],
       fecha: [
-        '',
+        ,
         [Validators.required],
       ],
       patente: [
@@ -45,15 +46,36 @@ export class AgregarPGruaComponent {
   onSubmit() {
     console.log('creando');
 
-    const gruero = (this.formularioPoliza.controls['gruero'].value).GrueroID;
+    const gruero = this.formularioPoliza.controls['gruero'].value;
     const nombreCliente = this.formularioPoliza.controls['nCliente'].value;
     const fecha = this.formularioPoliza.controls['fecha'].value;
     const patente = this.formularioPoliza.controls['patente'].value;
+    const formato = fecha.indexOf('/') !== -1 ? '/' : '-';
+    const partesFecha = fecha.split(formato);
+    let grueroId: Number = 0;
+    let fechaE: Date = new Date();
 
-    this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fecha, patente, true, gruero, 1)
-    ).subscribe((res) => {
-      console.log('Pedido creado:', res);
-    });
+    const anio = parseInt(partesFecha[0]);
+    const mes = parseInt(partesFecha[1]);
+    const dia = parseInt(partesFecha[2]);
+
+    fechaE.setDate(dia);
+    fechaE.setMonth(mes - 1);
+    fechaE.setFullYear(anio);
+
+    this.grueroServ.getGrueroPorNombre(gruero).subscribe((res: Gruero) => {
+
+      grueroId = res.GrueroID ?? 0;
+      
+
+      console.log('prev' + res.GrueroID)
+      console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
+
+      this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+      ).subscribe((res) => {
+        console.log('Pedido creado:', res);
+      });
+    })
   }
 
   onPatenteInput(event: Event) {
@@ -96,7 +118,7 @@ export class AgregarPGruaComponent {
       (grueros) => {
         this.grueroSugerido = grueros
           .map(gruero => gruero.NombreGruero)
-          .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase())); // Filtramos los nombres que coinciden con lo ingresado
+          .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
       }
     );
   }

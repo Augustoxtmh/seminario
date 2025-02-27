@@ -10,7 +10,7 @@
 
         <ng-container matColumnDef="gruero">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Gruero </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ grueros[element.GrueroID - 1] }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor"> {{ grueros[element.GrueroID - 1].NombreGruero }} </td>
         </ng-container>
 
         <ng-container matColumnDef="Patente">
@@ -20,7 +20,7 @@
 
         <ng-container matColumnDef="FechaHoraPedido">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Fecha del pedido </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.FechaHoraPedido }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.FechaHoraPedido | date:'dd/MM/yyyy'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

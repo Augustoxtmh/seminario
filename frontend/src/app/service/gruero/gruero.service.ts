@@ -16,8 +16,13 @@ export class GrueroService {
   }
 
 
-  public getGrueroPorId(Id: number): Observable<Gruero> {
-    const params = { Id };
+  public getGrueroPorId(IGruero: number): Observable<Gruero> {
+    const params = { IGruero };
+    return this.http.get<Gruero>(this.url, { params });
+  }
+
+  public getGrueroPorNombre(NGruero: string): Observable<Gruero> {
+    const params = { NGruero };
     return this.http.get<Gruero>(this.url, { params });
   }
 
@@ -30,7 +35,7 @@ export class GrueroService {
   }
 
   public deleteGruero(gruero: Gruero): Observable<any>{
-    return this.http.delete<any>(this.url + gruero.GrueroId);
+    return this.http.delete<any>(this.url + gruero.GrueroID);
   }
   
 }

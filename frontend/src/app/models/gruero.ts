@@ -1,11 +1,12 @@
 export class Gruero{
 
-    GrueroId?: Number;
+    GrueroID?: Number;
     NombreGruero: String;
     TelefonoGruero: String;
 
 
-    constructor(nombre: String, telefono: String){
+    constructor(GrueroID: Number, nombre: String, telefono: String){
+        this.GrueroID = GrueroID;
         this.NombreGruero = nombre;
         this.TelefonoGruero = telefono;
     }
