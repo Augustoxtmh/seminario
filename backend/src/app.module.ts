@@ -19,14 +19,17 @@ import { PolizaModule } from './poliza/poliza.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
+import { CuotaController } from './cuota/cuota.controller';
+import { CuotaModule } from './cuota/cuota.module';
+import { CuotaService } from './cuota/cuota.service';
 
 @Module({
-  imports: [PrismaModule, VehiculoModule, PolizaModule, GrueroModule, UsuarioModule
+  imports: [PrismaModule, VehiculoModule, PolizaModule, GrueroModule, UsuarioModule, CuotaModule
     , PedidogruaModule],
   controllers: [AppController, VehiculoController, PolizaController, GrueroController, UsuarioController
-    , PedidogruaController, AuthController
+    , PedidogruaController, AuthController, CuotaController
   ],
   providers: [AppService, VehiculoService, PolizaService, GrueroService, UsuarioService
-    , PedidogruaService, AuthService],
+    , PedidogruaService, AuthService, CuotaService],
 })
 export class AppModule {}
