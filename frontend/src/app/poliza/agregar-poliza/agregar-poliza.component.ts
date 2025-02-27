@@ -4,7 +4,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import { Poliza } from 'src/app/models/poliza';
-import { Vehiculo } from 'src/app/models/vehiculo';
 
 @Component({
   selector: 'app-agregar-poliza',
@@ -58,7 +57,7 @@ export class AgregarPolizaComponent {
   
   setValuePatente(patente: String) {
     this.formularioPoliza.controls['patente'].setValue(patente);
-    this.patentesSugeridas = []; // Oculta la lista al seleccionar una opción
+    this.patentesSugeridas = [];
   }  
 
   buscarPatentes(query: string) {

@@ -7,7 +7,7 @@ import { Cuota } from 'src/app/models/cuota';
   providedIn: 'root'
 })
 export class CuotaService {
-url = "http://localhost:3000/cuotas"
+  url = "http://localhost:3000/cuota"
   
   constructor(private http: HttpClient) { }
 
