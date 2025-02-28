@@ -55,7 +55,7 @@ export class GrueroComponent {
     const nombre = this.formularioGruero.controls['nombre'].value;
     const telefono = this.formularioGruero.controls['telefono'].value;
   
-    this.grueroServ.createGruero(new Gruero(0, nombre, telefono)).subscribe((res) => {
+    this.grueroServ.createGruero(new Gruero(0, nombre, telefono, true)).subscribe((res) => {
       console.log(res);
 
       console.log(this.grueros)

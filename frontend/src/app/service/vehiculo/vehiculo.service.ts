@@ -7,7 +7,7 @@ import { Vehiculo } from 'src/app/models/vehiculo';
   providedIn: 'root'
 })
 export class VehiculoService {
-url = "http://localhost:3000/vehiculos"
+  url = "http://localhost:3000/vehiculos"
   
   constructor(private http: HttpClient) { }
 
@@ -35,7 +35,7 @@ url = "http://localhost:3000/vehiculos"
   }
 
   public createVehiculo(vehiculo: Vehiculo): Observable<any>{
-    return this.http.post<any>(this.url, vehiculo)
+    return this.http.post<any>(this.url, vehiculo);
   }
 
   public deleteVehiculo(vehiculo: Vehiculo): Observable<any>{

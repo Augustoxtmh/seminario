@@ -15,7 +15,6 @@ export class GrueroService {
     return this.http.get<Gruero[]>(this.url);
   }
 
-
   public getGrueroPorId(IGruero: number): Observable<Gruero> {
     const params = { IGruero };
     return this.http.get<Gruero>(this.url, { params });
@@ -31,11 +30,10 @@ export class GrueroService {
   }
 
   public createGruero(gruero: Gruero): Observable<any>{
-    return this.http.post<any>(this.url, gruero)
+    return this.http.post<any>(this.url, gruero);
   }
 
   public deleteGruero(gruero: Gruero): Observable<any>{
     return this.http.delete<any>(this.url + gruero.GrueroID);
   }
-  
 }

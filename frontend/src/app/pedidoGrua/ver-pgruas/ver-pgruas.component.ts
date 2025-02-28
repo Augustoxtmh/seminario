@@ -27,14 +27,16 @@ export class VerPGruasComponent {
 
   ngAfterViewInit() {
 
+        
+    this.grueroServ.getAllGrueros().subscribe((res) => {
+      this.grueros = res;
+    })
+    
     this.pedidoGrua.getAllPedidogrua().subscribe((res) => {
       this.polizas = res;
       this.dataSource.data = res;
     });
 
-    this.grueroServ.getAllGrueros().subscribe((res) => {
-      this.grueros = res;
-    })
   
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
