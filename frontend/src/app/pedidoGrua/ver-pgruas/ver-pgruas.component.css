@@ -11,6 +11,15 @@ form {
     justify-content: center;
 }
 
+.mat-table {
+    background-color: rgb(223, 223, 223);
+}
+
+.changeColor{
+    color: black;
+    border: solid 1px black;
+    min-width: 25vw;
+}
 
 .title-div{
     display: flex;

@@ -1,5 +1,5 @@
 
-<h2>Lista de polizas</h2>
+<h2 class="my-2">Lista de polizas</h2>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="mat-table">
         
@@ -27,6 +27,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[8]" showFirstLastButtons></mat-paginator>
 </div>
 <a class="btn btn-dark my-2" href="agregarPoliza">Agregar nueva poliza</a>

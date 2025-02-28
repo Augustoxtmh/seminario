@@ -1,41 +1,41 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Gruero } from 'src/app/models/gruero';
-import { PGrua } from 'src/app/models/pgrua';
-import { GrueroService } from 'src/app/service/gruero/gruero.service';
-import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
+import { Cuota } from 'src/app/models/cuota';
+import { Poliza } from 'src/app/models/poliza';
+import { Usuario } from 'src/app/models/usuario';
+import { CuotaService } from 'src/app/service/cuota/cuota.service';
+import { UsuarioService } from 'src/app/service/usuario/usuario.service';
 
 @Component({
-  selector: 'app-ver-pgruas',
-  templateUrl: './ver-pgruas.component.html',
-  styleUrls: ['./ver-pgruas.component.css']
+  selector: 'app-ver-cuotas',
+  templateUrl: './ver-cuotas.component.html',
+  styleUrls: ['./ver-cuotas.component.css']
 })
-export class VerPGruasComponent {
-
+export class VerCuotasComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  polizas: PGrua[] = [];
-  grueros: Gruero[] = [];
-  displayedColumns: string[] = ['NombreCliente', 'Patente', 'FechaHoraPedido', 'gruero'];
-  dataSource = new MatTableDataSource<PGrua>([]);
-  
-  constructor(private pedidoGrua: PgruaService, private grueroServ: GrueroService)
-  {}
+  usuario: Usuario[] = [];
+  cuota: Cuota[] = [];
+  displayedColumns: string[] = ['cuota', 'poliza', 'vigencia', 'monto', 'usuario'];
+  dataSource = new MatTableDataSource<Cuota>([]);
 
+  constructor(private cuotaServ: CuotaService, private usuarioServ: UsuarioService)
+  {}
   ngAfterViewInit() {
-        
-    this.grueroServ.getAllGrueros().subscribe((res) => {
-      this.grueros = res;
+
+    this.usuarioServ.getAllUsuarios().subscribe((res) => {
+      this.usuario = res;
     })
 
-    this.pedidoGrua.getAllPedidogrua().subscribe((res) => {
-      this.polizas = res;
+    this.cuotaServ.getAllCuota().subscribe((res) => {
+      this.cuota = res;
       this.dataSource.data = res;
     });
-
+  
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -45,7 +45,7 @@ export class VerPGruasComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onRowClick(poliza: PGrua) {
+  onRowClick(poliza: Poliza) {
     /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
       vehiculoRecibido => {
         if (vehiculo.empresa == 1){

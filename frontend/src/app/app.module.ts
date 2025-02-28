@@ -25,9 +25,10 @@ import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehic
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {MatSortModule} from '@angular/material/sort';
     ReportesDeGruasComponent,
     ReportesDeVehiculosComponent,
     ReportesDePolizasComponent,
-    GrueroComponent
+    GrueroComponent,
+    VerCuotasComponent
   ],
   imports: [
     BrowserModule,
