@@ -3,6 +3,11 @@
     min-width: 55%;
 }
 
+.title-div{
+    display: flex;
+    justify-content: center;
+}
+
 .mat-table {
     background-color: rgb(223, 223, 223);
 }

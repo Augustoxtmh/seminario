@@ -1,6 +1,11 @@
 :host {
     justify-items: center;
-    min-width: 55%;
+    min-width: 65%;
+}
+
+.title-div{
+    display: flex;
+    justify-content: center;
 }
 
 .mat-table {
@@ -10,5 +15,14 @@
 .changeColor{
     color: black;
     border: solid 1px black;
-    min-width: 12vw;
+    min-width: 13vw;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: center;
+}
+
+#data {
+    display: none;
 }

@@ -10,22 +10,25 @@ import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
   templateUrl: './ver-vehiculos.component.html',
   styleUrls: ['./ver-vehiculos.component.css']
 })
-export class VerVehiculosComponent implements OnInit{
+export class VerVehiculosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: string[] = ['Patente', 'Color', 'Marca', 'TipoPlan', 'Modelo'];
+  displayedColumns: String[] = ['Patente', 'Color', 'Marca', 'TipoPlan', 'Modelo'];
   dataSource = new MatTableDataSource<Vehiculo>([]);
-  
-  constructor(private vehiculoServ: VehiculoService){}
+  patentesSugeridas: String[] = [];
+  vehiculos: Vehiculo[] = [];
+
+  constructor(private vehiculoServ: VehiculoService) { }
 
   ngOnInit() {
     this.vehiculoServ.getAllVehiculos().subscribe((res) => {
+      this.vehiculos = res;
       this.dataSource.data = res;
     });
   }
-  
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -36,19 +39,14 @@ export class VerVehiculosComponent implements OnInit{
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onRowClick(vehiculo: Vehiculo) {
-    /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
-      vehiculoRecibido => {
-        if (vehiculo.empresa == 1){
-          this.datosVehiculoAgrosaltaService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/agrosalta']);
-        } else {
-          this.datosVehiculoLiderarService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/liderar']);
-        };
-      }
-    ) */
-  } 
+  onPatenteInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value.trim().toLowerCase();
+
+    if (value.length > 2) {
+      this.dataSource.data = this.vehiculos.filter(vehiculo => vehiculo.Patente.toLowerCase().includes(value));
+    } else {
+      this.dataSource.data = this.vehiculos;
+    }
+  }
 }

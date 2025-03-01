@@ -1,10 +1,15 @@
 :host {
     justify-items: center;
-    min-width: 55%;
+    min-width: 65%;
 }
 
 form {
     text-align: center;
+}
+
+.title-div{
+    display: flex;
+    justify-content: center;
 }
 
 .form-div {
@@ -18,5 +23,5 @@ form {
 .changeColor{
     color: black;
     border: solid 1px black;
-    min-width: 12vw;
+    min-width: 13vw;
 }

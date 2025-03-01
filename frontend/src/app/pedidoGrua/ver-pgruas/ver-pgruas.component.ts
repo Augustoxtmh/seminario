@@ -45,6 +45,17 @@ export class VerPGruasComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  onPatenteInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value.trim().toLowerCase();
+
+    if (value.length > 2) {
+      this.dataSource.data = this.polizas.filter(polizas => polizas.Patente.toLowerCase().includes(value));
+    } else {
+      this.dataSource.data = this.polizas;
+    }
+  }
+
   onRowClick(poliza: PGrua) {
     /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
       vehiculoRecibido => {

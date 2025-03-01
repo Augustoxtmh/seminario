@@ -1,6 +1,6 @@
 :host {
     justify-items: center;
-    min-width: 55%;
+    min-width: 65%;
 }
 
 form {
@@ -11,6 +11,11 @@ form {
     justify-content: center;
 }
 
+.title-div{
+    display: flex;
+    justify-content: center;
+}
+
 .mat-table {
     background-color: rgb(223, 223, 223);
 }
@@ -18,5 +23,5 @@ form {
 .changeColor{
     color: black;
     border: solid 1px black;
-    min-width: 25vw;
+    min-width: 13vw;
 }

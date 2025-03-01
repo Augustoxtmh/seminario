@@ -1,6 +1,6 @@
 :host {
     justify-items: center;
-    min-width: 55%;
+    min-width: 65%;
 }
 
 form {
@@ -10,7 +10,6 @@ form {
 .form-div {
     justify-content: center;
 }
-
 
 .title-div{
     display: flex;
