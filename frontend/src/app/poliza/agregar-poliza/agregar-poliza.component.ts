@@ -40,7 +40,7 @@ export class AgregarPolizaComponent {
     this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 1)).subscribe((res) => {
       console.log('Póliza creada:', res);
       const navigationExtras: NavigationExtras = { state: { poliza: res } };
-      this.router.navigate(['/verPoliza'], navigationExtras);
+      this.router.navigate(['/generarCuota'], navigationExtras);
     });
   }
 

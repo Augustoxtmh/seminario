@@ -5,6 +5,7 @@ import { Gruero } from '../models/gruero'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-gruero',
@@ -17,13 +18,28 @@ export class GrueroComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   formularioGruero: FormGroup;
+  formularioGrueroModificar: FormGroup;
   grueros: Gruero[] = [];
   displayedColumns: string[] = ['nombre', 'telefono'];
   dataSource = new MatTableDataSource<Gruero>([]);
-  
-  constructor(private fb: FormBuilder, private grueroServ: GrueroService)
+  grueroSeleccionado: Gruero = new Gruero('', '', true, 0);
+
+  constructor(private fb: FormBuilder, private grueroServ: GrueroService,
+    private router: Router
+  )
   {
     this.formularioGruero = this.fb.group({
+      nombre: [
+        '',
+        [Validators.required],
+      ],
+      telefono: [
+        '',
+        [Validators.required],
+      ],}
+    )
+
+    this.formularioGrueroModificar = this.fb.group({
       nombre: [
         '',
         [Validators.required],
@@ -55,7 +71,7 @@ export class GrueroComponent {
     const nombre = this.formularioGruero.controls['nombre'].value;
     const telefono = this.formularioGruero.controls['telefono'].value;
   
-    this.grueroServ.createGruero(new Gruero(0, nombre, telefono, true)).subscribe((res) => {
+    this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).subscribe((res) => {
       console.log(res);
 
       console.log(this.grueros)
@@ -64,19 +80,33 @@ export class GrueroComponent {
     });
   }  
 
-  onRowClick(gruero: Gruero) {
-    /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
-      vehiculoRecibido => {
-        if (vehiculo.empresa == 1){
-          this.datosVehiculoAgrosaltaService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/agrosalta']);
-        } else {
-          this.datosVehiculoLiderarService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/liderar']);
-        };
-      }
-    ) */
-  } 
+  onRowClick(gruero: any) {
+    this.grueroSeleccionado = gruero;
+    this.formularioGrueroModificar.patchValue({
+      nombre: gruero.NombreGruero,
+      telefono: gruero.TelefonoGruero
+    });
+  }
+  
+
+  onSubmitSave()
+  {
+    console.log(this.grueroSeleccionado)
+  }
+
+  onBack()
+  {
+    this.grueroSeleccionado = new Gruero('', '', true, 0)
+  }
+
+  onDelete()
+  {
+    this.grueroServ.deleteGruero(this.grueroSeleccionado.GrueroID ?? 0).subscribe(() => {
+
+      this.grueros = this.grueros.filter(gruero => gruero.GrueroID !== this.grueroSeleccionado.GrueroID);
+      this.dataSource.data = [...this.grueros];
+
+      this.onBack()
+    });
+  }
 }

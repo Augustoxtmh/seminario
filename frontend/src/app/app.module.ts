@@ -29,6 +29,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
+import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
     ReportesDeVehiculosComponent,
     ReportesDePolizasComponent,
     GrueroComponent,
-    VerCuotasComponent
+    VerCuotasComponent,
+    GeneradorCuotaComponent
   ],
   imports: [
     BrowserModule,

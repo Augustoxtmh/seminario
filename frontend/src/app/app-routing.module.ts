@@ -19,6 +19,7 @@ import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehic
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
 import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
+import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
 
 const routes: Routes = [
 
@@ -41,6 +42,7 @@ const routes: Routes = [
     { path: 'modificarPoliza', component: ModificarPolizaComponent },
     { path: 'verPolizas', component: VerPolizasComponent },
     { path: 'verPoliza', component: VerPolizaComponent },
+    { path: 'generarCuota', component: GeneradorCuotaComponent },
     { path: 'verCuotas', component: VerCuotasComponent },
 
     { path: 'verReportesDeGruas', component: ReportesDeGruasComponent },
