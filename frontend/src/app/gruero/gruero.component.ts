@@ -91,7 +91,12 @@ export class GrueroComponent {
 
   onSubmitSave()
   {
-    console.log(this.grueroSeleccionado)
+    const nombre = this.formularioGrueroModificar.controls['nombre'].value;
+    const telefono = this.formularioGrueroModificar.controls['telefono'].value;
+    this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
+    .subscribe((res) => {
+      console.log(res)
+    })
   }
 
   onBack()
