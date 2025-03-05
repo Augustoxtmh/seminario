@@ -96,7 +96,7 @@ export class GrueroComponent {
     this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
     .subscribe((res) => {
       console.log(res)
-    })
+    }) 
   }
 
   onBack()
