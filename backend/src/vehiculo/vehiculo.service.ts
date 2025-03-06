@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Vehiculo } from '@prisma/client';
+import { VehiculoModule } from './vehiculo.module';
 
 @Injectable()
 export class VehiculoService {
@@ -11,13 +12,18 @@ export class VehiculoService {
   }
 
   async getVehiculos(): Promise<Vehiculo[]> {
-    return await this.prisma.vehiculo.findMany();
+    return await this.prisma.vehiculo.findMany({
+      where: {
+        DeAlta: true,
+      },
+    });
   }
 
   async getVehiculoByPatente(Patente: string): Promise<Vehiculo> {
     return await this.prisma.vehiculo.findUnique({
       where: {
-        Patente
+        Patente,
+        DeAlta: true,
       }
     })
   }
@@ -28,6 +34,7 @@ export class VehiculoService {
         Patente: {
           startsWith: Patente,
         },
+        DeAlta: true
       },
       select: {
         Patente: true,
@@ -36,6 +43,13 @@ export class VehiculoService {
     });
   
     return vehiculos.map(v => v.Patente);
+  }
+
+  async updateVehiculo(id: string, data: VehiculoModule): Promise<VehiculoModule> {
+    return this.prisma.vehiculo.update({
+      where: { Patente: id },
+      data,
+    });
   }
 
   async unableVehiculoByPatente(Patente: string): Promise<Vehiculo> {

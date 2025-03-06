@@ -33,8 +33,8 @@ export class GrueroController {
     return this.grueroService.updateGruero(Number(id), data);
   }
 
-  @Delete(':id')
-  async deleteGruero(@Param('id') id: string): Promise<GrueroModel> {
+  @Delete(':IGruero')
+  async deleteGruero(@Query('IGruero') id: number): Promise<GrueroModel> {
     return this.grueroService.deleteGruero(Number(id));
   }
 }
