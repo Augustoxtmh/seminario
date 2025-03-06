@@ -87,7 +87,6 @@ export class GrueroComponent {
       telefono: gruero.TelefonoGruero
     });
   }
-  
 
   onSubmitSave()
   {

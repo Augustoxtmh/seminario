@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NavigationExtras, Router } from '@angular/router';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 
@@ -20,7 +21,7 @@ export class VerVehiculosComponent implements OnInit {
   patentesSugeridas: String[] = [];
   vehiculos: Vehiculo[] = [];
 
-  constructor(private vehiculoServ: VehiculoService) { }
+  constructor(private vehiculoServ: VehiculoService, private router: Router) { }
 
   ngOnInit() {
     this.vehiculoServ.getAllVehiculos().subscribe((res) => {
@@ -49,4 +50,9 @@ export class VerVehiculosComponent implements OnInit {
       this.dataSource.data = this.vehiculos;
     }
   }
+
+  onRowClick(vehiculo: Vehiculo) {
+    const navigationExtras: NavigationExtras = { state: { vehiculo: vehiculo } };
+    this.router.navigate(['/modificarVehiculo'], navigationExtras);
+  } 
 }

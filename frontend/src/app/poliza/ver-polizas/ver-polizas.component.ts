@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NavigationExtras, Router } from '@angular/router';
 import { Poliza } from 'src/app/models/poliza';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 
@@ -20,7 +21,7 @@ export class VerPolizasComponent {
   dataSource = new MatTableDataSource<Poliza>([]);
 
   
-  constructor(private polizaServ: PolizaService)
+  constructor(private polizaServ: PolizaService, private router: Router)
   {}
   ngAfterViewInit() {
 
@@ -61,18 +62,7 @@ export class VerPolizasComponent {
   }
 
   onRowClick(poliza: Poliza) {
-    /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
-      vehiculoRecibido => {
-        if (vehiculo.empresa == 1){
-          this.datosVehiculoAgrosaltaService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/agrosalta']);
-        } else {
-          this.datosVehiculoLiderarService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/liderar']);
-        };
-      }
-    ) */
+    const navigationExtras: NavigationExtras = { state: { poliza: poliza } };
+    this.router.navigate(['/modificarPoliza'], navigationExtras);
   } 
 }

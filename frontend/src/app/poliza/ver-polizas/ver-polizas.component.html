@@ -17,22 +17,22 @@
         
         <ng-container matColumnDef="poliza">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Num. de Poliza </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.NumeroPoliza }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.NumeroPoliza }} </td>
         </ng-container>
 
         <ng-container matColumnDef="telefono">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Teléfono </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.Telefono }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.Telefono }} </td>
         </ng-container>
 
         <ng-container matColumnDef="patente">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Patente </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.Patente }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.Patente }} </td>
         </ng-container>
 
         <ng-container matColumnDef="vigencia">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Fecha de emisión </th>
-            <td mat-cell *matCellDef="let element" class="changeColor"> {{ element.Vigencia | date:'dd/MM/yyyy' }} </td>
+            <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.Vigencia | date:'dd/MM/yyyy' }} </td>
         </ng-container>
 
         

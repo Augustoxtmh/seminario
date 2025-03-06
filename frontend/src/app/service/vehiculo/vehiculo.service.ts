@@ -30,16 +30,16 @@ export class VehiculoService {
     return this.http.get<String[]>(this.url, { params });
   }
 
-  public updateVehiculo(vehiculo: Vehiculo): Observable<any>{
-    return this.http.put<any>(this.url, vehiculo);
-  }
-
   public createVehiculo(vehiculo: Vehiculo): Observable<any>{
     return this.http.post<any>(this.url, vehiculo);
   }
 
-  public deleteVehiculo(vehiculo: Vehiculo): Observable<any>{
-    return this.http.delete<any>(this.url + vehiculo.Patente);
+  public updateVehiculo(UPatente: string, vehiculo: Vehiculo): Observable<any> {
+    return this.http.put<any>(`${this.url}/${UPatente}`, vehiculo);
   }
+  
+  public deleteVehiculo(DPatente: string): Observable<any> {
+    return this.http.put<any>(`${this.url}/unable/${DPatente}`, {});
+  }  
   
 }

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NavigationExtras, Router } from '@angular/router';
 import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
@@ -22,7 +23,9 @@ export class VerPGruasComponent {
   displayedColumns: string[] = ['NombreCliente', 'Patente', 'FechaHoraPedido', 'gruero'];
   dataSource = new MatTableDataSource<PGrua>([]);
   
-  constructor(private pedidoGrua: PgruaService, private grueroServ: GrueroService)
+  constructor(private pedidoGrua: PgruaService, private grueroServ: GrueroService,
+    private router: Router
+  )
   {}
 
   ngAfterViewInit() {
@@ -56,19 +59,8 @@ export class VerPGruasComponent {
     }
   }
 
-  onRowClick(poliza: PGrua) {
-    /* this.vehiculoServ.getVehiculoEspecifico(vehiculo.id.valueOf()).subscribe(
-      vehiculoRecibido => {
-        if (vehiculo.empresa == 1){
-          this.datosVehiculoAgrosaltaService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/agrosalta']);
-        } else {
-          this.datosVehiculoLiderarService.setVehiculo(vehiculoRecibido);
-          this.vehiculo = vehiculoRecibido;
-          this.router.navigate(['/cliente/liderar']);
-        };
-      }
-    ) */
+  onRowClick(pgrua: PGrua) {
+    const navigationExtras: NavigationExtras = { state: { poliza: pgrua } };
+    this.router.navigate(['/modificarPedidoGrua'], navigationExtras);
   } 
 }

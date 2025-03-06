@@ -1,1 +1,39 @@
-<p>modificar-vehiculo works!</p>
+<h1 class="col-md-4 title-div my-3">Modificar vehículo</h1>
+<form [formGroup]="formularioVehiculo" novalidate>
+    <div class="row mb-4 my-3 form-div">
+        <div class="col-md-4 ">
+            <label for="Patente" class="form-label">Patente:</label>
+            <input type="text" class="form-control" id="Patente" name="Patente" formControlName="Patente"
+            name="Patente">
+        </div>
+        <div class="col-md-4">
+            <label for="Color" class="form-label">Color:</label>
+            <input type="text" class="form-control" id="Color" 
+            name="Color" formControlName="Color">
+        </div>
+        <div class="col-md-4">
+            <label for="Marca" class="form-label">Marca:</label>
+            <input type="text" class="form-control" id="Marca" 
+            name="Marca" formControlName="Marca">
+        </div>
+    </div>
+    <div class="row mb-4 my-2 form-div">
+        <div class="col-md-6">
+            <label for="TipoPlan" class="form-label">Tipo de plan:</label>
+            <input type="text" class="form-control" id="TipoPlan" 
+            name="TipoPlan" formControlName="TipoPlan">
+        </div>
+        <div class="col-md-6">
+            <label for="Modelo" class="form-label">Modelo:</label>
+            <input type="text" class="form-control" id="Modelo" 
+            name="Modelo" formControlName="Modelo">
+        </div>
+    </div>
+</form>
+
+
+<button class="btn btn-info my-3 mx-1" (click)="onBack()" >Volver</button>
+    
+<button class="btn btn-success my-3 mx-4"(click)="onSave()" >Guardar</button>
+
+<button class="btn btn-danger my-3 mx-1" (click)="onDelete()" >Eliminar</button>
