@@ -30,8 +30,13 @@ export class PedidogruaService {
   }
 
   async deletePedidogrua(id: number): Promise<PedidogruaModel> {
-    return this.prisma.pedidoGrua.delete({
-      where: { PedidoID: id },
+    return this.prisma.pedidoGrua.update({
+      where: { 
+        PedidoID: id 
+      },
+      data: {
+        DeAlta: false,
+      },
     });
   }
 }

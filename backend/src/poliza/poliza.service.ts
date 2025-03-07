@@ -13,25 +13,39 @@ export class PolizaService {
   }
 
   async getAllPolizas(): Promise<PolizaModel[]> {
-    return this.prisma.poliza.findMany();
+    return this.prisma.poliza.findMany({
+      where: {
+        DeAlta: true,
+      },
+    });
   }
 
   async getPoliza(NumeroPoliza: string): Promise<PolizaModel> {
     return this.prisma.poliza.findUnique({
-      where: { NumeroPoliza: NumeroPoliza },
+      where: { 
+        NumeroPoliza: NumeroPoliza,
+        DeAlta: true,
+      },
     });
   }
 
   async updatePoliza(NumeroPoliza: string, data: PolizaModel): Promise<PolizaModel> {
     return this.prisma.poliza.update({
-      where: { NumeroPoliza: NumeroPoliza },
+      where: {
+        NumeroPoliza: NumeroPoliza
+        , DeAlta: true, },
       data,
     });
   }
 
   async deletePoliza(NumeroPoliza: string): Promise<PolizaModel> {
-    return this.prisma.poliza.delete({
-      where: { NumeroPoliza: NumeroPoliza },
+    return this.prisma.poliza.update({
+      where: { 
+        NumeroPoliza: NumeroPoliza,
+      },
+      data: {
+        DeAlta: false,
+      },
     });
   }
 }
