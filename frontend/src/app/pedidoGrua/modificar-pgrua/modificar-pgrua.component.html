@@ -1,6 +1,6 @@
 
 <h1 class="col-md-4 title-div my-3">Modificar pedido de grúa</h1> 
-<form [formGroup]="formularioPoliza" (ngSubmit)="onSubmit()">
+<form [formGroup]="formularioPoliza">
     <div class="row mb-4 my-3 form-div">
         <div class="col-md-3 my-2 position-relative">
             <label for="gruero" class="form-label">Gruero:</label>
@@ -51,7 +51,8 @@
             <input type="date" class="form-control" id="fecha" formControlName="fecha">
         </div>
     </div>
-    <button class="btn btn-success my-3">Guardar</button>
 </form>
 
-<a class="btn btn-dark" href="verPedidosDeGrua">Ver todos los pedidos</a> 
+<button class="btn btn-info my-3" (click)="onBack()">Volver</button>
+<button class="btn btn-success my-3 mx-4" (click)="onSave()">Guardar</button>
+<button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>

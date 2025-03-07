@@ -60,7 +60,7 @@ export class VerPGruasComponent {
   }
 
   onRowClick(pgrua: PGrua) {
-    const navigationExtras: NavigationExtras = { state: { poliza: pgrua } };
+    const navigationExtras: NavigationExtras = { state: { pgrua: pgrua, grueroN: this.grueros[Number(pgrua.GrueroID) - 1].NombreGruero} };
     this.router.navigate(['/modificarPedidoGrua'], navigationExtras);
   } 
 }
