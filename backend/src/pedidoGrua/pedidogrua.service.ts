@@ -13,7 +13,11 @@ export class PedidogruaService {
   }
 
   async getAllPedidogruas(): Promise<PedidogruaModel[]> {
-    return this.prisma.pedidoGrua.findMany();
+    return this.prisma.pedidoGrua.findMany(
+      {
+        where: { DeAlta: true }
+      }
+    );
   }
 
   async getPedidogrua(id: number): Promise<PedidogruaModel> {
@@ -22,9 +26,9 @@ export class PedidogruaService {
     });
   }
 
-  async updatePedidogrua(id: number, data: PedidogruaModel): Promise<PedidogruaModel> {
+  async updatePedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
     return this.prisma.pedidoGrua.update({
-      where: { PedidoID: id },
+      where: { PedidoID: data.PedidoID },
       data,
     });
   }

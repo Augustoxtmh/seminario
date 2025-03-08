@@ -21,12 +21,12 @@ export class PolizaController {
     return this.polizaService.getPoliza(id);
   }
 
-  @Put(':nPoliza')
-  async updatePoliza(@Param('id') id: string, @Body() data: PolizaModel): Promise<PolizaModel> {
-    return this.polizaService.updatePoliza(id, data);
+  @Put()
+  async updatePoliza(@Body() data: PolizaModel): Promise<PolizaModel> {
+    return this.polizaService.updatePoliza(data);
   }
 
-  @Delete(':nPoliza')
+  @Delete(':id')
   async deletePoliza(@Param('id') id: string): Promise<PolizaModel> {
     return this.polizaService.deletePoliza(id);
   }

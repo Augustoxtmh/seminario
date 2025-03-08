@@ -21,9 +21,9 @@ export class PedidogruaController {
     return this.pedidogruaService.getPedidogrua(Number(id));
   }
 
-  @Put(':id')
-  async updatePedidogrua(@Param('id') id: string, @Body() data: PedidogruaModel): Promise<PedidogruaModel> {
-    return this.pedidogruaService.updatePedidogrua(Number(id), data);
+  @Put()
+  async updatePedidogrua(@Body() data: PedidogruaModel): Promise<PedidogruaModel> {
+    return this.pedidogruaService.updatePedidogrua(data);
   }
 
   @Delete(':id')

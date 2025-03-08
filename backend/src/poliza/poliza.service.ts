@@ -29,11 +29,12 @@ export class PolizaService {
     });
   }
 
-  async updatePoliza(NumeroPoliza: string, data: PolizaModel): Promise<PolizaModel> {
+  async updatePoliza(data: PolizaModel): Promise<PolizaModel> {
     return this.prisma.poliza.update({
       where: {
-        NumeroPoliza: NumeroPoliza
-        , DeAlta: true, },
+        NumeroPoliza: data.NumeroPoliza,
+        DeAlta: true
+      },
       data,
     });
   }
