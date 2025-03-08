@@ -6,6 +6,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { Poliza } from 'src/app/models/poliza';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-polizas',

@@ -3,10 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-pgruas',
@@ -30,7 +32,20 @@ export class VerPGruasComponent {
 
   ngAfterViewInit() {
         
-    this.grueroServ.getAllGrueros().subscribe((res) => {
+    this.grueroServ.getAllGrueros().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
       this.grueros = res;
     })
 

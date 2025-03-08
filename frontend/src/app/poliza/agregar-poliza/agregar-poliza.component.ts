@@ -5,6 +5,7 @@ import { PolizaService } from 'src/app/service/poliza/poliza.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import { Poliza } from 'src/app/models/poliza';
 import { catchError } from 'rxjs/internal/operators/catchError';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-poliza',

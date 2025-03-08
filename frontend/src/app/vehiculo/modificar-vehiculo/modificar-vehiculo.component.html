@@ -34,6 +34,6 @@
 
 <button class="btn btn-info my-3 mx-1" (click)="onBack()" >Volver</button>
     
-<button class="btn btn-success my-3 mx-4"(click)="onSave()" >Guardar</button>
+<button class="btn btn-success my-3 mx-4"(click)="onSave()" [disabled]="formularioVehiculo.invalid">Guardar</button>
 
 <button class="btn btn-danger my-3 mx-1" (click)="onDelete()" >Eliminar</button>

@@ -3,11 +3,13 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Cuota } from 'src/app/models/cuota';
 import { Poliza } from 'src/app/models/poliza';
 import { Usuario } from 'src/app/models/usuario';
 import { CuotaService } from 'src/app/service/cuota/cuota.service';
 import { UsuarioService } from 'src/app/service/usuario/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-cuotas',
@@ -27,11 +29,37 @@ export class VerCuotasComponent {
   {}
   ngAfterViewInit() {
 
-    this.usuarioServ.getAllUsuarios().subscribe((res) => {
+    this.usuarioServ.getAllUsuarios().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+        ).subscribe((res) => {
       this.usuario = res;
     })
 
-    this.cuotaServ.getAllCuota().subscribe((res) => {
+    this.cuotaServ.getAllCuota().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
       this.cuota = res;
       this.dataSource.data = res;
     });

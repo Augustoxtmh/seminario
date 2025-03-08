@@ -42,7 +42,7 @@
   <div class="title-div mb-10">
     <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
 
-    <button class="btn btn-success my-3 mx-4" (click)="onSave()">Guardar</button>
+    <button class="btn btn-success my-3 mx-4" (click)="onSave()" [disabled]="formularioPoliza.invalid">Guardar</button>
     
     <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
   </div>

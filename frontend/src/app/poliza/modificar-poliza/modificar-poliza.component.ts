@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/internal/operators/catchError';
 import { Poliza } from 'src/app/models/poliza';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modificar-poliza',

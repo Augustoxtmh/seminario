@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-vehiculo',

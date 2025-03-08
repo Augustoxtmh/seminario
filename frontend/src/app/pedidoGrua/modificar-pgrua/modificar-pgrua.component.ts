@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { Poliza } from 'src/app/models/poliza';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modificar-pgrua',
@@ -147,9 +149,22 @@ export class ModificarPGruaComponent {
 
   onDelete()
   {
-    this.pGruaServ.deletePedidogrua(this.pedidoGruaRecibido).subscribe(() => {
-      this.onBack()
-      this.router.navigate(['/verPedidosDeGrua']);
+    this.pGruaServ.deletePedidogrua(this.pedidoGruaRecibido).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+      ).subscribe(() => {
+        this.onBack()
+        this.router.navigate(['/verPedidosDeGrua']);
     });
   }
 }

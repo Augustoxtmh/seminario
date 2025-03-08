@@ -52,7 +52,19 @@ export class GrueroComponent {
   }
 
   ngAfterViewInit() {
-    this.grueroServ.getAllGrueros().subscribe((res) => {
+    this.grueroServ.getAllGrueros().pipe(
+    catchError(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error al buscar grueros",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '20vw',
+        padding: '20px',
+      });
+      return [];
+    })).subscribe((res) => {
       this.grueros = res;
       this.dataSource.data = res;
     });
@@ -118,8 +130,19 @@ export class GrueroComponent {
 
   onDelete()
   {
-    this.grueroServ.deleteGruero(this.grueroSeleccionado.GrueroID ?? 0).subscribe(() => {
-
+    this.grueroServ.deleteGruero(this.grueroSeleccionado.GrueroID ?? 0).pipe(
+    catchError(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error al obtener recomendaciónes",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '20vw',
+        padding: '20px',
+      });
+      return [];
+    })).subscribe((res) => {
       this.grueros = this.grueros.filter(gruero => gruero.GrueroID !== this.grueroSeleccionado.GrueroID);
       this.dataSource.data = [...this.grueros];
 

@@ -32,7 +32,7 @@
             name="Monto" formControlName="Monto">
         </div>
     </div>
-    <button class="btn btn-success my-3">Guardar</button>
+    <button class="btn btn-success my-3" [disabled]="formularioCuota.invalid">Guardar</button>
 </form>
 
 <a class="btn btn-dark" href="verPolizas">Ver todos las polizas</a> 

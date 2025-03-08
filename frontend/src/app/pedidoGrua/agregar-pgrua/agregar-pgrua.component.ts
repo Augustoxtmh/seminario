@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { Poliza } from 'src/app/models/poliza';
@@ -7,6 +8,7 @@ import { CuotaService } from 'src/app/service/cuota/cuota.service';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-pgrua',
@@ -35,7 +37,7 @@ export class AgregarPGruaComponent {
         [Validators.required],
       ],
       fecha: [
-        ,
+        this.formatearFecha(this.date),
         [Validators.required],
       ],
       patente: [
@@ -65,19 +67,46 @@ export class AgregarPGruaComponent {
     fechaE.setMonth(mes - 1);
     fechaE.setFullYear(anio);
 
-    this.grueroServ.getGrueroPorNombre(gruero).subscribe((res: Gruero) => {
-
-      grueroId = res.GrueroID ?? 0;
-      
-
-      console.log('prev' + res.GrueroID)
-      console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
-
-      this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+    this.grueroServ.getGrueroPorNombre(gruero).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al guardar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          console.log('error')
+          return [];
+        })
       ).subscribe((res) => {
-        console.log('Pedido creado:', res);
-      });
-    })
+
+        grueroId = res.GrueroID ?? 0;
+        
+        console.log('prev' + res.GrueroID)
+        console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
+
+        this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+        ).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al buscar gruero, recuerde agregar el dato",
+              showConfirmButton: false,
+              timer: 3500,
+              width: '25vw',
+              padding: '20px',
+            });
+            console.log('error')
+            return [];
+          })
+        ).subscribe((res) => {
+          console.log('Pedido creado:', res);
+        });
+      })
   }
 
   onPatenteInput(event: Event) {
@@ -93,18 +122,45 @@ export class AgregarPGruaComponent {
   
   setValuePatente(patente: String) {
     this.formularioPGrua.controls['patente'].setValue(patente);
-    this.cuotaServ.getCuotaPorIdByPoliza(patente).subscribe((res) => {
+    this.cuotaServ.getCuotaPorIdByPoliza(patente).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al colocar el valor",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
       this.errores = res.errores;
     });    
     this.patentesSugeridas = [];
   }  
 
   buscarPatentes(query: string) {
-    this.vehiculoServ.getVehiculosPorPatente(query).subscribe(
-      (vehiculos: String[]) => {
-        this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
-      }
-    );
+    this.vehiculoServ.getVehiculosPorPatente(query).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al obtener recomendaciónes",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+        ).subscribe((res) => {
+          (vehiculos: String[]) => {
+            this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
+          }
+        }
+      );
   }
 
   onGrueroInput(event: Event) {
@@ -119,11 +175,22 @@ export class AgregarPGruaComponent {
   }
   
   buscarGrueros(value: string) {
-    this.grueroServ.getAllGrueros().subscribe(
-      (grueros) => {
-        this.grueroSugerido = grueros
-          .map(gruero => gruero.NombreGruero)
-          .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
+    this.grueroServ.getAllGrueros().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al obtener recomendaciónes",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })).subscribe((grueros) => {
+      this.grueroSugerido = grueros
+        .map(gruero => gruero.NombreGruero)
+        .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
       }
     );
   }
@@ -131,5 +198,27 @@ export class AgregarPGruaComponent {
   setValueGruero(nombre: String) {
     this.formularioPGrua.controls['gruero'].setValue(nombre);
     this.grueroSugerido = [];
+  }
+
+  formatearFecha(fecha: any): string {
+    if (!fecha) return '';
+    const date = new Date(fecha);
+    return date.toISOString().split('T')[0];
   }  
 }
+
+
+/* .pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al obtener recomendaciónes",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+        ).subscribe((res) => { */

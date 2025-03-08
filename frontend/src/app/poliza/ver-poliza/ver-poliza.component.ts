@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Cuota } from 'src/app/models/cuota';
 import { Poliza } from 'src/app/models/poliza';
 import { CuotaService } from 'src/app/service/cuota/cuota.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-poliza',
@@ -66,7 +68,19 @@ export class VerPolizaComponent {
       let anio = parseInt(partesFecha[2]);
       let fecha = new Date(anio, mes, dia);
   
-      this.cuotaServ.createCuota(new Cuota(nCuota, fecha, Monto, poliza, idUsuario)).subscribe((res) => {
+      this.cuotaServ.createCuota(new Cuota(nCuota, fecha, Monto, poliza, idUsuario)).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al guardar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })).subscribe((res) => {
         console.log(`Cuota creada: ${res}`);
       });
   

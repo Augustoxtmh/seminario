@@ -52,7 +52,7 @@
             <input type="date" class="form-control" id="fecha" formControlName="fecha">
         </div>
     </div>
-    <button class="btn btn-success my-3">Guardar</button>
+    <button class="btn btn-success my-3" [disabled]="formularioPGrua.invalid">Guardar</button>
 </form>
 
 <a class="btn btn-dark" href="verPedidosDeGrua">Ver todos los pedidos</a>

@@ -10,7 +10,7 @@
       <input type="text" class="form-control" id="telefono" formControlName="telefono">
     </div>
   </div>
-  <button class="btn btn-success my-3">Guardar</button>
+  <button class="btn btn-success my-3" [disabled]="formularioGruero.invalid">Guardar</button>
 </form>
 
 <form [formGroup]="formularioGrueroModificar" [ngClass]="{ 'd-block': grueroSeleccionado.GrueroID != 0, 'd-none': grueroSeleccionado.GrueroID == 0 }">
@@ -25,7 +25,7 @@
     </div>
   </div>
   <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
-  <button class="btn btn-success my-3 mx-3" (click)="onSubmitSave()">Guardar</button>
+  <button class="btn btn-success my-3 mx-3" [disabled]="formularioGrueroModificar.invalid" (click)="onSubmitSave()">Guardar</button>
   <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
 </form>
 
