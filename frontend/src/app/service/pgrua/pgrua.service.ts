@@ -30,6 +30,6 @@ url = "http://localhost:3000/pedidosgrua"
   }
 
   public deletePedidogrua(poliza: PGrua): Observable<any>{
-    return this.http.delete<any>(this.url + poliza.PedidoID);
+    return this.http.delete<any>(this.url + '/' + poliza.PedidoID);
   }
 }

@@ -1,6 +1,6 @@
 :host {
     justify-items: center;
-    min-width: 65%;
+    width: 65%;
 }
 
 form {

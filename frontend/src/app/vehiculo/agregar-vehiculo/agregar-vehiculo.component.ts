@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 
@@ -47,8 +48,20 @@ export class AgregarVehiculoComponent {
     const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
     const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
-    this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).subscribe((res) => {
-      console.log(res);
+    this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })).subscribe((res) => {
+        console.log(res);
     }); 
   }  
 }

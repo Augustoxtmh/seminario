@@ -41,7 +41,7 @@ export class ModificarPGruaComponent {
         [Validators.required],
       ],
       fecha: [
-        this.pedidoGruaRecibido.FechaHoraPedido,
+        this.formatearFecha(this.pedidoGruaRecibido.FechaHoraPedido),
         [Validators.required],
       ],
       patente: [
@@ -53,6 +53,7 @@ export class ModificarPGruaComponent {
 
   onSave() {
     console.log('guardando');
+    console.log(this.pedidoGruaRecibido);
 
     const gruero = this.formularioPoliza.controls['gruero'].value;
     const nombreCliente = this.formularioPoliza.controls['nCliente'].value;
@@ -75,12 +76,18 @@ export class ModificarPGruaComponent {
 
       grueroId = res.GrueroID ?? 0;
 
-      this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+      this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.PedidoID)
       ).subscribe((res) => {
         console.log('Pedido guardado:', res);
       });
     })
   }
+
+  formatearFecha(fecha: any): string {
+    if (!fecha) return '';
+    const date = new Date(fecha);
+    return date.toISOString().split('T')[0];
+  }  
 
   onPatenteInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;

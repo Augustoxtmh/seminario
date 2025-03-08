@@ -11,8 +11,8 @@ export class PGrua{
     constructor(NombreCliente: String,
         FechaHoraPedido: Date, Patente: String,
         DeAlta: Boolean, GrueroID: Number,
-        UsuarioId: Number){
-        
+        UsuarioId: Number, PedidoID?: Number,){
+        this.PedidoID = PedidoID;
         this.FechaHoraPedido = FechaHoraPedido;
         this.Patente = Patente;
         this.NombreCliente = NombreCliente;

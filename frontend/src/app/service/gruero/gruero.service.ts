@@ -34,6 +34,6 @@ export class GrueroService {
   }
 
   deleteGruero(id: Number): Observable<Gruero> {
-    return this.http.delete<Gruero>(`${this.url}/${id}`);
+    return this.http.delete<Gruero>('this.url' + '/' + id);
   }
 }

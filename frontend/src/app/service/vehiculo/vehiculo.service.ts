@@ -35,11 +35,11 @@ export class VehiculoService {
   }
 
   public updateVehiculo(UPatente: string, vehiculo: Vehiculo): Observable<any> {
-    return this.http.put<any>(`${this.url}/${UPatente}`, vehiculo);
+    return this.http.put<any>('this.url' + '/' + UPatente, vehiculo);
   }
   
   public deleteVehiculo(DPatente: string): Observable<any> {
-    return this.http.put<any>(`${this.url}/unable/${DPatente}`, {});
+    return this.http.put<any>('this.url' + '/' + DPatente, {});
   }  
   
 }

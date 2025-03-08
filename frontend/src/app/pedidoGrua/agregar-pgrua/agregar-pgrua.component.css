@@ -1,6 +1,6 @@
 :host {
     justify-items: center;
-    min-width: 65%;
+    width: 65%;
 }
 
 form {
@@ -14,4 +14,8 @@ form {
 .title-div{
     display: flex;
     justify-content: center;
+}
+
+p {
+    color: red;
 }

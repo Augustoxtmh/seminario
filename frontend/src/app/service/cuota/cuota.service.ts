@@ -15,11 +15,14 @@ export class CuotaService {
     return this.http.get<Cuota[]>(this.url);
   }
 
-
   public getCuotaPorId(Id: number): Observable<Cuota> {
     const params = { Id };
     return this.http.get<Cuota>(this.url, { params });
   }
+
+  public getCuotaPorIdByPoliza(patente: String): Observable<{ valido: boolean; errores: string[] }> {
+    return this.http.get<{ valido: boolean; errores: string[] }>(this.url + '/poliza/' + patente);
+  }  
 
   public updateCuota(cuota: Cuota): Observable<any>{
     return this.http.put<any>(this.url, cuota);

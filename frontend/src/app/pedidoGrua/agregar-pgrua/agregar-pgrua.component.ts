@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
 import { Poliza } from 'src/app/models/poliza';
+import { CuotaService } from 'src/app/service/cuota/cuota.service';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
@@ -16,14 +17,15 @@ export class AgregarPGruaComponent {
 
   patentesSugeridas: String[] = [];
   grueroSugerido: String[] = [];
-  formularioPoliza: FormGroup;
-  polizas: Poliza[] = [];
+  formularioPGrua: FormGroup;
   date: Date = new Date();
+  errores: string[] = [];
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
-      private vehiculoServ: VehiculoService, private grueroServ: GrueroService)
+      private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
+      private cuotaServ: CuotaService, private cd: ChangeDetectorRef)
   {
-    this.formularioPoliza = this.fb.group({
+    this.formularioPGrua = this.fb.group({
       gruero: [
         '',
         [Validators.required]
@@ -46,10 +48,10 @@ export class AgregarPGruaComponent {
   onSubmit() {
     console.log('creando');
 
-    const gruero = this.formularioPoliza.controls['gruero'].value;
-    const nombreCliente = this.formularioPoliza.controls['nCliente'].value;
-    const fecha = this.formularioPoliza.controls['fecha'].value;
-    const patente = this.formularioPoliza.controls['patente'].value;
+    const gruero = this.formularioPGrua.controls['gruero'].value;
+    const nombreCliente = this.formularioPGrua.controls['nCliente'].value;
+    const fecha = this.formularioPGrua.controls['fecha'].value;
+    const patente = this.formularioPGrua.controls['patente'].value;
     const formato = fecha.indexOf('/') !== -1 ? '/' : '-';
     const partesFecha = fecha.split(formato);
     let grueroId: Number = 0;
@@ -90,7 +92,10 @@ export class AgregarPGruaComponent {
   }
   
   setValuePatente(patente: String) {
-    this.formularioPoliza.controls['patente'].setValue(patente);
+    this.formularioPGrua.controls['patente'].setValue(patente);
+    this.cuotaServ.getCuotaPorIdByPoliza(patente).subscribe((res) => {
+      this.errores = res.errores;
+    });    
     this.patentesSugeridas = [];
   }  
 
@@ -124,7 +129,7 @@ export class AgregarPGruaComponent {
   }
   
   setValueGruero(nombre: String) {
-    this.formularioPoliza.controls['gruero'].setValue(nombre);
+    this.formularioPGrua.controls['gruero'].setValue(nombre);
     this.grueroSugerido = [];
   }  
 }

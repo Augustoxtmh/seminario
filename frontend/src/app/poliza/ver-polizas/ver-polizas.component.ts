@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Poliza } from 'src/app/models/poliza';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 
@@ -25,10 +26,22 @@ export class VerPolizasComponent {
   {}
   ngAfterViewInit() {
 
-    this.polizaServ.getAllPoliza().subscribe((res) => {
-      this.polizas = res;
-      this.dataSource.data = res;
-    });
+    this.polizaServ.getAllPoliza().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })).subscribe((res) => {
+        this.polizas = res;
+        this.dataSource.data = res;
+      });
   
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

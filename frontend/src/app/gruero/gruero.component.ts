@@ -5,7 +5,8 @@ import { Gruero } from '../models/gruero'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { NavigationExtras, Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gruero',
@@ -24,8 +25,7 @@ export class GrueroComponent {
   dataSource = new MatTableDataSource<Gruero>([]);
   grueroSeleccionado: Gruero = new Gruero('', '', true, 0);
 
-  constructor(private fb: FormBuilder, private grueroServ: GrueroService,
-    private router: Router
+  constructor(private fb: FormBuilder, private grueroServ: GrueroService
   )
   {
     this.formularioGruero = this.fb.group({
@@ -70,15 +70,28 @@ export class GrueroComponent {
   
     const nombre = this.formularioGruero.controls['nombre'].value;
     const telefono = this.formularioGruero.controls['telefono'].value;
-  
-    this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).subscribe((res) => {
-      console.log(res);
 
-      console.log(this.grueros)
+  
+    this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
       this.grueros = [...this.grueros, res];
-      this.dataSource.data = this.grueros; 
+      this.dataSource.data = this.grueros;
     });
-  }  
+    
+  }
+  
 
   onRowClick(gruero: any) {
     this.grueroSeleccionado = gruero;

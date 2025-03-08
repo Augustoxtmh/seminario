@@ -15,7 +15,6 @@ export class PolizaService {
     return this.http.get<Poliza[]>(this.url);
   }
 
-
   public getPolizaPorNPoliza(NPoliza: number): Observable<Poliza> {
     const params = { NPoliza };
     return this.http.get<Poliza>(this.url, { params });
@@ -30,6 +29,6 @@ export class PolizaService {
   }
 
   public deletePoliza(poliza: Poliza): Observable<any>{
-    return this.http.delete<any>(this.url + poliza.NumeroPoliza);
+    return this.http.delete<any>(this.url + '/' + poliza.NumeroPoliza);
   }
 }

@@ -1,1 +1,52 @@
-<p>modificar-poliza works!</p>
+<h1 class="col-md-4 title-div my-3">Polizas</h1> 
+
+<div class="col-md-4 title-div">
+  <label>Fecha de emisión:</label>
+  <p type="text" class="mx-3">{{polizaRecibida.Vigencia | date:'dd/MM/yyyy'}}</p>
+</div>
+
+<form [formGroup]="formularioPoliza">
+  <div class="row mb-4 my-3 form-div">
+    <div class="col-md-4 my-2">
+      <label for="poliza" class="form-label">Num. de Poliza:</label>
+      <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza">
+    </div>
+    <div class="col-md-4 my-2">
+      <label for="telefono" class="form-label">Teléfono:</label>
+      <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono">
+    </div>
+    <div class="col-md-4 my-2 position-relative">
+      <label for="patente" class="form-label">Patente:</label>
+      <input type="text" 
+             class="form-control" 
+             id="patente" 
+             name="patente" 
+             formControlName="patente" 
+             (input)="onPatenteInput($event)">
+    
+      <div *ngIf="patentesSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+        <button *ngFor="let patente of patentesSugeridas"
+                type="button"
+                class="list-group-item list-group-item-action"
+                (click)="setValuePatente(patente)">
+          {{ patente }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="title-div mb-10">
+    <button class="btn btn-warning my-3" (click)="onGenerateCuota()">Generar cuota</button>
+  </div>
+  <div class="title-div mb-10">
+    <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
+
+    <button class="btn btn-success my-3 mx-4" (click)="onSave()">Guardar</button>
+    
+    <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
+  </div>
+</div>
+
+
+
