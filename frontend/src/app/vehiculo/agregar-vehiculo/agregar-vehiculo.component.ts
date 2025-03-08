@@ -49,6 +49,19 @@ export class AgregarVehiculoComponent {
     const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
     const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
+    if (!Patente || !Marca || !Color || !TipoPlan || !Modelo) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
     this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
       catchError(() => {
         Swal.fire({
@@ -57,7 +70,7 @@ export class AgregarVehiculoComponent {
           title: "Error al guardar",
           showConfirmButton: false,
           timer: 1500,
-          width: '20vw',
+          width: '25vw',
           padding: '20px',
         });
         return [];

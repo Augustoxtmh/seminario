@@ -83,6 +83,19 @@ export class GrueroComponent {
     const nombre = this.formularioGruero.controls['nombre'].value;
     const telefono = this.formularioGruero.controls['telefono'].value;
 
+    if (nombre == '' || telefono == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
   
     this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
       catchError(() => {
@@ -117,6 +130,21 @@ export class GrueroComponent {
   {
     const nombre = this.formularioGrueroModificar.controls['nombre'].value;
     const telefono = this.formularioGrueroModificar.controls['telefono'].value;
+
+    if (nombre == '' || telefono == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
     this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
     .subscribe((res) => {
       console.log(res)

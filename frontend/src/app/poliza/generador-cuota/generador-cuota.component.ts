@@ -59,6 +59,20 @@ export class GeneradorCuotaComponent {
     const Monto = this.formularioCuota.controls['Monto'].value;
     const poliza = this.formularioCuota.controls['poliza'].value;
     let idUsuario = Number(this.polizaRecibida.UsuarioId);
+
+    if (!nCuota || Cantidad == 0 || FechaV == '' || Monto == '' || poliza == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
     
     for (let index = 0; index < Cantidad; index++) {
       const formato = FechaV.indexOf('/') !== -1 ? '/' : '-';

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modificar-vehiculo',
@@ -53,7 +55,33 @@ export class ModificarVehiculoComponent {
     const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
     const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
-    this.vehiculoServ.updateVehiculo(this.vehiculoRecibido.Patente.toString(), new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).subscribe((res) => {
+    if (Patente == '' || Marca == '' || Color == '' || TipoPlan == '' || Modelo == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
+    this.vehiculoServ.updateVehiculo(this.vehiculoRecibido.Patente.toString(), new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return [];
+          })).subscribe((res) => {
       console.log(res);
       this.router.navigate(['/verVehiculos']);
     });

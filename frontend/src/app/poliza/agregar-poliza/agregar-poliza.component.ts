@@ -39,6 +39,34 @@ export class AgregarPolizaComponent {
     const patente = this.formularioPoliza.value.patente;
     const date = new Date();
 
+    if (poliza == '' || telefono == '' || patente == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
+    if (poliza == '' || telefono == '' || patente == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
     this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
           catchError(() => {
             Swal.fire({

@@ -59,6 +59,20 @@ export class AgregarPGruaComponent {
     let grueroId: Number = 0;
     let fechaE: Date = new Date();
 
+    if (gruero == '' || nombreCliente == '' || patente == '' || fecha == '') {
+      console.log('error')
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Todos los campos son requeridos",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+      return;
+    }
+
     const anio = parseInt(partesFecha[0]);
     const mes = parseInt(partesFecha[1]);
     const dia = parseInt(partesFecha[2]);

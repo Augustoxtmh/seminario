@@ -32,7 +32,7 @@ export class VerPolizasComponent {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Error al obtener las polizas",
           showConfirmButton: false,
           timer: 1500,
           width: '20vw',
