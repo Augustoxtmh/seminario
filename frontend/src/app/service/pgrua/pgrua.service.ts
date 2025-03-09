@@ -14,22 +14,21 @@ url = "http://localhost:3000/pedidosgrua"
   public getAllPedidogrua(): Observable<PGrua[]> {
     return this.http.get<PGrua[]>(this.url);
   }
-
-
+  
   public getPedidogruaPorNPoliza(NPoliza: number): Observable<PGrua> {
     const params = { NPoliza };
     return this.http.get<PGrua>(this.url, { params });
   }
 
-  public updatePedidogrua(poliza: PGrua): Observable<any>{
-    return this.http.put<any>(this.url, poliza);
+  public updatePedidogrua(pgrua: PGrua): Observable<any>{
+    return this.http.put<any>(this.url, pgrua);
   }
 
-  public createPedidogrua(poliza: PGrua): Observable<any>{
-    return this.http.post<any>(this.url, poliza)
+  public createPedidogrua(pgrua: PGrua): Observable<any>{
+    return this.http.post<any>(this.url, pgrua)
   }
 
-  public deletePedidogrua(poliza: PGrua): Observable<any>{
-    return this.http.delete<any>(this.url + '/' + poliza.PedidoID);
+  public deletePedidogrua(pgrua: PGrua): Observable<any>{
+    return this.http.delete<any>(this.url + '/' + pgrua.PedidoID);
   }
 }

@@ -33,7 +33,7 @@ export class GrueroService {
     return this.http.post<any>(this.url, gruero);
   }
 
-  deleteGruero(id: Number): Observable<Gruero> {
-    return this.http.delete<Gruero>('this.url' + '/' + id);
-  }
+  public deleteGruero(grueroID: number): Observable<any> {
+    return this.http.delete<any>(this.url + '/' + grueroID);
+  }  
 }
