@@ -28,9 +28,9 @@ export class GrueroService {
     });
   }
 
-  async updateGruero(id: number, data: GrueroModel): Promise<GrueroModel> {
+  async updateGruero(data: GrueroModel): Promise<GrueroModel> {
     return this.prisma.gruero.update({
-      where: { GrueroID: id },
+      where: { GrueroID: data.GrueroID },
       data,
     });
   }

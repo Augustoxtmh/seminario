@@ -6,8 +6,15 @@ import { PedidoGrua as PedidogruaModel } from '@prisma/client';
 export class PedidogruaService {
   constructor(private prisma: PrismaService) {}
 
-  async createPedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
+  async createPedidogrua(data: PedidogruaModel) {
     return this.prisma.pedidoGrua.create({
+      data,
+    });
+  }
+
+  async updatePedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
+    return this.prisma.pedidoGrua.update({
+      where: { PedidoID: data.PedidoID },
       data,
     });
   }
@@ -26,12 +33,17 @@ export class PedidogruaService {
     });
   }
 
-  async updatePedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
+
+
+  async updatePedidogruaById(idPedido: number, urlFactura: string): Promise<PedidogruaModel> {
     return this.prisma.pedidoGrua.update({
-      where: { PedidoID: data.PedidoID },
-      data,
+      where: { PedidoID: idPedido },
+      data: {
+        urlFactura: urlFactura
+      }
     });
   }
+
 
   async deletePedidogrua(id: number): Promise<PedidogruaModel> {
     return this.prisma.pedidoGrua.update({

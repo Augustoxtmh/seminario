@@ -8,58 +8,59 @@ datasource db {
 }
 
 model Gruero {
-  GrueroID       Int         @id @default(autoincrement())
-  NombreGruero   String      @unique
-  TelefonoGruero String
-  DeAlta         Boolean     @default(true)
-  pedidos        PedidoGrua[]
+  GrueroID          Int         @id @default(autoincrement())
+  NombreGruero      String      @unique
+  TelefonoGruero    String
+  DeAlta            Boolean     @default(true)
+  pedidos           PedidoGrua[]
 }
 
 model PedidoGrua {
-  PedidoID        Int         @id @default(autoincrement())
-  UsuarioId        Int
-  FechaHoraPedido DateTime
-  NombreCliente   String
-  GrueroID        Int         
-  Patente         String
-  DeAlta          Boolean     @default(true)
-  Gruero          Gruero?     @relation(fields: [GrueroID], references: [GrueroID])
-  Usuario          Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+  PedidoID          Int         @id @default(autoincrement())
+  UsuarioId         Int
+  FechaHoraPedido   DateTime
+  NombreCliente     String
+  GrueroID          Int         
+  Patente           String
+  urlFactura        String?
+  DeAlta            Boolean     @default(true)
+  Gruero            Gruero?     @relation(fields: [GrueroID], references: [GrueroID])
+  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
 model Vehiculo {
-  Patente  String  @id
-  Marca    String
-  Color    String
-  TipoPlan String
-  Modelo   String
-  DeAlta   Boolean     @default(true)
-  Poliza   Poliza?
-  UsuarioId        Int
-  Usuario          Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+  Patente           String  @id
+  Marca             String
+  Color             String
+  TipoPlan          String
+  Modelo            String
+  DeAlta            Boolean     @default(true)
+  Poliza            Poliza?
+  UsuarioId         Int
+  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
 model Cuota {
-  cuotaId          Int      @id @default(autoincrement())
-  NumCuota         Int
-  FechaVencimiento DateTime
-  Monto            Float
-  NumeroPoliza     String
-  Poliza           Poliza?  @relation(fields: [NumeroPoliza], references: [NumeroPoliza])
-  UsuarioId        Int
-  Usuario          Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+  cuotaId           Int      @id @default(autoincrement())
+  NumCuota          Int
+  FechaVencimiento  DateTime
+  Monto             Float
+  NumeroPoliza      String
+  Poliza            Poliza?  @relation(fields: [NumeroPoliza], references: [NumeroPoliza])
+  UsuarioId         Int
+  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
 model Poliza {
-  NumeroPoliza String  @id
-  Vigencia     DateTime
-  Telefono     String
-  DeAlta    Boolean     @default(true)
-  Patente      String   @unique
-  Vehiculo     Vehiculo @relation(fields: [Patente], references: [Patente])
-  cuotas       Cuota[]
-  UsuarioId        Int
-  Usuario          Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+  NumeroPoliza      String  @id
+  Vigencia          DateTime
+  Telefono          String
+  DeAlta            Boolean     @default(true)
+  Patente           String   @unique
+  Vehiculo          Vehiculo @relation(fields: [Patente], references: [Patente])
+  cuotas            Cuota[]
+  UsuarioId         Int
+  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
 enum TipoUsuario {
@@ -68,15 +69,15 @@ enum TipoUsuario {
 }
 
 model Usuario {
-  UsuarioId  Int         @id @default(autoincrement())
-  Nombre     String
-  Contra     String
-  Autoridad  TipoUsuario @default(U)
-  DeAlta     Boolean     @default(true)
+  UsuarioId         Int         @id @default(autoincrement())
+  Nombre            String
+  Contra            String
+  Autoridad         TipoUsuario @default(U)
+  DeAlta            Boolean     @default(true)
   
-  pedidos    PedidoGrua[]
-  vehiculos  Vehiculo[]
-  polizas    Poliza[]
-  cuotas     Cuota[]
+  pedidos           PedidoGrua[]
+  vehiculos         Vehiculo[]
+  polizas           Poliza[]
+  cuotas            Cuota[]
 }
 

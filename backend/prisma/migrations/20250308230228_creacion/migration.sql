@@ -5,6 +5,7 @@ CREATE TABLE `Gruero` (
     `TelefonoGruero` VARCHAR(191) NOT NULL,
     `DeAlta` BOOLEAN NOT NULL DEFAULT true,
 
+    UNIQUE INDEX `Gruero_NombreGruero_key`(`NombreGruero`),
     PRIMARY KEY (`GrueroID`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -16,6 +17,7 @@ CREATE TABLE `PedidoGrua` (
     `NombreCliente` VARCHAR(191) NOT NULL,
     `GrueroID` INTEGER NOT NULL,
     `Patente` VARCHAR(191) NOT NULL,
+    `urlFactura` VARCHAR(191) NULL,
     `DeAlta` BOOLEAN NOT NULL DEFAULT true,
 
     PRIMARY KEY (`PedidoID`)

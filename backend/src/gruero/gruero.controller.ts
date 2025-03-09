@@ -28,14 +28,14 @@ export class GrueroController {
     return res
   }
   
-  @Put(':id')
-  async updateGruero(@Param('id') id: string, @Body() data: GrueroModel): Promise<GrueroModel> {
-    return this.grueroService.updateGruero(Number(id), data);
+  @Put()
+  async updateGruero( @Body() data: GrueroModel): Promise<GrueroModel> {
+    return this.grueroService.updateGruero(data);
   }
 
-  @Delete(':IGruero')
-  async deleteGruero(@Query('IGruero') id: number): Promise<GrueroModel> {
-    return this.grueroService.deleteGruero(Number(id));
-  }
+  @Delete(':grueroID')
+  async deleteGruero(@Param('grueroID') grueroID: string): Promise<GrueroModel> {
+    return this.grueroService.deleteGruero(Number(grueroID));
+  }  
 }
 
