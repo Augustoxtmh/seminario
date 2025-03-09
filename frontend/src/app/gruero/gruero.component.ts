@@ -146,10 +146,43 @@ export class GrueroComponent {
     }
 
     this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
-    .subscribe((res) => {
+    .pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al actualizar al gruero",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })).subscribe((res) => {
       console.log(res)
-    }) 
+
+      this.grueroServ.getAllGrueros().pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al actualizar al gruero",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })).subscribe((res) => {
+          this.grueros = res;
+          this.dataSource.data = res;
+        });
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    )
   }
+  
 
   onBack()
   {
@@ -158,12 +191,12 @@ export class GrueroComponent {
 
   onDelete()
   {
-    this.grueroServ.deleteGruero(this.grueroSeleccionado.GrueroID ?? 0).pipe(
+    this.grueroServ.deleteGruero(Number(this.grueroSeleccionado.GrueroID ?? 0)).pipe(
     catchError(() => {
       Swal.fire({
         position: "top-end",
         icon: "error",
-        title: "Error al obtener recomendaciónes",
+        title: "Error al borrar",
         showConfirmButton: false,
         timer: 1500,
         width: '20vw',

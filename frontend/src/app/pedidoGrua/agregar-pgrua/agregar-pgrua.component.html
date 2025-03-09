@@ -14,9 +14,15 @@
             <div *ngIf="grueroSugerido.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
               <button *ngFor="let gruero of grueroSugerido"
                       type="button"
-                      class="list-group-item list-group-item-action  "
+                      class="list-group-item list-group-item-action "
                       (click)="setValueGruero(gruero)">
                 {{ gruero }}
+              </button>
+            </div>
+
+            <div *ngIf="grueroSugerido.length == 0 && this.formularioPGrua.controls['gruero'].dirty && !this.grueroSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
+              <button class="list-group-item list-group-item-action" type="button" (click)="openGrueroModal()">  
+                Crear nuevo gruero
               </button>
             </div>
         </div>
@@ -45,6 +51,11 @@
               </button>
             </div>
 
+            <div *ngIf="patentesSugeridas.length == 0 && this.formularioPGrua.controls['patente'].dirty && !this.vehiculoSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
+              <button class="list-group-item list-group-item-action" type="button" (click)="openVehiculoModal()">  
+                Crear nuevo vehiculo
+              </button>
+            </div>
           </div>
 
         <div class="col-md-4 my-2">

@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { catchError } from 'rxjs/internal/operators/catchError';
-import { Gruero } from 'src/app/models/gruero';
 import { PGrua } from 'src/app/models/pgrua';
-import { Poliza } from 'src/app/models/poliza';
 import { CuotaService } from 'src/app/service/cuota/cuota.service';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
+import { ModalGrueroService } from 'src/app/service/modals/modalGruero/modal-gruero.service';
+import { ModalVehiculoService } from 'src/app/service/modals/modalVehiculo/modal-vehiculo.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import Swal from 'sweetalert2';
@@ -20,12 +21,15 @@ export class AgregarPGruaComponent {
   patentesSugeridas: String[] = [];
   grueroSugerido: String[] = [];
   formularioPGrua: FormGroup;
+  grueroSeleccionado: boolean = false;
+  vehiculoSeleccionado: boolean = false;
   date: Date = new Date();
   errores: string[] = [];
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
-      private cuotaServ: CuotaService, private cd: ChangeDetectorRef)
+      private cuotaServ: CuotaService, private router: Router
+      , private grueroModalServ: ModalGrueroService, private vehiculoModalServ: ModalVehiculoService)
   {
     this.formularioPGrua = this.fb.group({
       gruero: [
@@ -86,7 +90,7 @@ export class AgregarPGruaComponent {
           Swal.fire({
             position: "top-end",
             icon: "error",
-            title: "Error al guardar",
+            title: "Error al asignar el gruero",
             showConfirmButton: false,
             timer: 1500,
             width: '20vw',
@@ -108,7 +112,7 @@ export class AgregarPGruaComponent {
             Swal.fire({
               position: "top-end",
               icon: "error",
-              title: "Error al buscar gruero, recuerde agregar el dato",
+              title: "Error al crear el pedido de grúa, revise los datos",
               showConfirmButton: false,
               timer: 3500,
               width: '25vw',
@@ -118,6 +122,7 @@ export class AgregarPGruaComponent {
             return [];
           })
         ).subscribe((res) => {
+          this.router.navigate(['/verPedidosDeGrua']);
           console.log('Pedido creado:', res);
         });
       })
@@ -127,7 +132,7 @@ export class AgregarPGruaComponent {
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value.trim();
     
-    if (value.length > 2) {
+    if (value.length > 1) {
       this.buscarPatentes(value);
     } else {
       this.patentesSugeridas = [];
@@ -135,6 +140,8 @@ export class AgregarPGruaComponent {
   }
   
   setValuePatente(patente: String) {
+    this.vehiculoSeleccionado = true;
+    console.log(this.vehiculoSeleccionado)
     this.formularioPGrua.controls['patente'].setValue(patente);
     this.cuotaServ.getCuotaPorIdByPoliza(patente).pipe(
       catchError(() => {
@@ -168,20 +175,18 @@ export class AgregarPGruaComponent {
           padding: '20px',
         });
         return [];
-      })
-        ).subscribe((res) => {
-          (vehiculos: String[]) => {
-            this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
-          }
-        }
-      );
+      })).subscribe((vehiculos: String[]) => {
+        this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
+      }
+    )
   }
+    
 
   onGrueroInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value.trim();
   
-    if (value.length > 2) {
+    if (value.length > 1) {
       this.buscarGrueros(value);
     } else {
       this.grueroSugerido = [];
@@ -211,6 +216,8 @@ export class AgregarPGruaComponent {
   
   setValueGruero(nombre: String) {
     this.formularioPGrua.controls['gruero'].setValue(nombre);
+    this.grueroSeleccionado = true;
+    console.log(this.grueroSeleccionado)
     this.grueroSugerido = [];
   }
 
@@ -219,20 +226,12 @@ export class AgregarPGruaComponent {
     const date = new Date(fecha);
     return date.toISOString().split('T')[0];
   }  
+
+  openGrueroModal() {
+    this.grueroModalServ.openFormModal();
+  }
+
+  openVehiculoModal() {
+    this.vehiculoModalServ.openFormModal();
+  }
 }
-
-
-/* .pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al obtener recomendaciónes",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
-        });
-        return [];
-      })
-        ).subscribe((res) => { */

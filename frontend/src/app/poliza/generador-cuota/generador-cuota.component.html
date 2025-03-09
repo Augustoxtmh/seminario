@@ -4,7 +4,7 @@
 
 <form [formGroup]="formularioCuota" (ngSubmit)="onSubmit()">
     <div class="row mb-4 my-3 form-div">
-        <div class="col-md-3 my-2">
+        <div class="col-md-4 my-2">
             <label for="poliza" class="form-label">Num. de Poliza:</label>
             <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza"
             name="poliza">
@@ -12,12 +12,12 @@
         <div class="col-md-4 my-2">
             <label for="nCuota" class="form-label">Num de la cuota:</label>
             <input type="number" class="form-control" id="nCuota" name="nCuota" formControlName="nCuota"
-            name="nCuota">
+            name="nCuota" min="0" max="5">
         </div>
-        <div class="col-md-3 my-2">
+        <div class="col-md-4 my-2">
             <label for="Cantidad" class="form-label">Cantidad de pagos:</label>
             <input type="number" class="form-control" id="Cantidad" name="Cantidad" formControlName="Cantidad"
-            name="Cantidad">
+            name="Cantidad" min="1" max="6">
         </div>
     </div>
     <div class="row mb-4 my-3 form-div">
@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-4 my-2">
             <label for="Monto" class="form-label">Monto:</label>
-            <input type="number" class="form-control" id="Monto" 
+            <input type="number" class="form-control" id="Monto" min="0"
             name="Monto" formControlName="Monto">
         </div>
     </div>

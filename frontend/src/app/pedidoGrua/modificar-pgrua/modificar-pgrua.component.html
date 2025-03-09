@@ -1,6 +1,6 @@
 
-<h1 class="col-md-4 title-div my-3">Modificar pedido de grúa</h1> 
-<form [formGroup]="formularioPoliza">
+<h1 class="col-md-6 title-div my-3">Modificar pedido de grúa</h1> 
+<form [formGroup]="formularioPGrua">
     <div class="row mb-4 my-2 form-div">
         <div class="col-md-3 my-2 position-relative">
             <label for="gruero" class="form-label">Gruero:</label>
@@ -52,7 +52,16 @@
         </div>
     </div>
 </form>
+<div class="row form-div">
+  <div class="title-div mb-10">
+    <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
+    <button class="btn btn-success my-3 mx-4" (click)="onSave()" [disabled]="formularioPGrua.invalid">Guardar</button>
+    <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
+  </div>
 
-<button class="btn btn-info my-3" (click)="onBack()">Volver</button>
-<button class="btn btn-success my-3 mx-4" (click)="onSave()" [disabled]="formularioPoliza.invalid">Guardar</button>
-<button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
+  <div class="col-6 my-4 pdfBtn">
+    <h2 for="">Factura:</h2>
+    <input type="file" class="btn btn-dark w-100" (change)="onFileSelected($event)" accept="application/pdf">
+    <button class="btn btn-warning my-3" (click)="uploadPDF()">Guardar factura</button>
+  </div>
+</div>

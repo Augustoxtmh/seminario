@@ -8,6 +8,7 @@ import { Poliza } from 'src/app/models/poliza';
 import { GrueroService } from 'src/app/service/gruero/gruero.service';
 import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import { UploadService } from 'src/app/service/upload/upload.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,21 +20,24 @@ export class ModificarPGruaComponent {
 
   patentesSugeridas: String[] = [];
   grueroSugerido: String[] = [];
-  formularioPoliza: FormGroup;
+  formularioPGrua: FormGroup;
   polizas: Poliza[] = [];
   pedidoGruaRecibido: PGrua;
   date: Date = new Date();
+  selectedFile!: File;
+  grueroSeleccionado: boolean = false;
+
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
-      private router: Router)
+      private router: Router, private uploadService: UploadService,)
   {
     const navigation = this.router.getCurrentNavigation();
     this.pedidoGruaRecibido = navigation?.extras.state?.['pgrua'];
     
     const gruero = navigation?.extras.state?.['grueroN'];;
 
-    this.formularioPoliza = this.fb.group({
+    this.formularioPGrua = this.fb.group({
       gruero: [
         gruero,
         [Validators.required]
@@ -57,10 +61,10 @@ export class ModificarPGruaComponent {
     console.log('guardando');
     console.log(this.pedidoGruaRecibido);
 
-    const gruero = this.formularioPoliza.controls['gruero'].value;
-    const nombreCliente = this.formularioPoliza.controls['nCliente'].value;
-    const fecha = this.formularioPoliza.controls['fecha'].value;
-    const patente = this.formularioPoliza.controls['patente'].value;
+    const gruero = this.formularioPGrua.controls['gruero'].value;
+    const nombreCliente = this.formularioPGrua.controls['nCliente'].value;
+    const fecha = this.formularioPGrua.controls['fecha'].value;
+    const patente = this.formularioPGrua.controls['patente'].value;
     const formato = fecha.indexOf('/') !== -1 ? '/' : '-';
     const partesFecha = fecha.split(formato);
     let grueroId: Number = 0;
@@ -94,6 +98,7 @@ export class ModificarPGruaComponent {
 
       this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.PedidoID)
       ).subscribe((res) => {
+        this.router.navigate(['/verPedidosDeGrua']);
         console.log('Pedido guardado:', res);
       });
     })
@@ -117,7 +122,7 @@ export class ModificarPGruaComponent {
   }
   
   setValuePatente(patente: String) {
-    this.formularioPoliza.controls['patente'].setValue(patente);
+    this.formularioPGrua.controls['patente'].setValue(patente);
     this.patentesSugeridas = [];
   }  
 
@@ -151,13 +156,13 @@ export class ModificarPGruaComponent {
   }
   
   setValueGruero(nombre: String) {
-    this.formularioPoliza.controls['gruero'].setValue(nombre);
+    this.formularioPGrua.controls['gruero'].setValue(nombre);
     this.grueroSugerido = [];
   }
 
   onBack()
   {
-    this.pedidoGruaRecibido = new PGrua('', new Date(), '', true, 0, 0)
+    this.pedidoGruaRecibido = new PGrua('', new Date(), '', true, 0, 0, 0)
     this.router.navigate(['/verPedidosDeGrua']);
   }
 
@@ -179,6 +184,30 @@ export class ModificarPGruaComponent {
       ).subscribe(() => {
         this.onBack()
         this.router.navigate(['/verPedidosDeGrua']);
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      this.selectedFile = file;
+    } else {
+      alert('Por favor selecciona un archivo PDF válido');
+    }
+  }
+
+  uploadPDF() {
+    if (!this.selectedFile) {
+      alert('No has seleccionado ningún archivo');
+      return;
+    }
+
+    this.uploadService.uploadFile(this.selectedFile, Number(this.pedidoGruaRecibido.PedidoID?.valueOf() ?? 0)).subscribe(response => {
+      console.log('Respuesta del servidor:', response);
+      alert('PDF subido correctamente');
+    }, error => {
+      console.error('Error al subir el archivo:', error);
+      alert('Hubo un error al subir el archivo');
     });
   }
 }

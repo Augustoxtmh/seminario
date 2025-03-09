@@ -117,10 +117,9 @@ export class AgregarPolizaComponent {
         });
         return [];
       })
-    ).subscribe((res) => {
-      (vehiculos: String[]) => {
+    ).subscribe((vehiculos: String[]) => {
         this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
       }
-    });
-  }
+    )
+  };
 }
