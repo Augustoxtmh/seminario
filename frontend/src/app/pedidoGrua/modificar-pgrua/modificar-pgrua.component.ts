@@ -26,6 +26,7 @@ export class ModificarPGruaComponent {
   date: Date = new Date();
   selectedFile!: File;
   grueroSeleccionado: boolean = false;
+  baseUrl = 'http://localhost:3000';
 
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
@@ -34,7 +35,7 @@ export class ModificarPGruaComponent {
   {
     const navigation = this.router.getCurrentNavigation();
     this.pedidoGruaRecibido = navigation?.extras.state?.['pgrua'];
-    
+    console.log(this.pedidoGruaRecibido.urlFactura == null);
     const gruero = navigation?.extras.state?.['grueroN'];;
 
     this.formularioPGrua = this.fb.group({
@@ -187,6 +188,7 @@ export class ModificarPGruaComponent {
     });
   }
 
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file && file.type === 'application/pdf') {
@@ -195,19 +197,28 @@ export class ModificarPGruaComponent {
       alert('Por favor selecciona un archivo PDF válido');
     }
   }
-
+  
   uploadPDF() {
     if (!this.selectedFile) {
       alert('No has seleccionado ningún archivo');
       return;
     }
-
+  
     this.uploadService.uploadFile(this.selectedFile, Number(this.pedidoGruaRecibido.PedidoID?.valueOf() ?? 0)).subscribe(response => {
       console.log('Respuesta del servidor:', response);
       alert('PDF subido correctamente');
+      this.pedidoGruaRecibido.urlFactura = response.filePath;
     }, error => {
       console.error('Error al subir el archivo:', error);
       alert('Hubo un error al subir el archivo');
     });
+  }
+  
+
+  guardarMonto(){
+    const monto: number = Number((document.getElementById('monto') as HTMLInputElement).value.trim());
+    this.pGruaServ.updateMontoPGrua(Number(this.pedidoGruaRecibido.PedidoID ?? 0), monto).subscribe((res)=>{
+      console.log(res)
+    })
   }
 }

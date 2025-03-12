@@ -29,3 +29,8 @@ form {
 .red {
     color: red;
 }
+
+.hidden-row {
+    display: none;
+  }
+  

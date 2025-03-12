@@ -60,8 +60,20 @@
   </div>
 
   <div class="col-6 my-4 pdfBtn">
-    <h2 for="">Factura:</h2>
+    <h3>Factura:</h3>
+    
     <input type="file" class="btn btn-dark w-100" (change)="onFileSelected($event)" accept="application/pdf">
     <button class="btn btn-warning my-3" (click)="uploadPDF()">Guardar factura</button>
+  
+    <div *ngIf="pedidoGruaRecibido.urlFactura != null">
+      <h4>Factura subida:</h4>
+      <a [href]="baseUrl + pedidoGruaRecibido.urlFactura" target="_blank" class="btn btn-info">Ver PDF</a>
+    </div>
+  </div>
+  
+  <div class="col-6 my-4 pdfBtn" *ngIf="this.pedidoGruaRecibido.urlFactura != null">
+    <h3 for="">Monto a pagar:</h3>
+    <input type="number" placeholder="Ej: 1200" class="form-control" name="monto" id="monto">
+    <button class="btn btn-success my-3" (click)="guardarMonto()">Guardar monto</button>
   </div>
 </div>

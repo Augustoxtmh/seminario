@@ -78,8 +78,6 @@ export class GrueroComponent {
   }
 
   onSubmit() {
-    console.log('creando');
-  
     const nombre = this.formularioGruero.controls['nombre'].value;
     const telefono = this.formularioGruero.controls['telefono'].value;
 
@@ -113,10 +111,8 @@ export class GrueroComponent {
     ).subscribe((res) => {
       this.grueros = [...this.grueros, res];
       this.dataSource.data = this.grueros;
-    });
-    
+    }); 
   }
-  
 
   onRowClick(gruero: any) {
     this.grueroSeleccionado = gruero;

@@ -45,7 +45,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns" [hidden]="!element.DeAlta"></tr>
+
   </table>
 
   <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>

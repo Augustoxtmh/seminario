@@ -69,7 +69,7 @@ export class ModificarVehiculoComponent {
       return;
     }
 
-    this.vehiculoServ.updateVehiculo(this.vehiculoRecibido.Patente.toString(), new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+    this.vehiculoServ.updateVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",

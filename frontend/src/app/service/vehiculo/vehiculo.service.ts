@@ -34,12 +34,13 @@ export class VehiculoService {
     return this.http.post<any>(this.url, vehiculo);
   }
 
-  public updateVehiculo(UPatente: string, vehiculo: Vehiculo): Observable<any> {
-    return this.http.put<any>('this.url' + '/' + UPatente, vehiculo);
+  public updateVehiculo(vehiculo: Vehiculo): Observable<any> {
+    return this.http.put<any>(this.url, vehiculo);
   }
   
   public deleteVehiculo(DPatente: string): Observable<any> {
-    return this.http.put<any>('this.url' + '/' + DPatente, {});
+    console.log(DPatente)
+    return this.http.put<any>(this.url + '/unable/' + DPatente, {});
   }  
   
 }
