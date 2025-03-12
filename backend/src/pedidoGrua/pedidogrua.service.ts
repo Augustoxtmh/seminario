@@ -33,8 +33,6 @@ export class PedidogruaService {
     });
   }
 
-
-
   async updatePedidogruaById(idPedido: number, urlFactura: string): Promise<PedidogruaModel> {
     return this.prisma.pedidoGrua.update({
       where: { PedidoID: idPedido },
@@ -44,6 +42,13 @@ export class PedidogruaService {
     });
   }
 
+  async updateMontoPedidogrua(idPedido: number, monto: number): Promise<PedidogruaModel> {
+    return this.prisma.pedidoGrua.update({
+      where: { PedidoID: idPedido },
+      data: { Monto: monto },
+    });
+  }
+  
 
   async deletePedidogrua(id: number): Promise<PedidogruaModel> {
     return this.prisma.pedidoGrua.update({

@@ -7,10 +7,29 @@ export class GrueroService {
   constructor(private prisma: PrismaService) {}
 
   async createGruero(data: GrueroModel): Promise<GrueroModel> {
-    return this.prisma.gruero.create({
-      data,
-    });
+    try {
+      const existingGruero = await this.prisma.gruero.findUnique({
+        where: { NombreGruero: data.NombreGruero },
+      });
+  
+      if (existingGruero) {
+        if (!existingGruero.DeAlta) {
+          return await this.prisma.gruero.update({
+            where: { NombreGruero: data.NombreGruero },
+            data: { DeAlta: true, NombreGruero: data.NombreGruero },
+          });
+        }
+        throw new Error('P2002');
+      }
+        return await this.prisma.gruero.create({ data });
+    } catch (error) {
+      if (error.code === 'P2002' || error.message === 'P2002') {
+        throw new Error('El gruero ya está registrado.');
+      }
+      throw new Error('Error al crear el gruero.');
+    }
   }
+  
 
   async getAllGrueros(): Promise<GrueroModel[]> {
     return this.prisma.gruero.findMany();
@@ -36,8 +55,11 @@ export class GrueroService {
   }
 
   async deleteGruero(id: number): Promise<GrueroModel> {
-    return this.prisma.gruero.delete({
+    return this.prisma.gruero.update({
       where: { GrueroID: id },
+      data: {
+        DeAlta: false
+      }
     });
   }
 }

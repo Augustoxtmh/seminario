@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { VehiculoService } from './vehiculo.service';
 import { Vehiculo } from '@prisma/client';
-import { VehiculoModule } from './vehiculo.module';
 
 @Controller('vehiculos')
 export class VehiculoController {
@@ -26,18 +25,16 @@ export class VehiculoController {
     return res;
   }
   
-  @Put(':UPatente')
+  @Put()
   async updateVehiculo(
-    @Param('UPatente') UPatente: string,
-    @Body() vehiculo: VehiculoModule
-  ): Promise<VehiculoModule> {
-    return this.vehiculoService.updateVehiculo(UPatente, vehiculo);
+    @Body() vehiculo: Vehiculo): Promise<Vehiculo> {
+    return this.vehiculoService.updateVehiculo(vehiculo);
   }
   
   @Put('unable/:DPatente')
   async unableVehiculo(
     @Param('DPatente') DPatente: string
-  ): Promise<VehiculoModule> {
+  ): Promise<Vehiculo> {
     return this.vehiculoService.unableVehiculoByPatente(DPatente);
   }
 }

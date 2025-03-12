@@ -19,6 +19,14 @@ export class PedidogruaController {
     return this.pedidogruaService.updatePedidogrua(data);
   }
 
+  @Put('montoUpd/:idPedido')
+  async updateMontoPedidogrua(
+    @Param('idPedido') idPedido: string,
+    @Body('monto') monto: number
+  ): Promise<PedidogruaModel> {
+    return this.pedidogruaService.updateMontoPedidogrua(Number(idPedido), monto);
+  }
+
   @Get()
   async getAllPedidogruas(): Promise<PedidogruaModel[]> {
     return this.pedidogruaService.getAllPedidogruas();

@@ -24,6 +24,7 @@ model PedidoGrua {
   Patente           String
   urlFactura        String?
   DeAlta            Boolean     @default(true)
+  Monto             Int
   Gruero            Gruero?     @relation(fields: [GrueroID], references: [GrueroID])
   Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
