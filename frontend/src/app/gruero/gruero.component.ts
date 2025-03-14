@@ -31,7 +31,7 @@ export class GrueroComponent {
     this.formularioGruero = this.fb.group({
       nombre: [
         '',
-        [Validators.required],
+        [Validators.required], 
       ],
       telefono: [
         '',
