@@ -29,9 +29,9 @@ export class ModificarPolizaComponent {
     this.polizaRecibida = navigation?.extras.state?.['poliza'];
 
     this.formularioPoliza = this.fb.group({
-      poliza: [this.polizaRecibida.NumeroPoliza, [Validators.required]],
-      telefono: [this.polizaRecibida.Telefono, [Validators.required]],
-      patente: [this.polizaRecibida.Patente, [Validators.required]],
+      poliza: [this.polizaRecibida.NumeroPoliza, [Validators.required, Validators.minLength(7)]],
+      telefono: [this.polizaRecibida.Telefono, [Validators.required, Validators.minLength(10)]],
+      patente: [this.polizaRecibida.Patente, [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -41,30 +41,33 @@ export class ModificarPolizaComponent {
   }
 
   onSave() {
-    console.log('creando');
-  
-    const poliza = this.formularioPoliza.value.poliza;
-    const telefono = this.formularioPoliza.value.telefono;
-    const patente = this.formularioPoliza.value.patente;
-    const date = new Date();
+    if(this.formularioPoliza.valid)
+    {
+      console.log('creando');
+    
+      const poliza = this.formularioPoliza.value.poliza;
+      const telefono = this.formularioPoliza.value.telefono;
+      const patente = this.formularioPoliza.value.patente;
+      const date = new Date();
 
-    this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al guardar",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
-        });
-        return [];
-      })
-    ).subscribe((res) => {
-      console.log('Póliza actualizada:', res);
-      this.router.navigate(['/verPolizas']);
-    });
+      this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al guardar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })
+      ).subscribe((res) => {
+        console.log('Póliza actualizada:', res);
+        this.router.navigate(['/verPolizas']);
+      });
+    }
   }
 
   onBack() {

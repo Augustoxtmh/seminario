@@ -6,6 +6,7 @@ import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import { Poliza } from 'src/app/models/poliza';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import Swal from 'sweetalert2';
+import { ModalVehiculoService } from 'src/app/service/modals/modalVehiculo/modal-vehiculo.service';
 
 @Component({
   selector: 'app-agregar-poliza',
@@ -16,75 +17,78 @@ export class AgregarPolizaComponent {
 
   formularioPoliza: FormGroup;
   patentesSugeridas: String[] = [];
+  vehiculoSeleccionado: boolean = false;
   date: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
     private polizaServ: PolizaService,
     private router: Router,
-    private vehiculoServ: VehiculoService
+    private vehiculoServ: VehiculoService, 
+    private vehiculoModalServ: ModalVehiculoService
   ) {
     this.formularioPoliza = this.fb.group({
-      poliza: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
-      patente: ['', [Validators.required]],
+      poliza: ['', [Validators.required, Validators.minLength(7)]],
+      telefono: ['', [Validators.required, Validators.minLength(10)]],
+      patente: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
   onSubmit() {
-    console.log('creando');
-  
-    const poliza = this.formularioPoliza.value.poliza;
-    const telefono = this.formularioPoliza.value.telefono;
-    const patente = this.formularioPoliza.value.patente;
-    const date = new Date();
+    if(this.formularioPoliza.valid)
+    {
+      const poliza = this.formularioPoliza.value.poliza;
+      const telefono = this.formularioPoliza.value.telefono;
+      const patente = this.formularioPoliza.value.patente;
+      const date = new Date();
 
-    if (poliza == '' || telefono == '' || patente == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
+      if (poliza == '' || telefono == '' || patente == '') {
+        console.log('error')
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Todos los campos son requeridos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
+
+      if (poliza == '' || telefono == '' || patente == '') {
+        console.log('error')
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Todos los campos son requeridos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
+
+      this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
+            catchError(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error al guardar",
+                showConfirmButton: false,
+                timer: 1500,
+                width: '20vw',
+                padding: '20px',
+              });
+              return [];
+            })
+          ).subscribe((res) => {
+        console.log('Póliza creada:', res);
+        const navigationExtras: NavigationExtras = { state: { poliza: res } };
+        this.router.navigate(['/generarCuota'], navigationExtras);
       });
-      return;
     }
-
-    if (poliza == '' || telefono == '' || patente == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
-
-    this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
-          catchError(() => {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: "Error al guardar",
-              showConfirmButton: false,
-              timer: 1500,
-              width: '20vw',
-              padding: '20px',
-            });
-            return [];
-          })
-        ).subscribe((res) => {
-      console.log('Póliza creada:', res);
-      const navigationExtras: NavigationExtras = { state: { poliza: res } };
-      this.router.navigate(['/generarCuota'], navigationExtras);
-    });
   }
 
   onPatenteInput(event: Event) {
@@ -99,6 +103,7 @@ export class AgregarPolizaComponent {
   }
   
   setValuePatente(patente: String) {
+    this.vehiculoSeleccionado = true;
     this.formularioPoliza.controls['patente'].setValue(patente);
     this.patentesSugeridas = [];
   }  
@@ -122,4 +127,8 @@ export class AgregarPolizaComponent {
       }
     )
   };
+
+  openVehiculoModal() {
+    this.vehiculoModalServ.openFormModal();
+  }
 }

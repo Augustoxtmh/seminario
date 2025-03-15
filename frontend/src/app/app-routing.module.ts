@@ -13,7 +13,6 @@ import { VerVehiculoComponent } from './vehiculo/ver-vehiculo/ver-vehiculo.compo
 import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.component';
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
 import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
-import { VerPolizaComponent } from './poliza/ver-poliza/ver-poliza.component';
 import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
 import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
@@ -41,7 +40,6 @@ const routes: Routes = [
     { path: 'agregarPoliza', component: AgregarPolizaComponent },
     { path: 'modificarPoliza', component: ModificarPolizaComponent },
     { path: 'verPolizas', component: VerPolizasComponent },
-    { path: 'verPoliza', component: VerPolizaComponent },
     { path: 'generarCuota', component: GeneradorCuotaComponent },
     { path: 'verCuotas', component: VerCuotasComponent },
 

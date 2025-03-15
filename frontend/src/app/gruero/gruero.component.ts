@@ -31,24 +31,24 @@ export class GrueroComponent {
     this.formularioGruero = this.fb.group({
       nombre: [
         '',
-        [Validators.required], 
+        [Validators.required, Validators.minLength(5)],
       ],
       telefono: [
         '',
-        [Validators.required],
-      ],}
-    )
-
+        [Validators.required, Validators.minLength(10)],
+      ],
+    });
+    
     this.formularioGrueroModificar = this.fb.group({
       nombre: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(5)],
       ],
       telefono: [
         '',
-        [Validators.required],
-      ],}
-    )
+        [Validators.required, Validators.minLength(10)],
+      ],
+    });    
   }
 
   ngAfterViewInit() {
@@ -78,40 +78,43 @@ export class GrueroComponent {
   }
 
   onSubmit() {
-    const nombre = this.formularioGruero.controls['nombre'].value;
-    const telefono = this.formularioGruero.controls['telefono'].value;
-
-    if (nombre == '' || telefono == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
+    if(this.formularioGruero.valid)
+    {
+      const nombre = this.formularioGruero.controls['nombre'].value;
+      const telefono = this.formularioGruero.controls['telefono'].value;
   
-    this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
-      catchError(() => {
+      if (nombre == '' || telefono == '') {
+        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Todos los campos son requeridos",
           showConfirmButton: false,
           timer: 1500,
-          width: '20vw',
+          width: '25vw',
           padding: '20px',
         });
-        return [];
-      })
-    ).subscribe((res) => {
-      this.grueros = [...this.grueros, res];
-      this.dataSource.data = this.grueros;
-    }); 
+        return;
+      }
+    
+      this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al guardar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })
+      ).subscribe((res) => {
+        this.grueros = [...this.grueros, res];
+        this.dataSource.data = this.grueros;
+      }); 
+    }
   }
 
   onRowClick(gruero: any) {
@@ -124,40 +127,27 @@ export class GrueroComponent {
 
   onSubmitSave()
   {
-    const nombre = this.formularioGrueroModificar.controls['nombre'].value;
-    const telefono = this.formularioGrueroModificar.controls['telefono'].value;
+    if(this.formularioGrueroModificar.valid)
+    {
+      const nombre = this.formularioGrueroModificar.controls['nombre'].value;
+      const telefono = this.formularioGrueroModificar.controls['telefono'].value;
 
-    if (nombre == '' || telefono == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
-
-    this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
-    .pipe(
-      catchError(() => {
+      if (nombre == '' || telefono == '') {
+        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al actualizar al gruero",
+          title: "Todos los campos son requeridos",
           showConfirmButton: false,
           timer: 1500,
-          width: '20vw',
+          width: '25vw',
           padding: '20px',
         });
-        return [];
-      })).subscribe((res) => {
-      console.log(res)
+        return;
+      }
 
-      this.grueroServ.getAllGrueros().pipe(
+      this.grueroServ.updateGruero(new Gruero(nombre, telefono, true, this.grueroSeleccionado.GrueroID ?? 0))
+      .pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",
@@ -170,13 +160,29 @@ export class GrueroComponent {
           });
           return [];
         })).subscribe((res) => {
-          this.grueros = res;
-          this.dataSource.data = res;
-        });
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-    )
+        console.log(res)
+
+        this.grueroServ.getAllGrueros().pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al actualizar al gruero",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })).subscribe((res) => {
+            this.grueros = res;
+            this.dataSource.data = res;
+          });
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      )
+    }
   }
   
 

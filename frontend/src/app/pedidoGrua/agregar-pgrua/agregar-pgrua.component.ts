@@ -34,11 +34,11 @@ export class AgregarPGruaComponent {
     this.formularioPGrua = this.fb.group({
       gruero: [
         '',
-        [Validators.required]
+        [Validators.required, Validators.minLength(5)],
       ],
       nCliente: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(7)],,
       ],
       fecha: [
         this.formatearFecha(this.date),
@@ -46,86 +46,89 @@ export class AgregarPGruaComponent {
       ],
       patente: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],,
       ],}
     )
   }
 
   onSubmit() {
-    console.log('creando');
+    if(this.formularioPGrua.valid)
+    {
+      console.log('creando');
 
-    const gruero = this.formularioPGrua.controls['gruero'].value;
-    const nombreCliente = this.formularioPGrua.controls['nCliente'].value;
-    const fecha = this.formularioPGrua.controls['fecha'].value;
-    const patente = this.formularioPGrua.controls['patente'].value;
-    const formato = fecha.indexOf('/') !== -1 ? '/' : '-';
-    const partesFecha = fecha.split(formato);
-    let grueroId: Number = 0;
-    let fechaE: Date = new Date();
+      const gruero = this.formularioPGrua.controls['gruero'].value;
+      const nombreCliente = this.formularioPGrua.controls['nCliente'].value;
+      const fecha = this.formularioPGrua.controls['fecha'].value;
+      const patente = this.formularioPGrua.controls['patente'].value;
+      const formato = fecha.indexOf('/') !== -1 ? '/' : '-';
+      const partesFecha = fecha.split(formato);
+      let grueroId: Number = 0;
+      let fechaE: Date = new Date();
 
-    if (gruero == '' || nombreCliente == '' || patente == '' || fecha == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
+      if (gruero == '' || nombreCliente == '' || patente == '' || fecha == '') {
+        console.log('error')
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Todos los campos son requeridos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
 
-    const anio = parseInt(partesFecha[0]);
-    const mes = parseInt(partesFecha[1]);
-    const dia = parseInt(partesFecha[2]);
+      const anio = parseInt(partesFecha[0]);
+      const mes = parseInt(partesFecha[1]);
+      const dia = parseInt(partesFecha[2]);
 
-    fechaE.setDate(dia);
-    fechaE.setMonth(mes - 1);
-    fechaE.setFullYear(anio);
+      fechaE.setDate(dia);
+      fechaE.setMonth(mes - 1);
+      fechaE.setFullYear(anio);
 
-    this.grueroServ.getGrueroPorNombre(gruero).pipe(
-        catchError(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error al asignar el gruero",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '20vw',
-            padding: '20px',
-          });
-          console.log('error')
-          return [];
-        })
-      ).subscribe((res) => {
-
-        grueroId = res.GrueroID ?? 0;
-        
-        console.log('prev' + res.GrueroID)
-        console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
-
-        this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
-        ).pipe(
+      this.grueroServ.getGrueroPorNombre(gruero).pipe(
           catchError(() => {
             Swal.fire({
               position: "top-end",
               icon: "error",
-              title: "Error al crear el pedido de grúa, revise los datos",
+              title: "Error al asignar el gruero",
               showConfirmButton: false,
-              timer: 3500,
-              width: '25vw',
+              timer: 1500,
+              width: '20vw',
               padding: '20px',
             });
             console.log('error')
             return [];
           })
         ).subscribe((res) => {
-          this.router.navigate(['/verPedidosDeGrua']);
-          console.log('Pedido creado:', res);
-        });
-      })
+
+          grueroId = res.GrueroID ?? 0;
+          
+          console.log('prev' + res.GrueroID)
+          console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
+
+          this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+          ).pipe(
+            catchError(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error al crear el pedido de grúa, revise los datos",
+                showConfirmButton: false,
+                timer: 3500,
+                width: '25vw',
+                padding: '20px',
+              });
+              console.log('error')
+              return [];
+            })
+          ).subscribe((res) => {
+            this.router.navigate(['/verPedidosDeGrua']);
+            console.log('Pedido creado:', res);
+          });
+        })
+    }
   }
 
   onPatenteInput(event: Event) {
@@ -141,7 +144,6 @@ export class AgregarPGruaComponent {
   
   setValuePatente(patente: String) {
     this.vehiculoSeleccionado = true;
-    console.log(this.vehiculoSeleccionado)
     this.formularioPGrua.controls['patente'].setValue(patente);
     this.cuotaServ.getCuotaPorIdByPoliza(patente).pipe(
       catchError(() => {

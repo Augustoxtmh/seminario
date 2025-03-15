@@ -25,23 +25,23 @@ export class ModificarVehiculoComponent {
     this.formularioVehiculo = this.fb.group({
       Patente: [
         this.vehiculoRecibido?.Patente,
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],
       Marca: [
         this.vehiculoRecibido?.Marca,
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],
       Color: [
         this.vehiculoRecibido?.Color,
-        [Validators.required],
+        [Validators.required, Validators.minLength(3)],
       ],
       TipoPlan: [
         this.vehiculoRecibido?.TipoPlan,
-        [Validators.required],
+        [Validators.required, Validators.maxLength(2)],
       ],
       Modelo: [
         this.vehiculoRecibido?.Modelo,
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],}
     )
   }

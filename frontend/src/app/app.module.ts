@@ -18,7 +18,6 @@ import { VerVehiculoComponent } from './vehiculo/ver-vehiculo/ver-vehiculo.compo
 import { VerVehiculosComponent } from './vehiculo/ver-vehiculos/ver-vehiculos.component';
 import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.component';
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
-import { VerPolizaComponent } from './poliza/ver-poliza/ver-poliza.component';
 import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
 import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
 import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
@@ -48,7 +47,6 @@ import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuot
     VerVehiculosComponent,
     AgregarPolizaComponent,
     ModificarPolizaComponent,
-    VerPolizaComponent,
     VerPolizasComponent,
     ReportesDeGruasComponent,
     ReportesDeVehiculosComponent,

@@ -19,63 +19,66 @@ export class AgregarVehiculoComponent {
     this.formularioVehiculo = this.fb.group({
       Patente: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],
       Marca: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],
       Color: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(3)],
       ],
       TipoPlan: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(2)],
       ],
       Modelo: [
         '',
-        [Validators.required],
+        [Validators.required, Validators.minLength(4)],
       ],}
     )
   }
 
   onSubmit() {
-    console.log('creando');
-  
-    const Patente = this.formularioVehiculo.controls['Patente'].value;
-    const Marca = this.formularioVehiculo.controls['Marca'].value;
-    const Color = this.formularioVehiculo.controls['Color'].value;
-    const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
-    const Modelo = this.formularioVehiculo.controls['Modelo'].value;
+    if(this.formularioVehiculo.valid)
+    {
+      console.log('creando');
+    
+      const Patente = this.formularioVehiculo.controls['Patente'].value;
+      const Marca = this.formularioVehiculo.controls['Marca'].value;
+      const Color = this.formularioVehiculo.controls['Color'].value;
+      const TipoPlan = this.formularioVehiculo.controls['TipoPlan'].value;
+      const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
-    if (!Patente || !Marca || !Color || !TipoPlan || !Modelo) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
-
-    this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
-      catchError(() => {
+      if (!Patente || !Marca || !Color || !TipoPlan || !Modelo) {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Todos los campos son requeridos",
           showConfirmButton: false,
           timer: 1500,
           width: '25vw',
           padding: '20px',
         });
-        return [];
-      })).subscribe((res) => {
-        console.log(res);
-    }); 
+        return;
+      }
+
+      this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al guardar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
+          return [];
+        })).subscribe((res) => {
+          console.log(res);
+      });
+    }
   }  
 }

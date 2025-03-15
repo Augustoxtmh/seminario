@@ -31,15 +31,15 @@ export class GeneradorCuotaComponent {
     this.formularioCuota = this.fb.group({
       poliza: [
         this.polizaRecibida?.NumeroPoliza,
-        [Validators.required],
+        [Validators.required, Validators.minLength(7)],
       ],
       nCuota: [
         '0',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(1)],
       ],
       Cantidad: [
         '1',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(1)],
       ],
       FechaV: [
         fechaV.getDate()+'/'+fechaV.getMonth()+'/'+fechaV.getFullYear(),
@@ -52,72 +52,73 @@ export class GeneradorCuotaComponent {
     )
   }
 
-  onSubmit() {  
-    let nCuota = parseInt(this.formularioCuota.controls['nCuota'].value);
-    const Cantidad = parseInt(this.formularioCuota.controls['Cantidad'].value);
-    let FechaV = this.formularioCuota.controls['FechaV'].value;
-    const Monto = this.formularioCuota.controls['Monto'].value;
-    const poliza = this.formularioCuota.controls['poliza'].value;
-    let idUsuario = Number(this.polizaRecibida.UsuarioId);
-
-    if (nCuota < 0 || nCuota > 5 || Cantidad == 0 || FechaV == '' || Monto == '' || poliza == '') {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Todos los campos son requeridos",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
-
-    if (nCuota + Cantidad > 6) {
-      console.log('error')
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "El número de cuota superará el maximo",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-      return;
-    }
+  onSubmit() {
+    if(this.formularioCuota.valid)
+    {
+      let nCuota = parseInt(this.formularioCuota.controls['nCuota'].value);
+      const Cantidad = parseInt(this.formularioCuota.controls['Cantidad'].value);
+      let FechaV = this.formularioCuota.controls['FechaV'].value;
+      const Monto = this.formularioCuota.controls['Monto'].value;
+      const poliza = this.formularioCuota.controls['poliza'].value;
+      let idUsuario = Number(this.polizaRecibida.UsuarioId);
+  
+      if (nCuota < 0 || nCuota > 5 || Cantidad == 0 || FechaV == '' || Monto == '' || poliza == '') {
+        console.log('error')
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Todos los campos son requeridos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
+  
+      if (nCuota + Cantidad > 6) {
+        console.log('error')
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "El número de cuota superará el maximo",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
+      
+      for (let index = 0; index < Cantidad; index++) {
+        const formato = FechaV.indexOf('/') !== -1 ? '/' : '-';
+        const partesFecha = FechaV.split(formato);
+        let dia = parseInt(partesFecha[0]);
+        let mes = parseInt(partesFecha[1]) - 1;
+        let anio = parseInt(partesFecha[2]);
+        let fecha = new Date(anio, mes, dia);
     
-    for (let index = 0; index < Cantidad; index++) {
-      const formato = FechaV.indexOf('/') !== -1 ? '/' : '-';
-      const partesFecha = FechaV.split(formato);
-      let dia = parseInt(partesFecha[0]);
-      let mes = parseInt(partesFecha[1]) - 1;
-      let anio = parseInt(partesFecha[2]);
-      let fecha = new Date(anio, mes, dia);
-  
-      this.cuotaServ.createCuota(new Cuota(nCuota, fecha, Monto, poliza, idUsuario)).pipe(
-        catchError(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error al guardar",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '20vw',
-            padding: '20px',
-          });
-          return [];
-        })).subscribe((res) => {
-        console.log(`Cuota creada: ${res}`);
-      });
-  
-      nCuota++;
-      FechaV = this.sumarUnMes(FechaV);
+        this.cuotaServ.createCuota(new Cuota(nCuota, fecha, Monto, poliza, idUsuario)).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al guardar",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })).subscribe((res) => {
+          console.log(`Cuota creada: ${res}`);
+        });
+    
+        nCuota++;
+        FechaV = this.sumarUnMes(FechaV);
+      }
     }
   }
-  
-
   
   esBisiesto(anio: number): boolean {
     return (anio % 4 === 0 && anio % 100 !== 0) || anio % 400 === 0;
