@@ -95,9 +95,18 @@ export class ModificarVehiculoComponent {
 
   onDelete()
   {
-    this.vehiculoServ.deleteVehiculo(this.vehiculoRecibido.Patente.toString()).subscribe(() => {
-      this.onBack()
-      this.router.navigate(['/verVehiculos']);
-    });
+    return Swal.fire({
+      title: '¿Seguro que quiere borrar al gruero?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+      }).then(result => {
+      if (result.isConfirmed) {
+        this.vehiculoServ.deleteVehiculo(this.vehiculoRecibido.Patente.toString()).subscribe(() => {
+          this.onBack()
+          this.router.navigate(['/verVehiculos']);
+        });
+      }
+    })
   }
 }

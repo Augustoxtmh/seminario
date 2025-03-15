@@ -172,23 +172,32 @@ export class ModificarPGruaComponent {
 
   onDelete()
   {
-    this.pGruaServ.deletePedidogrua(this.pedidoGruaRecibido).pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al guardar",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
+    return Swal.fire({
+      title: '¿Seguro que quiere borrar el pedido?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+      }).then(result => {
+        if (result.isConfirmed) {
+        this.pGruaServ.deletePedidogrua(this.pedidoGruaRecibido).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al borrar",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })
+          ).subscribe(() => {
+            this.onBack()
+            this.router.navigate(['/verPedidosDeGrua']);
         });
-        return [];
-      })
-      ).subscribe(() => {
-        this.onBack()
-        this.router.navigate(['/verPedidosDeGrua']);
-    });
+      }
+    })
   }
 
 

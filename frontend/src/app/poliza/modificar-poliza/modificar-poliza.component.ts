@@ -75,7 +75,14 @@ export class ModificarPolizaComponent {
   }
 
   onDelete() {
-    this.polizaServ.deletePoliza(this.polizaRecibida).pipe(
+    return Swal.fire({
+      title: '¿Seguro que quiere borrar al gruero?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+      }).then(result => {
+        if (result.isConfirmed) {
+        this.polizaServ.deletePoliza(this.polizaRecibida).pipe(
           catchError(() => {
             Swal.fire({
               position: "top-end",
@@ -87,11 +94,12 @@ export class ModificarPolizaComponent {
               padding: '20px',
             });
             return [];
-          })
-        ).subscribe((res) => {
-      console.log('Póliza borrada:', res);
-      this.router.navigate(['/verPolizas']);
-    });
+          })).subscribe((res) => {
+          console.log('Póliza borrada:', res);
+          this.router.navigate(['/verPolizas']);
+        });
+      }
+    })
   }
 
   onPatenteInput(event: Event) {

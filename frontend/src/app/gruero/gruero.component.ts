@@ -193,23 +193,32 @@ export class GrueroComponent {
 
   onDelete()
   {
-    this.grueroServ.deleteGruero(Number(this.grueroSeleccionado.GrueroID ?? 0)).pipe(
-    catchError(() => {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Error al borrar",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '20vw',
-        padding: '20px',
-      });
-      return [];
-    })).subscribe((res) => {
-      this.grueros = this.grueros.filter(gruero => gruero.GrueroID !== this.grueroSeleccionado.GrueroID);
-      this.dataSource.data = [...this.grueros];
+    return Swal.fire({
+      title: '¿Seguro que quiere borrar al gruero?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+      }).then(result => {
+        if (result.isConfirmed) {
+        this.grueroServ.deleteGruero(Number(this.grueroSeleccionado.GrueroID ?? 0)).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al borrar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })).subscribe((res) => {
+          this.grueros = this.grueros.filter(gruero => gruero.GrueroID !== this.grueroSeleccionado.GrueroID);
+          this.dataSource.data = [...this.grueros];
 
-      this.onBack()
-    });
+          this.onBack()
+        });
+      }
+    })
   }
 }
