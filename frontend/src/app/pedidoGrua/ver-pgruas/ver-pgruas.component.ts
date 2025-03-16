@@ -49,10 +49,23 @@ export class VerPGruasComponent {
       this.grueros = res;
     })
 
-    this.pedidoGrua.getAllPedidogrua().subscribe((res) => {
-      this.polizas = res;
-      this.dataSource.data = res;
-    });
+    this.pedidoGrua.getAllPedidogrua().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al traer los datos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })).subscribe((res) => {
+        this.polizas = res;
+        this.dataSource.data = res;
+      }
+    );
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

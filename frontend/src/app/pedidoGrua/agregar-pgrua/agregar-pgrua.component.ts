@@ -125,6 +125,15 @@ export class AgregarPGruaComponent {
             })
           ).subscribe((res) => {
             this.router.navigate(['/verPedidosDeGrua']);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Creado con exito",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '25vw',
+              padding: '20px',
+            });
             console.log('Pedido creado:', res);
           });
         })

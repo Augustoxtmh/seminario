@@ -3,8 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
+import { catchError } from 'rxjs/internal/operators/catchError';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-vehiculos',
@@ -24,11 +26,25 @@ export class VerVehiculosComponent implements OnInit {
   constructor(private vehiculoServ: VehiculoService, private router: Router) { }
 
   ngOnInit() {
-    this.vehiculoServ.getAllVehiculos().subscribe((res) => {
+    this.vehiculoServ.getAllVehiculos().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al obtener los datos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
       this.vehiculos = res;
       this.dataSource.data = res;
     });
-  }
+  };
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

@@ -96,7 +96,6 @@ export class GrueroComponent {
         });
         return;
       }
-    
       this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
         catchError(() => {
           Swal.fire({
@@ -113,6 +112,15 @@ export class GrueroComponent {
       ).subscribe((res) => {
         this.grueros = [...this.grueros, res];
         this.dataSource.data = this.grueros;
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Creado con exito",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
       }); 
     }
   }
@@ -161,7 +169,15 @@ export class GrueroComponent {
           return [];
         })).subscribe((res) => {
         console.log(res)
-
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Actualizado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
         this.grueroServ.getAllGrueros().pipe(
           catchError(() => {
             Swal.fire({
@@ -215,7 +231,15 @@ export class GrueroComponent {
         })).subscribe((res) => {
           this.grueros = this.grueros.filter(gruero => gruero.GrueroID !== this.grueroSeleccionado.GrueroID);
           this.dataSource.data = [...this.grueros];
-
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Borrado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
           this.onBack()
         });
       }

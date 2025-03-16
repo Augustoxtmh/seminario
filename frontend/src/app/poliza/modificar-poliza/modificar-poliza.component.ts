@@ -64,7 +64,15 @@ export class ModificarPolizaComponent {
           return [];
         })
       ).subscribe((res) => {
-        console.log('Póliza actualizada:', res);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Actualizado con exito",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
         this.router.navigate(['/verPolizas']);
       });
     }
@@ -95,7 +103,15 @@ export class ModificarPolizaComponent {
             });
             return [];
           })).subscribe((res) => {
-          console.log('Póliza borrada:', res);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Borrado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
           this.router.navigate(['/verPolizas']);
         });
       }

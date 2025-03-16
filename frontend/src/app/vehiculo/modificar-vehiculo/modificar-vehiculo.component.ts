@@ -81,10 +81,19 @@ export class ModificarVehiculoComponent {
           padding: '20px',
         });
         return [];
-          })).subscribe((res) => {
-      console.log(res);
-      this.router.navigate(['/verVehiculos']);
-    });
+        })).subscribe((res) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Actualizado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
+        this.router.navigate(['/verVehiculos']);
+      }
+    );
   }
 
   onBack()
@@ -103,6 +112,15 @@ export class ModificarVehiculoComponent {
       }).then(result => {
       if (result.isConfirmed) {
         this.vehiculoServ.deleteVehiculo(this.vehiculoRecibido.Patente.toString()).subscribe(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Borrado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
           this.onBack()
           this.router.navigate(['/verVehiculos']);
         });

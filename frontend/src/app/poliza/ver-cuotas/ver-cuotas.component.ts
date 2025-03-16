@@ -34,7 +34,7 @@ export class VerCuotasComponent {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Error al obtener los datos",
           showConfirmButton: false,
           timer: 1500,
           width: '20vw',
@@ -51,7 +51,7 @@ export class VerCuotasComponent {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Error al obtener los datos",
           showConfirmButton: false,
           timer: 1500,
           width: '20vw',

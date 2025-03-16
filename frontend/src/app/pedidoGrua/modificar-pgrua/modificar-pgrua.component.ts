@@ -26,8 +26,6 @@ export class ModificarPGruaComponent {
   date: Date = new Date();
   selectedFile!: File;
   grueroSeleccionado: boolean = false;
-  baseUrl = 'http://localhost:3000';
-
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
@@ -95,16 +93,52 @@ export class ModificarPGruaComponent {
       fechaE.setMonth(mes - 1);
       fechaE.setFullYear(anio);
 
-      this.grueroServ.getGrueroPorNombre(gruero).subscribe((res: Gruero) => {
-
+      this.grueroServ.getGrueroPorNombre(gruero).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al actualizar",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '20vw',
+            padding: '20px',
+          });
+          return [];
+        })
+      ).subscribe((res) => {
         grueroId = res.GrueroID ?? 0;
 
         this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.PedidoID)
+        ).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al actualizar",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })
         ).subscribe((res) => {
+
           this.router.navigate(['/verPedidosDeGrua']);
           console.log('Pedido guardado:', res);
+          
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Actualizado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
         });
-      })
+      });
     }
   }
 
@@ -150,13 +184,35 @@ export class ModificarPGruaComponent {
   }
   
   buscarGrueros(value: string) {
-    this.grueroServ.getAllGrueros().subscribe(
-      (grueros) => {
-        this.grueroSugerido = grueros
-          .map(gruero => gruero.NombreGruero)
-          .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
-      }
-    );
+    this.grueroServ.getAllGrueros().pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
+
+      this.grueroSugerido = res
+        .map(gruero => gruero.NombreGruero)
+        .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Creado con exito",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+    });
   }
   
   setValueGruero(nombre: String) {
@@ -193,6 +249,15 @@ export class ModificarPGruaComponent {
             return [];
           })
           ).subscribe(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Borrado con exito",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '25vw',
+              padding: '20px',
+            });
             this.onBack()
             this.router.navigate(['/verPedidosDeGrua']);
         });
@@ -216,21 +281,71 @@ export class ModificarPGruaComponent {
       return;
     }
   
-    this.uploadService.uploadFile(this.selectedFile, Number(this.pedidoGruaRecibido.PedidoID?.valueOf() ?? 0)).subscribe(response => {
-      console.log('Respuesta del servidor:', response);
-      alert('PDF subido correctamente');
-      this.pedidoGruaRecibido.urlFactura = response.filePath;
-    }, error => {
-      console.error('Error al subir el archivo:', error);
-      alert('Hubo un error al subir el archivo');
+    this.uploadService.uploadFile(this.selectedFile, Number(this.pedidoGruaRecibido.PedidoID?.valueOf() ?? 0)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al subir",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return [];
+      })
+      ).subscribe((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Subido con exito",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        this.pedidoGruaRecibido.urlFactura = res.filePath;
     });
   }
-  
 
   guardarMonto(){
     const monto: number = Number((document.getElementById('monto') as HTMLInputElement).value.trim());
-    this.pGruaServ.updateMontoPGrua(Number(this.pedidoGruaRecibido.PedidoID ?? 0), monto).subscribe((res)=>{
-      console.log(res)
-    })
+    this.pGruaServ.updateMontoPGrua(Number(this.pedidoGruaRecibido.PedidoID ?? 0), monto).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return [];
+      })
+      ).subscribe(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Guardado con exito",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+    });
   }
 }
+
+
+/*
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Guardado con exito",
+            showConfirmButton: false,
+            timer: 1500,
+            width: '25vw',
+            padding: '20px',
+          });
+*/
