@@ -20,9 +20,9 @@ export class VehiculoService {
     return this.http.get<Vehiculo>(this.url, { params });
   }
 
-  public getVehiculoPorPatente(SPatente: string): Observable<Vehiculo[]> {
+  public getVehiculoPorPatente(SPatente: string): Observable<Vehiculo> {
     const params = { SPatente };
-    return this.http.get<Vehiculo[]>(this.url, { params });
+    return this.http.get<Vehiculo>(this.url, { params });
   }
 
   public getVehiculosPorPatente(MPatente: string): Observable<String[]> {

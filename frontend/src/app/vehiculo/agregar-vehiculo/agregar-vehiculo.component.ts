@@ -17,6 +17,10 @@ export class AgregarVehiculoComponent {
     )
   {
     this.formularioVehiculo = this.fb.group({
+      Nombre:[
+        '',
+        [Validators.required, Validators.minLength(8)],
+      ],
       Patente: [
         '',
         [Validators.required, Validators.minLength(4)],
@@ -45,6 +49,7 @@ export class AgregarVehiculoComponent {
     {
       console.log('creando');
     
+      const Nombre = this.formularioVehiculo.controls['Nombre'].value;
       const Patente = this.formularioVehiculo.controls['Patente'].value;
       const Marca = this.formularioVehiculo.controls['Marca'].value;
       const Color = this.formularioVehiculo.controls['Color'].value;
@@ -64,7 +69,7 @@ export class AgregarVehiculoComponent {
         return;
       }
 
-      this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+      this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",

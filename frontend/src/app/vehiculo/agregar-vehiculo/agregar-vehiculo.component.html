@@ -1,7 +1,12 @@
 <h1 class="col-md-4 title-div my-3">Agregar vehículo</h1>
 <form [formGroup]="formularioVehiculo" (ngSubmit)="onSubmit()">
     <div class="row mb-4 my-3 form-div">
-        <div class="col-md-4 ">
+        <div class="col-md-5">
+            <label for="Nombre" class="form-label">Nombre del titular:</label>
+            <input type="text" class="form-control" id="Nombre" name="Nombre" formControlName="Nombre"
+            name="Nombre">
+        </div>
+        <div class="col-md-3">
             <label for="Patente" class="form-label">Patente:</label>
             <input type="text" class="form-control" id="Patente" name="Patente" formControlName="Patente"
             name="Patente">
@@ -11,19 +16,20 @@
             <input type="text" class="form-control" id="Color" 
             name="Color" formControlName="Color">
         </div>
+    </div>
+    <div class="row mb-4 my-2 form-div">
+        
+        <div class="col-md-3">
+            <label for="TipoPlan" class="form-label">Tipo de plan:</label>
+            <input type="text" class="form-control" id="TipoPlan" 
+            name="TipoPlan" formControlName="TipoPlan">
+        </div>
         <div class="col-md-4">
             <label for="Marca" class="form-label">Marca:</label>
             <input type="text" class="form-control" id="Marca" 
             name="Marca" formControlName="Marca">
         </div>
-    </div>
-    <div class="row mb-4 my-2 form-div">
-        <div class="col-md-6">
-            <label for="TipoPlan" class="form-label">Tipo de plan:</label>
-            <input type="text" class="form-control" id="TipoPlan" 
-            name="TipoPlan" formControlName="TipoPlan">
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <label for="Modelo" class="form-label">Modelo:</label>
             <input type="text" class="form-control" id="Modelo" 
             name="Modelo" formControlName="Modelo">

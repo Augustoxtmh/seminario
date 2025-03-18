@@ -18,7 +18,7 @@ export class VerVehiculosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: String[] = ['Patente', 'Color', 'Marca', 'TipoPlan', 'Modelo'];
+  displayedColumns: String[] = ['Titular', 'Patente', 'Color', 'Marca', 'TipoPlan', 'Modelo'];
   dataSource = new MatTableDataSource<Vehiculo>([]);
   patentesSugeridas: String[] = [];
   vehiculos: Vehiculo[] = [];

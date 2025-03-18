@@ -49,6 +49,7 @@ export class ModificarVehiculoComponent {
   onSave()
   {
 
+    const Nombre = this.formularioVehiculo.controls['Nombre'].value;
     const Patente = this.formularioVehiculo.controls['Patente'].value;
     const Marca = this.formularioVehiculo.controls['Marca'].value;
     const Color = this.formularioVehiculo.controls['Color'].value;
@@ -69,7 +70,7 @@ export class ModificarVehiculoComponent {
       return;
     }
 
-    this.vehiculoServ.updateVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+    this.vehiculoServ.updateVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",
@@ -98,7 +99,7 @@ export class ModificarVehiculoComponent {
 
   onBack()
   {
-    this.vehiculoRecibido = new Vehiculo('', '', '', '', '', 0)
+    this.vehiculoRecibido = new Vehiculo('', '', '', '', '', '', 0)
     this.router.navigate(['/verVehiculos']);
   }
 

@@ -24,23 +24,27 @@ export class ModalVehiculoService {
       html: `
         <form [formGroup]="formularioGrueroModal"">
           <div class="row mb-4 my-3 form-div">
-            <div class="col-md-6">
+            <div class="col-md-5">
               <label for="Patente" class="form-label">Patente:</label>
               <input type="text" class="form-control" id="Patente" formControlName="Patente">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
+              <label for="Patente" class="form-label">Patente:</label>
+              <input type="text" class="form-control" id="Patente" formControlName="Patente">
+            </div>
+            <div class="col-md-4">
               <label for="TipoPlan" class="form-label">Plan:</label>
               <input type="text" class="form-control" id="TipoPlan" formControlName="TipoPlan">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <label for="Marca" class="form-label">Marca:</label>
               <input type="text" class="form-control" id="Marca" formControlName="Marca">
             </div>
-            <div class="col-md-6 my-3">
+            <div class="col-md-4 my-3">
               <label for="Color" class="form-label">Color:</label>
               <input type="text" class="form-control" id="Color" formControlName="Color">
             </div>
-            <div class="col-md-6 my-3">
+            <div class="col-md-5 my-3">
               <label for="Modelo" class="form-label">Modelo:</label>
               <input type="text" class="form-control" id="Modelo" formControlName="Modelo">
             </div>
@@ -51,6 +55,7 @@ export class ModalVehiculoService {
       confirmButtonText: 'Guardar',
     }).then(result => {
       if (result.isConfirmed) {
+        const Nombre = (document.getElementById('Nombre') as HTMLInputElement).value.trim();
         const Patente = (document.getElementById('Patente') as HTMLInputElement).value.trim();
         const Marca = (document.getElementById('Marca') as HTMLInputElement).value.trim();
         const Color = (document.getElementById('Color') as HTMLInputElement).value.trim();
@@ -69,7 +74,7 @@ export class ModalVehiculoService {
         });
         return;
       }
-      this.vehiculoServ.createVehiculo(new Vehiculo(Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+      this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",
