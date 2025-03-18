@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { Cuota } from 'src/app/models/cuota';
-import { Poliza } from 'src/app/models/poliza';
 import { CuotaService } from 'src/app/service/cuota/cuota.service';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { Poliza } from 'src/app/models/poliza';
+import { Cuota } from 'src/app/models/cuota';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { jsPDF } from "jspdf";
+import { PolizaService } from 'src/app/service/poliza/poliza.service';
 
 @Component({
   selector: 'app-generador-cuota',
@@ -17,9 +19,10 @@ export class GeneradorCuotaComponent {
   formularioCuota: FormGroup;
   polizas: Poliza[] = [];
   date: Date = new Date();
+  doc = new jsPDF();
 
   constructor(private fb: FormBuilder, private cuotaServ: CuotaService
-    , private router: Router
+    , private router: Router, private polizaServ: PolizaService
   )
   {
     const navigation = this.router.getCurrentNavigation();
@@ -52,72 +55,139 @@ export class GeneradorCuotaComponent {
     )
   }
 
-  onSubmit() {
-    if(this.formularioCuota.valid)
-    {
-      let nCuota = parseInt(this.formularioCuota.controls['nCuota'].value);
-      const Cantidad = parseInt(this.formularioCuota.controls['Cantidad'].value);
-      let FechaV = this.formularioCuota.controls['FechaV'].value;
-      const Monto = this.formularioCuota.controls['Monto'].value;
-      const poliza = this.formularioCuota.controls['poliza'].value;
-      let idUsuario = Number(this.polizaRecibida.UsuarioId);
-  
-      if (nCuota < 0 || nCuota > 5 || Cantidad == 0 || FechaV == '' || Monto == '' || poliza == '') {
-        console.log('error')
+  async onSubmit() {
+    if (this.formularioCuota.valid) {
+      const Monto = this.formularioCuota.controls["Monto"].value
+      const poliza = this.formularioCuota.controls["poliza"].value
+      const idUsuario = Number(this.polizaRecibida.UsuarioId)
+      const Cantidad = Number.parseInt(this.formularioCuota.controls["Cantidad"].value)
+      let nCuota = Number.parseInt(this.formularioCuota.controls["nCuota"].value)
+      let FechaV = this.formularioCuota.controls["FechaV"].value
+      let patente: String = '';
+
+      this.polizaServ.getPolizaPorNPoliza(poliza).pipe(
+        catchError((err) => {
+          console.error(err)
+          return []
+        }),
+      )
+      .subscribe((res)=> {
+        patente = res.Patente
+      })
+
+      if (nCuota < 0 || nCuota > 5 || Cantidad == 0 || FechaV == "" || Monto == "" || poliza == "") {
         Swal.fire({
           position: "top-end",
           icon: "error",
           title: "Todos los campos son requeridos",
           showConfirmButton: false,
           timer: 1500,
-          width: '25vw',
-          padding: '20px',
-        });
-        return;
+          width: "25vw",
+          padding: "20px",
+        })
+        return
       }
-  
+
       if (nCuota + Cantidad > 6) {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "El número de cuota superará el maximo",
+          title: "El número de cuota superará el máximo",
           showConfirmButton: false,
           timer: 1500,
-          width: '25vw',
-          padding: '20px',
-        });
-        return;
+          width: "25vw",
+          padding: "20px",
+        })
+        return
       }
-      
+
+      const promises = []
+
       for (let index = 0; index < Cantidad; index++) {
-        const formato = FechaV.indexOf('/') !== -1 ? '/' : '-';
-        const partesFecha = FechaV.split(formato);
-        let dia = parseInt(partesFecha[0]);
-        let mes = parseInt(partesFecha[1]) - 1;
-        let anio = parseInt(partesFecha[2]);
-        let fecha = new Date(anio, mes, dia);
-    
-        this.cuotaServ.createCuota(new Cuota(nCuota, fecha, Monto, poliza, idUsuario)).pipe(
-          catchError(() => {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: "Error al guardar",
-              showConfirmButton: false,
-              timer: 1500,
-              width: '20vw',
-              padding: '20px',
-            });
-            return [];
-          })).subscribe((res) => {
-          console.log(`Cuota creada: ${res}`);
-        });
-    
-        nCuota++;
-        FechaV = this.sumarUnMes(FechaV);
+        const formato = FechaV.indexOf("/") !== -1 ? "/" : "-"
+        const partesFecha = FechaV.split(formato)
+        const dia = Number.parseInt(partesFecha[0])
+        const mes = Number.parseInt(partesFecha[1]) - 1
+        const anio = Number.parseInt(partesFecha[2])
+        const fecha = new Date(anio, mes, dia)
+
+        const currentCuota = nCuota
+
+        const promise = new Promise<void>((resolve, reject) => {
+          this.cuotaServ
+            .createCuota(new Cuota(currentCuota, fecha, Monto, poliza, idUsuario))
+            .pipe(
+              catchError((error) => {
+                console.error(`Error al guardar cuota ${currentCuota}:`, error)
+                reject(error)
+                return []
+              }),
+            )
+            .subscribe(() => {
+              console.log(currentCuota, fecha, Monto, poliza, index)
+              this.agregarDatosAlPDF(currentCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente);
+              resolve()
+            })
+        })
+
+        promises.push(promise)
+        nCuota++
+        FechaV = this.sumarUnMes(FechaV)
+      }
+
+      try {
+        
+        await Promise.all(promises)
+        this.generarDocumentoPDF()
+
+      } catch (error) {
+        console.error("Error al procesar las cuotas:", error)
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al procesar las cuotas",
+          showConfirmButton: false,
+          timer: 1500,
+          width: "25vw",
+          padding: "20px",
+        })
       }
     }
+  }
+
+  generarDocumentoPDF() {
+    console.log("guardando")
+    this.doc.save("Cupon_Pago.pdf")
+    this.doc = new jsPDF()
+  }
+
+  agregarDatosAlPDF(nCuota: number, fecha: Date, Monto: string
+    , poliza: string, index: number, totalCuotas: number, fechaA: Date
+    , patente: String) {
+    console.log("agregando");
+
+    let cliente = "Juan Pérez"; 
+
+    if (totalCuotas - index > 1) {
+        this.doc.addImage('../../../assets/cuotaDoble.jpg', 'JPG', 0, 0, 210, 297);
+        this.doc.addPage();
+    } else {
+        this.doc.addImage('../../../assets/cuotaSola.jpg', 'JPG', 0, 0, 210, 297);
+    }
+
+    let x = 31, y = 22;
+
+    this.doc.setFontSize(8);
+    this.doc.setFont('Helvetica', 'normal');
+    
+    this.doc.text(fecha.toLocaleDateString(), x + 22, y + 146, { angle: 90 });
+    this.doc.text(`${patente}`, x + 11, y + 95, { angle: 90 });
+    this.doc.text(`${poliza.toUpperCase()}`, x + 22, y  + 106, { angle: 90 });
+    this.doc.text(`${nCuota}`, x + 22, y + 168, { angle: 90 });
+    this.doc.text(`${Monto}`, x + 34, y + 94, { angle: 90 });
+    this.doc.text(`${fechaA.getDate()+'/'+fechaA.getMonth()+'/'+fechaA.getFullYear()}`, x, y + 95, { angle: 90 });
+    this.doc.text(`${cliente.toUpperCase()}`, x + 11, y + 168, { angle: 90 });
+
   }
   
   esBisiesto(anio: number): boolean {

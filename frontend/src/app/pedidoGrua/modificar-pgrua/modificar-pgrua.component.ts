@@ -26,6 +26,7 @@ export class ModificarPGruaComponent {
   date: Date = new Date();
   selectedFile!: File;
   grueroSeleccionado: boolean = false;
+  baseUrl = 'http://localhost:3000';
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
