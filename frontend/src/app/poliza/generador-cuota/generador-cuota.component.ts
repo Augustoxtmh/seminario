@@ -70,8 +70,8 @@ export class GeneradorCuotaComponent {
           console.error(err)
           return []
         }),
-      )
-      .subscribe((res)=> {
+      ).subscribe((res: Poliza)=> {
+        console.log(res.Patente + 'ACA' + res.Vigencia)
         patente = res.Patente
       })
 
@@ -124,7 +124,7 @@ export class GeneradorCuotaComponent {
               }),
             )
             .subscribe(() => {
-              console.log(currentCuota, fecha, Monto, poliza, index)
+              console.log(patente + 'ACA')
               this.agregarDatosAlPDF(currentCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente);
               resolve()
             })
@@ -164,7 +164,7 @@ export class GeneradorCuotaComponent {
   agregarDatosAlPDF(nCuota: number, fecha: Date, Monto: string
     , poliza: string, index: number, totalCuotas: number, fechaA: Date
     , patente: String) {
-    console.log("agregando");
+    console.log(patente);
 
     let cliente = "Juan Pérez"; 
 

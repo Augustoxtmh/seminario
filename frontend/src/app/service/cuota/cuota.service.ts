@@ -20,7 +20,7 @@ export class CuotaService {
     return this.http.get<Cuota>(this.url, { params });
   }
 
-  public getCuotaPorIdByPoliza(patente: String): Observable<{ valido: boolean; errores: string[] }> {
+  public getValidezByPatente(patente: String): Observable<{ valido: boolean; errores: string[] }> {
     return this.http.get<{ valido: boolean; errores: string[] }>(this.url + '/poliza/' + patente);
   }  
 

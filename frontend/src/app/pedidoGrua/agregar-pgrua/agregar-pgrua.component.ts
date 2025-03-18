@@ -154,7 +154,7 @@ export class AgregarPGruaComponent {
   setValuePatente(patente: String) {
     this.vehiculoSeleccionado = true;
     this.formularioPGrua.controls['patente'].setValue(patente);
-    this.cuotaServ.getCuotaPorIdByPoliza(patente).pipe(
+    this.cuotaServ.getValidezByPatente(patente).pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",
