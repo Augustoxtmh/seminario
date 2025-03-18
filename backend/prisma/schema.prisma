@@ -31,6 +31,7 @@ model PedidoGrua {
 
 model Vehiculo {
   Patente           String  @id
+  Nombre            String
   Marca             String
   Color             String
   TipoPlan          String

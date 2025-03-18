@@ -20,10 +20,19 @@ export class PolizaService {
     });
   }
 
-  async getPoliza(NumeroPoliza: string): Promise<PolizaModel> {
-    return this.prisma.poliza.findUnique({
+  async getPoliza(NumeroPoliza: string): Promise<PolizaModel | null> {
+    return this.prisma.poliza.findFirst({
       where: { 
-        NumeroPoliza: NumeroPoliza,
+        NumeroPoliza,
+        DeAlta: true,
+      },
+    });
+  }
+
+  async getPolizaPorNPoliza(NPoliza: number): Promise<PolizaModel | null> {
+    return this.prisma.poliza.findFirst({
+      where: { 
+        NumeroPoliza: NPoliza.toString(),
         DeAlta: true,
       },
     });
@@ -33,7 +42,6 @@ export class PolizaService {
     return this.prisma.poliza.update({
       where: {
         NumeroPoliza: data.NumeroPoliza,
-        DeAlta: true
       },
       data,
     });
@@ -50,4 +58,3 @@ export class PolizaService {
     });
   }
 }
-
