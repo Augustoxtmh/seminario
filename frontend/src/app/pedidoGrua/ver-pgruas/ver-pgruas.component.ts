@@ -20,7 +20,7 @@ export class VerPGruasComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  polizas: PGrua[] = [];
+  pedidosGruas: PGrua[] = [];
   grueros: Gruero[] = [];
   displayedColumns: string[] = ['NombreCliente', 'Patente', 'FechaHoraPedido', 'gruero'];
   dataSource = new MatTableDataSource<PGrua>([]);
@@ -62,7 +62,7 @@ export class VerPGruasComponent {
         });
         return [];
       })).subscribe((res) => {
-        this.polizas = res;
+        this.pedidosGruas = res;
         this.dataSource.data = res;
       }
     );
@@ -81,9 +81,9 @@ export class VerPGruasComponent {
     const value = inputElement.value.trim().toLowerCase();
 
     if (value.length > 2) {
-      this.dataSource.data = this.polizas.filter(polizas => polizas.Patente.toLowerCase().includes(value));
+      this.dataSource.data = this.pedidosGruas.filter(pedidosGruas => pedidosGruas.Patente.toLowerCase().includes(value));
     } else {
-      this.dataSource.data = this.polizas;
+      this.dataSource.data = this.pedidosGruas;
     }
   }
 

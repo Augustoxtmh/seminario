@@ -30,7 +30,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
 import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
