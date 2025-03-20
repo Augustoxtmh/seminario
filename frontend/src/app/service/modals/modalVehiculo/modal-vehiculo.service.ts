@@ -20,7 +20,7 @@ export class ModalVehiculoService {
 
   openFormModal(): Promise<any> {
     return Swal.fire({
-      title: 'Nuevo Gruero',
+      title: 'Nuevo Vehiculo',
       html: `
         <form [formGroup]="formularioGrueroModal"">
           <div class="row mb-4 my-3 form-div">
@@ -36,7 +36,7 @@ export class ModalVehiculoService {
               <label for="TipoPlan" class="form-label">Plan:</label>
               <input type="text" class="form-control" id="TipoPlan" formControlName="TipoPlan">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4 my-3">
               <label for="Marca" class="form-label">Marca:</label>
               <input type="text" class="form-control" id="Marca" formControlName="Marca">
             </div>
@@ -44,7 +44,7 @@ export class ModalVehiculoService {
               <label for="Color" class="form-label">Color:</label>
               <input type="text" class="form-control" id="Color" formControlName="Color">
             </div>
-            <div class="col-md-5 my-3">
+            <div class="col-md-4 my-3">
               <label for="Modelo" class="form-label">Modelo:</label>
               <input type="text" class="form-control" id="Modelo" formControlName="Modelo">
             </div>
@@ -62,7 +62,7 @@ export class ModalVehiculoService {
         const TipoPlan = (document.getElementById('TipoPlan') as HTMLInputElement).value.trim();
         const Modelo = (document.getElementById('Modelo') as HTMLInputElement).value.trim();
         
-      if (!Patente || !Marca || !Color || !TipoPlan || !Modelo) {
+      if (!Nombre || !Patente || !Marca || !Color || !TipoPlan || !Modelo) {
         Swal.fire({
           position: "top-end",
           icon: "error",

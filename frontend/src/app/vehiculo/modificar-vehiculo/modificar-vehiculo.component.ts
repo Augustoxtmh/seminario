@@ -23,6 +23,10 @@ export class ModificarVehiculoComponent {
     this.vehiculoRecibido = navigation?.extras.state?.['vehiculo'];
 
     this.formularioVehiculo = this.fb.group({
+      Nombre: [
+        this.vehiculoRecibido?.Nombre,
+        [Validators.required, Validators.minLength(4)],
+      ],
       Patente: [
         this.vehiculoRecibido?.Patente,
         [Validators.required, Validators.minLength(4)],

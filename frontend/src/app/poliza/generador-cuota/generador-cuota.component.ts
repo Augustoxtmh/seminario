@@ -137,7 +137,7 @@ export class GeneradorCuotaComponent {
         const anio = Number.parseInt(partesFecha[2]);
         const fecha = new Date(anio, mes, dia);
     
-        const aCuota = nCuota;
+        let aCuota = nCuota;
     
         const promise = new Promise<void>((resolve, reject) => {
             this.cuotaServ
@@ -153,6 +153,7 @@ export class GeneradorCuotaComponent {
                   if(Cantidad > 1){
                     this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente, nombre);
                     Cantidad = Cantidad - 2;
+                    aCuota++
                   }
                   if(Cantidad == 1){
                     this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente, nombre);
@@ -209,9 +210,9 @@ export class GeneradorCuotaComponent {
     }
 
     if(totalCuotas>1)
-    {
       this.doc.addPage();
-    }
+    
+
   }
 
   colocarTexto(nCuota: number, fecha: Date, Monto: string
