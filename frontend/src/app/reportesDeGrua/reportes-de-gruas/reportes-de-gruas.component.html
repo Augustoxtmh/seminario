@@ -1,2 +1,27 @@
-<h1>Datos de los grueros</h1>
-<div echarts [options]="pedidosPorDia" (chartClick)="onBarClick($event)" style="height: 400px;"></div>
+<div class="col-md-4 title-div my-3" id="contenedor">
+    <h1>Pedidos de grúa</h1>
+</div>
+<div style="display: flex; justify-content: space-between;">
+    <div style="background-color: bisque; border-radius: 5px; border: solid 1px black;">
+        <h2 class="mx-2">Pedidos del Mes por Día</h2>
+        <div echarts [options]="pedidosPorDia" (chartClick)="onBarClick($event)" style="justify-items: center; height: 300px; width: 32vw;"></div>
+    </div>
+    <div style="background-color: beige; border-radius: 5px; border: solid 1px black;">
+        <h2 class="mx-2">Cantitad de pedidos de cada gruero</h2>
+        <div echarts [options]="pedidosPorGruero" style="height: 300px; width: 32vw;"></div>
+    </div>
+</div>
+<div style="display: flex; justify-content: space-between;" class="my-3">
+
+    <div style="text-align: center; background-color: beige; border-radius: 5px; border: solid 1px black; height: 20vh; width: 32vw;">
+        <h2 class="mx-2 my-2">Pagos por Gruero</h2>
+        <li *ngFor="let pago of pagosPorGruero">
+            {{ pago.gruero }} - ${{ pago.totalPagado }}
+        </li>
+    </div>
+    <div style="text-align: center; background-color: beige; border-radius: 5px; border: solid 1px black; height: 20vh; width: 32vw;">
+        <h2 class="mx-2 my-2">Avisos</h2>
+        <label for="" *ngIf="montosRestantes != 0">Hay un total de {{montosRestantes}} monto a cargar</label>
+        <label for="" *ngIf="facturasRestantes != 0">Hay un total de {{facturasRestantes}} facturas a subir</label>
+    </div>
+</div>

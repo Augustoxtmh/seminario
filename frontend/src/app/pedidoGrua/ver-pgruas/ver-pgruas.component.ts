@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -24,20 +24,22 @@ export class VerPGruasComponent {
   grueros: Gruero[] = [];
   displayedColumns: string[] = ['NombreCliente', 'Patente', 'FechaHoraPedido', 'gruero'];
   dataSource = new MatTableDataSource<PGrua>([]);
-  
-  constructor(private pedidoGrua: PgruaService, private grueroServ: GrueroService,
-    private router: Router
-  )
-  {}
+  mostrandoFaltantes: boolean = false;
 
-  ngAfterViewInit() {
-        
+  constructor(
+    private pedidoGrua: PgruaService, 
+    private grueroServ: GrueroService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit() {       
     this.grueroServ.getAllGrueros().pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Error al guardar",
+          title: "Error al obtener grueros",
           showConfirmButton: false,
           timer: 1500,
           width: '20vw',
@@ -47,7 +49,7 @@ export class VerPGruasComponent {
       })
     ).subscribe((res) => {
       this.grueros = res;
-    })
+    });
 
     this.pedidoGrua.getAllPedidogrua().pipe(
       catchError(() => {
@@ -61,11 +63,11 @@ export class VerPGruasComponent {
           padding: '20px',
         });
         return [];
-      })).subscribe((res) => {
-        this.pedidosGruas = res;
-        this.dataSource.data = res;
-      }
-    );
+      })
+    ).subscribe((res) => {
+      this.pedidosGruas = res;
+      this.dataSource.data = res;
+    });
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -81,14 +83,32 @@ export class VerPGruasComponent {
     const value = inputElement.value.trim().toLowerCase();
 
     if (value.length > 2) {
-      this.dataSource.data = this.pedidosGruas.filter(pedidosGruas => pedidosGruas.Patente.toLowerCase().includes(value));
+      this.dataSource.data = this.pedidosGruas.filter(pedido => 
+        pedido.Patente.toLowerCase().includes(value)
+      );
     } else {
       this.dataSource.data = this.pedidosGruas;
     }
   }
 
+  filtrarPedidosFaltantes() {
+    if (this.mostrandoFaltantes) {
+      this.dataSource.data = this.pedidosGruas;
+    } else {
+      this.dataSource.data = this.pedidosGruas.filter(pedido => pedido.Monto === 0 || !pedido.urlFactura);
+    }
+    this.mostrandoFaltantes = !this.mostrandoFaltantes;
+    console.log(this.mostrandoFaltantes)
+  }
+  
+
   onRowClick(pgrua: PGrua) {
-    const navigationExtras: NavigationExtras = { state: { pgrua: pgrua, grueroN: this.grueros[Number(pgrua.GrueroID) - 1].NombreGruero} };
+    const navigationExtras: NavigationExtras = { 
+      state: { 
+        pgrua: pgrua, 
+        grueroN: this.grueros[Number(pgrua.GrueroID) - 1]?.NombreGruero || 'Desconocido'
+      } 
+    };
     this.router.navigate(['/modificarPedidoGrua'], navigationExtras);
   } 
 }

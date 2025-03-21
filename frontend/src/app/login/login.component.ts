@@ -53,10 +53,7 @@ export class LoginComponent {
           padding: '20px',
         });
         this.router.navigate(['/home']);
-        console.log(res)
         localStorage.setItem("User", JSON.stringify(res));
-        const cons = JSON.parse(localStorage.getItem("User") || '{}');
-        console.log(cons.UsuarioId);
       });  
     }
   }
