@@ -7,13 +7,18 @@ export class UsuarioService {
   constructor(private readonly prisma: PrismaService){}
 
     async createUsuario(data: Usuario) {
-      let status = 'error';
-      if(!this.getUsuarioByNombre(data.Nombre))
-      {
-        status = 'success';
-        await this.prisma.usuario.create({data})
+      const existingUser = await this.getUsuarioByNombre(data.Nombre);
+      if (!existingUser) {
+        return await this.prisma.usuario.create({ data });
       }
-      return status;
+      return 'error';
+    }
+  
+    async updateUsuario(data: Usuario): Promise<Usuario> {
+      return this.prisma.usuario.update({
+        where: { UsuarioId: data.UsuarioId },
+        data,
+      });
     }
   
     async getUsuarios(): Promise<Usuario[]> {
@@ -31,7 +36,7 @@ export class UsuarioService {
     async unableUsuarioById(UsuarioId: number): Promise<Usuario> {
       return await this.prisma.usuario.update({
         where: {
-          UsuarioId,
+          UsuarioId: UsuarioId
         },
         data: {
           DeAlta: false,

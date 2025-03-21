@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '@prisma/client';
 
@@ -21,8 +21,13 @@ export class UsuarioController {
     return this.usuarioService.getUsuarioByNombre(usuario);
   }
 
-  @Put(':id')
-  async unableUsuarioById(@Param(':id') Id: number): Promise<Usuario> {
-    return this.usuarioService.unableUsuarioById(Id);
+  @Put()
+  async updateUsuario( @Body() data: Usuario): Promise<Usuario> {
+    return this.usuarioService.updateUsuario(data);
+  }
+
+  @Delete(':Id')
+  async deleteUsuario(@Param('Id') Id: string): Promise<Usuario> {
+    return this.usuarioService.unableUsuarioById(Number(Id));
   } 
 }

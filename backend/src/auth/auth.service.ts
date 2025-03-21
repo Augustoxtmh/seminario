@@ -9,7 +9,7 @@ export class AuthService {
 
   async validateUser(nombre: string, contra: string): Promise<any> {
     const usuario: Usuario = await this.usuarioService.getUsuarioByNombre(nombre);
-    if (usuario && (contra == usuario.Contra)) {
+    if (usuario && (contra == usuario.Contra) && usuario.DeAlta) {
       const { Contra, ...result } = usuario;
       return result;
     }

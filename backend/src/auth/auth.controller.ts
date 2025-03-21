@@ -10,4 +10,5 @@ export class AuthController {
     async login(@Body() loginDto: { Nombre: string; Contra: string }) {
         return this.authService.validateUser(loginDto.Nombre, loginDto.Contra);
     }
+    
 }
