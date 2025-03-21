@@ -29,6 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
 import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { UsuarioComponent } from './usuario/usuario.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuot
     ReportesDePolizasComponent,
     GrueroComponent,
     VerCuotasComponent,
-    GeneradorCuotaComponent
+    GeneradorCuotaComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +63,10 @@ import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuot
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgxEchartsModule.forRoot({ echarts: () => import('echarts') })
   ],
   providers: [],
   bootstrap: [AppComponent]

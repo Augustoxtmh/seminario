@@ -22,6 +22,10 @@ export class NavbarComponent {
 
   goToUrl(url: string)
   {
-    this.router.navigate(['/grueros']);
+    this.router.navigate([url]);
+  }
+
+  cerrarSesion(){
+    this.router.navigate([''])
   }
 }

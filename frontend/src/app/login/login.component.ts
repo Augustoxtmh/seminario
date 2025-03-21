@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from '../service/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
+import Swal from 'sweetalert2';
+import { Usuario } from '../models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -24,18 +27,37 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.router.navigate(['/home']);
-/*     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
-        response => {
-          console.log('Inicio de sesión exitoso', response);
-          this.router.navigate(['/home']);
-        },
-        error => {
-          this.error = 'Fallo al iniciar sesión. Por favor, revise sus credenciales.';
-          console.error('Login error', error);
-        }
-      );
-    } */
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).pipe(
+        catchError(() => {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Fallo al iniciar sesión.",
+            text: "Por favor, revise sus credenciales.",
+            showConfirmButton: false,
+            timer: 4500,
+            width: '25vw',
+            padding: '20px',
+          });
+          return [];
+        })
+      ).subscribe((res: Usuario) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Inicio de sesión exitoso",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        this.router.navigate(['/home']);
+        console.log(res)
+        localStorage.setItem("User", JSON.stringify(res));
+        const cons = JSON.parse(localStorage.getItem("User") || '{}');
+        console.log(cons.UsuarioId);
+      });  
+    }
   }
 }

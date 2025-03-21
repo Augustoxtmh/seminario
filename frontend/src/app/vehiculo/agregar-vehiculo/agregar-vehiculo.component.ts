@@ -69,7 +69,7 @@ export class AgregarVehiculoComponent {
         return;
       }
 
-      this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+      this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",

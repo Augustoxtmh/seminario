@@ -52,9 +52,13 @@
             <a class="nav-link ms-3" href="verReportesDePolizas">Reportes de Pólizas</a>
           </div>
         </li>
+
+
       </ul>
     </div>
-
-    <button class="btn btn-danger" id="close-session">Cerrar sesión</button>
+    <button class="btn text-start w-100" (click)="goToUrl('gestionUsuarios')">
+      Gestionar usuarios
+    </button>
+    <button class="btn btn-danger" id="close-session" (click)="cerrarSesion()">Cerrar sesión</button>
 </nav>
   

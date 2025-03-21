@@ -141,7 +141,7 @@ export class GeneradorCuotaComponent {
     
         const promise = new Promise<void>((resolve, reject) => {
             this.cuotaServ
-                .createCuota(new Cuota(aCuota, fecha, Monto, poliza, idUsuario))
+                .createCuota(new Cuota(aCuota, fecha, Monto, poliza, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId ))
                 .pipe(
                     catchError((error) => {
                         console.error(`Error al guardar cuota ${aCuota}:`, error);

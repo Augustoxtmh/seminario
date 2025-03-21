@@ -70,7 +70,7 @@ export class AgregarPolizaComponent {
         return;
       }
 
-      this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
+      this.polizaServ.createPoliza(new Poliza(poliza, telefono, patente, date, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",

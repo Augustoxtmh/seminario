@@ -17,11 +17,17 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.url);
   }
 
-  public updateUsuarios(usuarios: Usuario): Observable<any>{
-    return this.http.put<any>(this.url, usuarios.UsuarioId);
+  public updateUsuario(usuario: Usuario): Observable<any>{
+    return this.http.put<any>(this.url, usuario);
   }
 
-  public createUsuarios(usuarios: Usuario): Observable<any>{
-    return this.http.post<any>(this.url, usuarios);
+  public createUsuario(usuario: Usuario): Observable<any>{
+    return this.http.post<any>(this.url, usuario);
   }
+
+  public unableUsuario(usuario: Usuario): Observable<any> {
+    const Id: number = (usuario.UsuarioId ?? 0).valueOf();
+    return this.http.delete<Usuario>(this.url + '/' + Id);
+  }  
+  
 }

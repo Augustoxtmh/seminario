@@ -108,7 +108,7 @@ export class AgregarPGruaComponent {
           console.log('prev' + res.GrueroID)
           console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
 
-          this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1)
+          this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)
           ).pipe(
             catchError(() => {
               Swal.fire({
