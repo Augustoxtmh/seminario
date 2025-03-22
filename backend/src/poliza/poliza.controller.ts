@@ -21,6 +21,11 @@ export class PolizaController {
     return this.polizaService.getPolizaPorNPoliza(Number(nPoliza));
   }
 
+  @Get('buscarV') 
+  async getPolizasPorNPoliza(@Query('NPoliza') nPoliza: string) {
+    return this.polizaService.getPolizasPorNPoliza(Number(nPoliza));
+  }  
+
   @Get(':id')
   async getPoliza(@Param('id') id: string): Promise<PolizaModel> {
     return this.polizaService.getPoliza(id);

@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Cuota as CuotaModel } from '@prisma/client';
+import { Cuota, Cuota as CuotaModel } from '@prisma/client';
 
 @Injectable()
 export class CuotaService {
   constructor(private prisma: PrismaService) {}
 
-  async createCuota(data: CuotaModel): Promise<CuotaModel> {
+  async createCuota(data: Cuota): Promise<Cuota> {
     return this.prisma.cuota.create({
       data,
     });
   }
 
-  async getAllCuotas(): Promise<CuotaModel[]> {
+  async getAllCuotas(): Promise<Cuota[]> {
     return this.prisma.cuota.findMany();
   }
 
-  async getCuota(id: number): Promise<CuotaModel> {
+  async getCuota(id: number): Promise<Cuota> {
     return this.prisma.cuota.findUnique({
       where: { cuotaId: id },
     });
@@ -65,9 +65,9 @@ export class CuotaService {
     };
   }
   
-  async updateCuota(id: number, data: CuotaModel): Promise<CuotaModel> {
+  async updateCuota(data: CuotaModel): Promise<Cuota> {
     return this.prisma.cuota.update({
-      where: { cuotaId: id },
+      where: { cuotaId: data.cuotaId },
       data,
     });
   }

@@ -26,9 +26,9 @@ export class CuotaController {
     return this.cuotaService.isPolizaVigente(poliza);
   }
 
-  @Put(':id')
-  async updateCuota(@Param('id') id: string, @Body() data: CuotaModel): Promise<CuotaModel> {
-    return this.cuotaService.updateCuota(Number(id), data);
+  @Put()
+  async updateCuota(@Body() data: CuotaModel): Promise<CuotaModel> {
+    return this.cuotaService.updateCuota(data);
   }
 
   @Delete(':id')

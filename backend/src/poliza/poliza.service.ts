@@ -38,6 +38,23 @@ export class PolizaService {
     });
   }
 
+  async getPolizasPorNPoliza(NPoliza: number): Promise<string[]> {
+    const polizas = await this.prisma.poliza.findMany({
+      where: {
+        NumeroPoliza: {
+          startsWith: NPoliza.toString(),
+        },
+        DeAlta: true
+      },
+      select: {
+        NumeroPoliza: true,
+      },
+      take: 7,
+    });
+
+    return polizas.map(v => v.NumeroPoliza);
+  }
+
   async updatePoliza(data: PolizaModel): Promise<PolizaModel> {
     return this.prisma.poliza.update({
       where: {

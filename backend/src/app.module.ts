@@ -22,14 +22,16 @@ import { AuthService } from './auth/auth.service';
 import { CuotaController } from './cuota/cuota.controller';
 import { CuotaModule } from './cuota/cuota.module';
 import { CuotaService } from './cuota/cuota.service';
+import { SeederService } from './seeder/seeder.service';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [PrismaModule, VehiculoModule, PolizaModule, GrueroModule, UsuarioModule, CuotaModule
-    , PedidogruaModule],
+    , PedidogruaModule, SeederModule],
   controllers: [AppController, VehiculoController, PolizaController, GrueroController, UsuarioController
     , PedidogruaController, AuthController, CuotaController
   ],
   providers: [AppService, VehiculoService, PolizaService, GrueroService, UsuarioService
-    , PedidogruaService, AuthService, CuotaService],
+    , PedidogruaService, AuthService, CuotaService, SeederService],
 })
 export class AppModule {}
