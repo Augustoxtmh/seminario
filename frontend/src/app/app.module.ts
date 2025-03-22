@@ -20,7 +20,6 @@ import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.c
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
 import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
 import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
-import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,7 +49,6 @@ import { UsuarioComponent } from './usuario/usuario.component';
     ModificarPolizaComponent,
     VerPolizasComponent,
     ReportesDeGruasComponent,
-    ReportesDeVehiculosComponent,
     ReportesDePolizasComponent,
     GrueroComponent,
     VerCuotasComponent,
@@ -66,8 +64,9 @@ import { UsuarioComponent } from './usuario/usuario.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    NgxEchartsModule.forRoot({ echarts: () => import('echarts') })
-  ],
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),  ],
   providers: [],
   bootstrap: [AppComponent]
 })

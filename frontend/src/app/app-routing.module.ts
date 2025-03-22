@@ -14,7 +14,6 @@ import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.c
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
 import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
 import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
-import { ReportesDeVehiculosComponent } from './reportesDeGrua/reportes-de-vehiculos/reportes-de-vehiculos.component';
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
 import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
@@ -47,7 +46,6 @@ const routes: Routes = [
     { path: 'gestionUsuarios', component: UsuarioComponent },
 
     { path: 'verReportesDeGruas', component: ReportesDeGruasComponent },
-    { path: 'verReportesDeVehiculos', component: ReportesDeVehiculosComponent },
     { path: 'verReportesDePolizas', component: ReportesDePolizasComponent },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },

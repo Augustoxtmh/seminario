@@ -1,1 +1,21 @@
-<p>reportes-de-polizas works!</p>
+<div class="col-md-4 title-div my-3" id="contenedor">
+    <h1>Reportes de Cuotas</h1>
+</div>
+
+<div class="my-2" style=" background-color: beige; border-radius: 5px; border: solid 1px black; min-height: 20vh; width: 65vw;">
+    <h2 class="mx-2">Cuotas que vencen este mes: {{ cuotasGeneradasMes }}</h2>
+    <h2 class="mx-2">Monto total de las cuotas en el mes: ${{ montoTotalCuotas }}</h2>
+    <h2 class="mx-2">Beneficio total: ${{ beneficioTotal }}</h2>
+</div>
+
+<div style="display: flex; justify-content: space-between;">
+    <div style="text-align: center; background-color: beige; border-radius: 5px; border: solid 1px black; min-height: 20vh; width: 32vw;" class="chart-box">
+        <h2>Cuotas Generadas por Día</h2>
+        <div echarts [options]="cuotasPorDia" style="min-height: 30vh; width: 32vw;"></div>
+    </div>
+    <div style="text-align: center; background-color: beige; border-radius: 5px; border: solid 1px black; min-height: 20vh; width: 32vw;" class="chart-box">
+        <h2>Cuotas Generadas por Usuario</h2>
+        <div echarts [options]="cuotasPorUsuario" style="min-height: 30vh; width: 32vw;"></div>
+    </div>
+</div>
+  

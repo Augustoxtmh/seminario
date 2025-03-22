@@ -14,6 +14,9 @@ export class ReportesDeGruasComponent implements OnInit {
   pedidosPorGruero: any;
   pagosPorGruero: { gruero: string, totalPagado: number }[] = [];
   grueros: Gruero[] = [];
+  montosRestantes: number = 0;
+  facturasRestantes: number = 0;
+
   pedidosPorDia = {
     tooltip: { trigger: 'axis' },
     xAxis: { 
@@ -29,8 +32,6 @@ export class ReportesDeGruasComponent implements OnInit {
       }
     ]
   };
-  montosRestantes: number = 0;
-  facturasRestantes: number = 0;
 
   constructor(private pedidoGruaServ: PgruaService, private gruerosServ: GrueroService,
     private cdr: ChangeDetectorRef
@@ -39,16 +40,13 @@ export class ReportesDeGruasComponent implements OnInit {
   ngOnInit(): void {
     this.gruerosServ.getAllGrueros().subscribe((res) => {
       this.grueros = res;
+      this.pedidoGruaServ.getAllPedidogrua().subscribe((data: PGrua[]) => {
+        this.processData(data);
+        this.processDataGrueros(data);
+        this.cdr.detectChanges();
+      });
     });
-
-    this.pedidoGruaServ.getAllPedidogrua().subscribe((data: PGrua[]) => {
-      this.processData(data);
-      this.processDataGrueros(data);
-    });
-
-
   }
-  
 
   processData(data: PGrua[]): void {
     const dates: string[] = [];
@@ -58,7 +56,7 @@ export class ReportesDeGruasComponent implements OnInit {
       const fechaObj = new Date(pedido.FechaHoraPedido);
       const fecha = fechaObj.toLocaleDateString();
   
-      if (fechaObj.getMonth() == new Date().getMonth()) {
+      if (fechaObj.getMonth() === new Date().getMonth()) {
         if (!dates.includes(fecha)) {
           dates.push(fecha);
           pedidos.push(1);
@@ -68,9 +66,14 @@ export class ReportesDeGruasComponent implements OnInit {
         }
       }
     });
-  
-    this.pedidosPorDia.xAxis.data = dates;
-    this.pedidosPorDia.series[0].data = pedidos;
+
+    if (dates.length > 0 && pedidos.length > 0) {
+      this.pedidosPorDia = {
+        ...this.pedidosPorDia,
+        xAxis: { ...this.pedidosPorDia.xAxis, data: dates },
+        series: [{ ...this.pedidosPorDia.series[0], data: pedidos }]
+      };
+    }
   }
   
   processDataGrueros(data: PGrua[]): void {
@@ -84,46 +87,41 @@ export class ReportesDeGruasComponent implements OnInit {
         const grueroId = pedido.GrueroID.toString();
         const monto = pedido.Monto || 0;
         
-        if (!pedido.Monto || pedido.Monto == 0)
-           this.montosRestantes++;
-          
-        if (!pedido.urlFactura || pedido.urlFactura == "")
-           this.facturasRestantes++;
+        if (!pedido.Monto || pedido.Monto === 0) this.montosRestantes++;
+        if (!pedido.urlFactura || pedido.urlFactura === "") this.facturasRestantes++;
         
         pedidosPorGruero[grueroId] = (pedidosPorGruero[grueroId] || 0) + 1;
-  
         pagosPorGruero[grueroId] = (pagosPorGruero[grueroId] || 0) + Number(monto);
       }
     });
+
+    if (this.grueros.length > 0) {
+      this.pedidosPorGruero = {
+        tooltip: { trigger: 'item' },
+        legend: { orient: 'vertical', left: 'left' },
+        series: [{
+          name: 'Pedidos',
+          type: 'pie',
+          radius: '50%',
+          data: Object.keys(pedidosPorGruero).map(id => {
+            const gruero = this.grueros.find(g => g.GrueroID === Number(id));
+            return {
+              name: gruero ? gruero.NombreGruero : 'Desconocido',
+              value: pedidosPorGruero[id] ?? 'N/A'
+            };
+          })
+        }]
+      };
+
+      this.pagosPorGruero = Object.entries(pagosPorGruero).map(([grueroId, total]) => {
+        const gruero = this.grueros.find(g => g.GrueroID === Number(grueroId));
+        return {
+          gruero: gruero ? gruero.NombreGruero.toString() : 'Desconocido',
+          totalPagado: total
+        };
+      });
+    }
+    
     this.cdr.detectChanges();
-    console.log(this.facturasRestantes)
-
-    this.pedidosPorGruero = {
-      tooltip: { trigger: 'item' },
-      legend: { orient: 'vertical', left: 'left' },
-      series: [{
-
-        name: 'Pedidos',
-        type: 'pie',
-        radius: '50%',
-        data: Object.keys(pedidosPorGruero).map(id => ({
-          name: `${this.grueros[Number(id) - 1].NombreGruero}`,
-          value: pedidosPorGruero[id]
-        })),
-      }]
-    };
-  
-    this.pagosPorGruero = Object.entries(pagosPorGruero).map(([grueroId, total]) => ({
-      gruero: `${this.grueros[Number(grueroId) - 1].NombreGruero}`,
-      totalPagado: total
-    }));
-
-
-  }
-  
-  
-
-  onBarClick(event: any) {
-    console.log('Día seleccionado:', event.name);
   }
 }
