@@ -65,37 +65,40 @@ export class UsuarioComponent {
   }
 
   onSubmit() {
-    if(this.formularioUsuario.valid) {
-      const nombre = this.formularioUsuario.controls['nombre'].value;
-      const contraseña = this.formularioUsuario.controls['contra'].value;
-      const autoridad = this.formularioUsuario.controls['autoridad'].value;
+    if(JSON.parse(localStorage.getItem("User") || '{}').Autoridad == 'A')
+    {
+      if(this.formularioUsuario.valid) {
+        const nombre = this.formularioUsuario.controls['nombre'].value;
+        const contraseña = this.formularioUsuario.controls['contra'].value;
+        const autoridad = this.formularioUsuario.controls['autoridad'].value;
 
-      this.usuarioServ.createUsuario(new Usuario(nombre, contraseña, autoridad, true)).pipe(
-        catchError(() => {
+        this.usuarioServ.createUsuario(new Usuario(nombre, contraseña, autoridad, true)).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al guardar",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })
+        ).subscribe((res) => {
+          this.usuarios = [...this.usuarios, res];
+          this.dataSource.data = this.usuarios;
           Swal.fire({
             position: "top-end",
-            icon: "error",
-            title: "Error al guardar",
+            icon: "success",
+            title: "Creado con éxito",
             showConfirmButton: false,
             timer: 1500,
-            width: '20vw',
+            width: '25vw',
             padding: '20px',
           });
-          return [];
-        })
-      ).subscribe((res) => {
-        this.usuarios = [...this.usuarios, res];
-        this.dataSource.data = this.usuarios;
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Creado con éxito",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '25vw',
-          padding: '20px',
-        });
-      }); 
+        }); 
+      }
     }
   }
 
@@ -109,38 +112,41 @@ export class UsuarioComponent {
   }
 
   onSubmitSave() {
-    if(this.formularioUsuarioModificar.valid) {
-      const nombre = this.formularioUsuarioModificar.controls['nombre'].value;
-      const contraseña = this.formularioUsuarioModificar.controls['contra'].value;
-      const autoridad = this.formularioUsuarioModificar.controls['autoridad'].value;
-      console.log('actualizando?')
+    if(JSON.parse(localStorage.getItem("User") || '{}').Autoridad == 'A')
+    {
+      if(this.formularioUsuarioModificar.valid) {
+        const nombre = this.formularioUsuarioModificar.controls['nombre'].value;
+        const contraseña = this.formularioUsuarioModificar.controls['contra'].value;
+        const autoridad = this.formularioUsuarioModificar.controls['autoridad'].value;
+        console.log('actualizando?')
 
-      this.usuarioServ.updateUsuario(new Usuario(nombre, contraseña, autoridad, true, this.usuarioSeleccionado.UsuarioId))
-      .pipe(
-        catchError(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error al actualizar al usuario",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '20vw',
-            padding: '20px',
-          });
-          return [];
-        })).subscribe(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Actualizado con éxito",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '25vw',
-            padding: '20px',
-          });
-          this.ngAfterViewInit();
-        }
-      )
+        this.usuarioServ.updateUsuario(new Usuario(nombre, contraseña, autoridad, true, this.usuarioSeleccionado.UsuarioId))
+        .pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al actualizar al usuario",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '20vw',
+              padding: '20px',
+            });
+            return [];
+          })).subscribe(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Actualizado con éxito",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '25vw',
+              padding: '20px',
+            });
+            this.ngAfterViewInit();
+          }
+        )
+      }
     }
   }
 
@@ -169,17 +175,20 @@ export class UsuarioComponent {
             });
             return [];
           })).subscribe(() => {
-            this.ngAfterViewInit();
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Usuario desactivado",
-              showConfirmButton: false,
-              timer: 1500,
-              width: '25vw',
-              padding: '20px',
-            });
-            this.onBack();
+            if(JSON.parse(localStorage.getItem("User") || '{}').Autoridad == 'A')
+            {
+              this.ngAfterViewInit();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Usuario desactivado",
+                showConfirmButton: false,
+                timer: 1500,
+                width: '25vw',
+                padding: '20px',
+              });
+              this.onBack();
+            }
           });
         }
     })

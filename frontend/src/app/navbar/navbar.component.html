@@ -8,6 +8,11 @@
             Grueros
           </button>
         </li>
+        <li class="nav-item">
+          <button class="btn text-start w-100" (click)="goToUrl('verCuotas')">
+            Ver cuotas
+          </button>
+        </li>
         <li class="nav-item" [class.active]="activeMenu === 'pedidos'">
           <button class="btn text-start w-100" (click)="toggleCollapse('pedidos')">
             Pedidos de grúa
@@ -40,8 +45,7 @@
             <a class="nav-link ms-3" href="verPolizas">Ver Todas las Pólizas</a>
           </div>
         </li>
-  
-        <li class="nav-item" [class.active]="activeMenu === 'reportes'">
+        <li class="nav-item" [class.active]="activeMenu === 'reportes'" *ngIf="der.Autoridad == 'A'">
           <button class="btn text-start w-100" (click)="toggleCollapse('reportes')">
             Reportes
             <i class="fas" [ngClass]="{ 'fa-chevron-down': activeMenu !== 'reportes', 'fa-chevron-up': activeMenu === 'reportes' }"></i>
@@ -55,7 +59,7 @@
 
       </ul>
     </div>
-    <button class="btn text-start w-100" (click)="goToUrl('gestionUsuarios')">
+    <button class="btn text-start w-100" (click)="goToUrl('gestionUsuarios')" *ngIf="der.Autoridad == 'A'">
       Gestionar usuarios
     </button>
     <button class="btn btn-danger" id="close-session" (click)="cerrarSesion()">Cerrar sesión</button>

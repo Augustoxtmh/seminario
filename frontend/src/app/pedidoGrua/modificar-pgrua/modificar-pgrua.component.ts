@@ -109,8 +109,8 @@ export class ModificarPGruaComponent {
         })
       ).subscribe((res) => {
         grueroId = res.GrueroID ?? 0;
-
-        this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.PedidoID)
+        console.log(this.pedidoGruaRecibido.PedidoID)
+        this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.Monto, this.pedidoGruaRecibido.PedidoID)
         ).pipe(
           catchError(() => {
             Swal.fire({
@@ -199,20 +199,9 @@ export class ModificarPGruaComponent {
         return [];
       })
     ).subscribe((res) => {
-
       this.grueroSugerido = res
         .map(gruero => gruero.NombreGruero)
         .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Creado con exito",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
     });
   }
   
@@ -337,16 +326,3 @@ export class ModificarPGruaComponent {
     });
   }
 }
-
-
-/*
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Guardado con exito",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '25vw',
-            padding: '20px',
-          });
-*/

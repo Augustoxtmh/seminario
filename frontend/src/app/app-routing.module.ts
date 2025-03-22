@@ -16,9 +16,12 @@ import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component'
 import { ReportesDeGruasComponent } from './reportesDeGrua/reportes-de-gruas/reportes-de-gruas.component';
 import { ReportesDePolizasComponent } from './reportesDeGrua/reportes-de-polizas/reportes-de-polizas.component';
 import { GrueroComponent } from './gruero/gruero.component';
-import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
-import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
+
+import { GeneradorCuotaComponent } from './cuota/generador-cuota/generador-cuota.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { VerCuotasComponent } from './cuota/ver-cuotas/ver-cuotas.component';
+import { ModificarCuotaComponent } from './cuota/modificar-cuota/modificar-cuota.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
 
@@ -40,13 +43,15 @@ const routes: Routes = [
     { path: 'agregarPoliza', component: AgregarPolizaComponent },
     { path: 'modificarPoliza', component: ModificarPolizaComponent },
     { path: 'verPolizas', component: VerPolizasComponent },
+
     { path: 'generarCuota', component: GeneradorCuotaComponent },
+    { path: 'modificarCuota', component: ModificarCuotaComponent },
     { path: 'verCuotas', component: VerCuotasComponent },
 
-    { path: 'gestionUsuarios', component: UsuarioComponent },
+    { path: 'gestionUsuarios', component: UsuarioComponent, canActivate: [authGuard] },
 
-    { path: 'verReportesDeGruas', component: ReportesDeGruasComponent },
-    { path: 'verReportesDePolizas', component: ReportesDePolizasComponent },
+    { path: 'verReportesDeGruas', component: ReportesDeGruasComponent, canActivate: [authGuard] },
+    { path: 'verReportesDePolizas', component: ReportesDePolizasComponent, canActivate: [authGuard] },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
   ];

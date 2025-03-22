@@ -1,0 +1,45 @@
+<h1 class="col-md-4 title-div my-3">Modificar Cuota</h1>
+
+<div class="col-md-4 title-div">
+  <label>Fecha de Vencimiento:</label>
+  <p class="mx-3">{{cuotaRecibida.FechaVencimiento | date:'dd/MM/yyyy'}}</p>
+</div>
+
+<form [formGroup]="formularioCuota">
+  <div class="row mb-4 my-3 form-div">
+    <div class="col-md-4 my-2">
+      <label for="numCuota" class="form-label">Número de Cuota:</label>
+      <input type="number" class="form-control" id="numCuota" name="numCuota" formControlName="NumCuota">
+    </div>
+    <div class="col-md-4 my-2">
+      <label for="monto" class="form-label">Monto:</label>
+      <input type="number" class="form-control" id="monto" name="monto" formControlName="Monto">
+    </div>
+    <div class="col-md-4 my-2 position-relative">
+        <label for="NumeroPoliza" class="form-label">Número de Póliza:</label>
+        <input type="text" 
+            class="form-control" 
+            id="NumeroPoliza" 
+            name="NumeroPoliza" 
+            formControlName="NumeroPoliza" 
+            (input)="onPolizaInput($event)">
+      
+        <div *ngIf="polizasSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+          <button *ngFor="let poliza of polizasSugeridas"
+                  type="button"
+                  class="list-group-item list-group-item-action"
+                  (click)="setValuePoliza(poliza)">
+            {{ poliza }}
+          </button>
+        </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="title-div mb-10">
+    <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
+    <button class="btn btn-success my-3 mx-4" (click)="onSave()" [disabled]="formularioCuota.invalid">Guardar</button>
+    <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
+  </div>
+</div>

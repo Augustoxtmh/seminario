@@ -26,10 +26,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { VerCuotasComponent } from './poliza/ver-cuotas/ver-cuotas.component';
-import { GeneradorCuotaComponent } from './poliza/generador-cuota/generador-cuota.component';
+import { GeneradorCuotaComponent } from './cuota/generador-cuota/generador-cuota.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { ModificarCuotaComponent } from './cuota/modificar-cuota/modificar-cuota.component';
+import { VerCuotasComponent } from './cuota/ver-cuotas/ver-cuotas.component';
 
 @NgModule({
   declarations: [
@@ -51,9 +52,10 @@ import { UsuarioComponent } from './usuario/usuario.component';
     ReportesDeGruasComponent,
     ReportesDePolizasComponent,
     GrueroComponent,
-    VerCuotasComponent,
     GeneradorCuotaComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    ModificarCuotaComponent,
+    VerCuotasComponent
   ],
   imports: [
     BrowserModule,

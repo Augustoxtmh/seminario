@@ -151,12 +151,12 @@ export class GeneradorCuotaComponent {
                 )
                 .subscribe(() => {
                   if(Cantidad > 1){
-                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente, nombre);
+                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
                     Cantidad = Cantidad - 2;
                     aCuota++
                   }
                   if(Cantidad == 1){
-                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, index, Cantidad, fecha, patente, nombre);
+                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
                     Cantidad--;
                   }
                   resolve();
@@ -196,7 +196,7 @@ export class GeneradorCuotaComponent {
   }
 
   agregarDatosAlPDF(nCuota: number, fecha: Date, Monto: string
-    , poliza: string, index: number, totalCuotas: number, fechaA: Date
+    , poliza: string,  totalCuotas: number
     , patente: String, nombre: String) {
 
     if (totalCuotas > 1) {

@@ -33,6 +33,6 @@ export class CuotaService {
   }
 
   public deleteCuota(cuota: Cuota): Observable<any>{
-    return this.http.delete<any>(this.url + cuota.cuotaId);
+    return this.http.delete<any>(this.url + '/' + cuota.cuotaId);
   }
 }

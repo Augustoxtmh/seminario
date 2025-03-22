@@ -1,0 +1,26 @@
+:host {
+    justify-items: center;
+    width: 65%;
+}
+
+form {
+    text-align: center;
+}
+
+.form-div {
+    justify-content: center;
+}
+
+.title-div{
+    display: flex;
+    justify-content: center;
+}
+
+datalist {
+    display: block;
+}
+
+option {
+    display: block;
+    padding: 5px;
+}

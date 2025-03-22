@@ -74,7 +74,7 @@ export class ModificarVehiculoComponent {
       return;
     }
 
-    this.vehiculoServ.updateVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, 1)).pipe(
+    this.vehiculoServ.updateVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",

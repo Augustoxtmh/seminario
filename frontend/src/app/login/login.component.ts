@@ -43,17 +43,12 @@ export class LoginComponent {
           return [];
         })
       ).subscribe((res: Usuario) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Inicio de sesión exitoso",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '25vw',
-          padding: '20px',
-        });
-        this.router.navigate(['/home']);
         localStorage.setItem("User", JSON.stringify(res));
+
+        this.router.navigate(['/home']).then(() => {
+          window.location.reload()
+        });
+        
       });  
     }
   }

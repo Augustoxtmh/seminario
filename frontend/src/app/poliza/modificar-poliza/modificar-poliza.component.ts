@@ -136,21 +136,20 @@ export class ModificarPolizaComponent {
 
   buscarPatentes(query: string) {
     this.vehiculoServ.getVehiculosPorPatente(query).pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al guardar",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
-        });
-        return [];
-      })).subscribe((res) => {
-      (vehiculos: String[]) => {
-        this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
-      }
-    });
-  }
+    catchError(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error al guardar",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '20vw',
+        padding: '20px',
+      });
+      return [];
+    })).subscribe((vehiculos: String[]) => {
+      this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
+    }
+  )};
 }
+

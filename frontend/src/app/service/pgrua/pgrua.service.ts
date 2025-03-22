@@ -24,9 +24,9 @@ url = "http://localhost:3000/pedidosgrua"
     return this.http.put<any>(this.url, pgrua);
   }
 
-  public updateMontoPGrua(idPedido: number, monto: number): Observable<any>{
-    return this.http.put<any>(this.url + '/montoUpd/' + idPedido, monto);
-  }
+  public updateMontoPGrua(idPedido: number, monto: number): Observable<any> {
+    return this.http.put<any>(this.url + '/montoUpd/' + idPedido, { monto: monto });
+  }  
 
   public createPedidogrua(pgrua: PGrua): Observable<any>{
     return this.http.post<any>(this.url, pgrua)

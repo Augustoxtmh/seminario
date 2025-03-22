@@ -19,6 +19,10 @@ export class PolizaService {
     return this.http.get<Poliza>(`${this.url}/buscar`, { params: { NPoliza: NPoliza.toString() } });
   }
 
+  public getPolizasPorNPoliza(NPoliza: number): Observable<String[]> { 
+    return this.http.get<String[]>(`${this.url}/buscarV`, { params: { NPoliza: NPoliza.toString() } });
+  }
+
   public updatePoliza(poliza: Poliza): Observable<any>{
     return this.http.put<any>(this.url, poliza);
   }

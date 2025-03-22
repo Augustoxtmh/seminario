@@ -1,6 +1,6 @@
 export class PGrua{
 
-    PedidoID?: Number = 0;
+    PedidoID?: Number;
     NombreCliente: String;
     FechaHoraPedido: Date;
     Patente: String;
