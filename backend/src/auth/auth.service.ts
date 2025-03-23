@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Usuario } from '@prisma/client';
 
-
 @Injectable()
 export class AuthService {
   constructor(private usuarioService: UsuarioService) {}

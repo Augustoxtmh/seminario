@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Poliza as PolizaModel } from '@prisma/client';
+import { Poliza } from '@prisma/client';
 
 @Injectable()
 export class PolizaService {
   constructor(private prisma: PrismaService) {}
 
-  async createPoliza(data: PolizaModel): Promise<PolizaModel> {
+  async createPoliza(data: Poliza): Promise<Poliza> {
     return this.prisma.poliza.create({
       data,
     });
   }
 
-  async getAllPolizas(): Promise<PolizaModel[]> {
+  async getAllPolizas(): Promise<Poliza[]> {
     return this.prisma.poliza.findMany({
       where: {
         DeAlta: true,
@@ -20,7 +20,7 @@ export class PolizaService {
     });
   }
 
-  async getPoliza(NumeroPoliza: string): Promise<PolizaModel | null> {
+  async getPoliza(NumeroPoliza: string): Promise<Poliza | null> {
     return this.prisma.poliza.findFirst({
       where: { 
         NumeroPoliza,
@@ -29,7 +29,7 @@ export class PolizaService {
     });
   }
 
-  async getPolizaPorNPoliza(NPoliza: number): Promise<PolizaModel | null> {
+  async getPolizaPorNPoliza(NPoliza: number): Promise<Poliza | null> {
     return this.prisma.poliza.findFirst({
       where: { 
         NumeroPoliza: NPoliza.toString(),
@@ -55,7 +55,7 @@ export class PolizaService {
     return polizas.map(v => v.NumeroPoliza);
   }
 
-  async updatePoliza(data: PolizaModel): Promise<PolizaModel> {
+  async updatePoliza(data: Poliza): Promise<Poliza> {
     return this.prisma.poliza.update({
       where: {
         NumeroPoliza: data.NumeroPoliza,
@@ -64,7 +64,7 @@ export class PolizaService {
     });
   }
 
-  async deletePoliza(NumeroPoliza: string): Promise<PolizaModel> {
+  async deletePoliza(NumeroPoliza: string): Promise<Poliza> {
     return this.prisma.poliza.update({
       where: { 
         NumeroPoliza: NumeroPoliza,

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, BadRequestException, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { PedidogruaService } from './pedidogrua.service';
-import { PedidoGrua as PedidogruaModel } from '@prisma/client';
+import { PedidoGrua } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -10,12 +10,12 @@ export class PedidogruaController {
   constructor(private readonly pedidogruaService: PedidogruaService) {}
 
   @Post()
-  async createPedidogrua(@Body() data: PedidogruaModel) {
+  async createPedidogrua(@Body() data: PedidoGrua) {
     return this.pedidogruaService.createPedidogrua(data);
   }
 
   @Put()
-  async updatePedidogrua(@Body() data: PedidogruaModel): Promise<PedidogruaModel> {
+  async updatePedidogrua(@Body() data: PedidoGrua): Promise<PedidoGrua> {
     return this.pedidogruaService.updatePedidogrua(data);
   }
 
@@ -23,22 +23,22 @@ export class PedidogruaController {
   async updateMontoPedidogrua(
     @Param('idPedido') idPedido: string,
     @Body('monto') monto: number
-  ): Promise<PedidogruaModel> {
+  ): Promise<PedidoGrua> {
     return this.pedidogruaService.updateMontoPedidogrua(Number(idPedido), monto);
   }
 
   @Get()
-  async getAllPedidogruas(): Promise<PedidogruaModel[]> {
+  async getAllPedidogruas(): Promise<PedidoGrua[]> {
     return this.pedidogruaService.getAllPedidogruas();
   }
 
   @Get(':id')
-  async getPedidogrua(@Param('id') id: string): Promise<PedidogruaModel> {
+  async getPedidogrua(@Param('id') id: string): Promise<PedidoGrua> {
     return this.pedidogruaService.getPedidogrua(Number(id));
   }
 
   @Delete(':id')
-  async deletePedidogrua(@Param('id') id: string): Promise<PedidogruaModel> {
+  async deletePedidogrua(@Param('id') id: string): Promise<PedidoGrua> {
     return this.pedidogruaService.deletePedidogrua(Number(id));
   }
 

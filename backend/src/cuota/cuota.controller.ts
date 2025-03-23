@@ -1,23 +1,23 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { CuotaService } from './cuota.service';
-import { Cuota as CuotaModel } from '@prisma/client';
+import { Cuota } from '@prisma/client';
 
 @Controller('cuota')
 export class CuotaController {
   constructor(private readonly cuotaService: CuotaService) {}
 
   @Post()
-  async createCuota(@Body() data: CuotaModel): Promise<CuotaModel> {
+  async createCuota(@Body() data: Cuota): Promise<Cuota> {
     return this.cuotaService.createCuota(data);
   }
 
   @Get()
-  async getAllCuotas(): Promise<CuotaModel[]> {
+  async getAllCuotas(): Promise<Cuota[]> {
     return this.cuotaService.getAllCuotas();
   }
 
   @Get(':id')
-  async getCuota(@Param('id') id: string): Promise<CuotaModel> {
+  async getCuota(@Param('id') id: string): Promise<Cuota> {
     return this.cuotaService.getCuota(Number(id));
   }
 
@@ -27,12 +27,12 @@ export class CuotaController {
   }
 
   @Put()
-  async updateCuota(@Body() data: CuotaModel): Promise<CuotaModel> {
+  async updateCuota(@Body() data: Cuota): Promise<Cuota> {
     return this.cuotaService.updateCuota(data);
   }
 
   @Delete(':id')
-  async deleteCuota(@Param('id') id: string): Promise<CuotaModel> {
+  async deleteCuota(@Param('id') id: string): Promise<Cuota> {
     return this.cuotaService.deleteCuota(Number(id));
   }
 }

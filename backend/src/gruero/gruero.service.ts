@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Gruero as GrueroModel } from '@prisma/client';
+import { Gruero } from '@prisma/client';
 
 @Injectable()
 export class GrueroService {
   constructor(private prisma: PrismaService) {}
 
-  async createGruero(data: GrueroModel): Promise<GrueroModel> {
+  async createGruero(data: Gruero): Promise<Gruero> {
     try {
       const existingGruero = await this.prisma.gruero.findUnique({
         where: { NombreGruero: data.NombreGruero },
@@ -31,30 +31,30 @@ export class GrueroService {
   }
   
 
-  async getAllGrueros(): Promise<GrueroModel[]> {
+  async getAllGrueros(): Promise<Gruero[]> {
     return this.prisma.gruero.findMany();
   }
 
-  async getGrueroById(id: number): Promise<GrueroModel> {
+  async getGrueroById(id: number): Promise<Gruero> {
     return this.prisma.gruero.findUnique({
       where: { GrueroID: id },
     });
   }
 
-  async getGrueroByNombre(nombre: string): Promise<GrueroModel> {
+  async getGrueroByNombre(nombre: string): Promise<Gruero> {
     return this.prisma.gruero.findUnique({
       where: { NombreGruero: nombre },
     });
   }
 
-  async updateGruero(data: GrueroModel): Promise<GrueroModel> {
+  async updateGruero(data: Gruero): Promise<Gruero> {
     return this.prisma.gruero.update({
       where: { GrueroID: data.GrueroID },
       data,
     });
   }
 
-  async deleteGruero(id: number): Promise<GrueroModel> {
+  async deleteGruero(id: number): Promise<Gruero> {
     return this.prisma.gruero.update({
       where: { GrueroID: id },
       data: {

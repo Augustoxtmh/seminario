@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Cuota, Cuota as CuotaModel } from '@prisma/client';
+import { Cuota } from '@prisma/client';
 
 @Injectable()
 export class CuotaService {
@@ -65,14 +65,14 @@ export class CuotaService {
     };
   }
   
-  async updateCuota(data: CuotaModel): Promise<Cuota> {
+  async updateCuota(data: Cuota): Promise<Cuota> {
     return this.prisma.cuota.update({
       where: { cuotaId: data.cuotaId },
       data,
     });
   }
 
-  async deleteCuota(id: number): Promise<CuotaModel> {
+  async deleteCuota(id: number): Promise<Cuota> {
     return this.prisma.cuota.delete({
       where: { cuotaId: id },
     });

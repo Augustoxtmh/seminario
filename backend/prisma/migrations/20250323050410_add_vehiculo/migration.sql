@@ -19,7 +19,7 @@ CREATE TABLE `PedidoGrua` (
     `Patente` VARCHAR(191) NOT NULL,
     `urlFactura` VARCHAR(191) NULL,
     `DeAlta` BOOLEAN NOT NULL DEFAULT true,
-    `Monto` INTEGER NOT NULL,
+    `Monto` INTEGER NULL,
 
     PRIMARY KEY (`PedidoID`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

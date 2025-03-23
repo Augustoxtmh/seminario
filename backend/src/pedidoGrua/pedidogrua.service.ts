@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { PedidoGrua as PedidogruaModel } from '@prisma/client';
+import { PedidoGrua } from '@prisma/client';
 
 @Injectable()
 export class PedidogruaService {
   constructor(private prisma: PrismaService) {}
 
-  async createPedidogrua(data: PedidogruaModel) {
+  async createPedidogrua(data: PedidoGrua) {
     return this.prisma.pedidoGrua.create({
       data,
     });
   }
 
-  async updatePedidogrua(data: PedidogruaModel): Promise<PedidogruaModel> {
+  async updatePedidogrua(data: PedidoGrua): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.update({
       where: { PedidoID: data.PedidoID },
       data,
     });
   }
 
-  async getAllPedidogruas(): Promise<PedidogruaModel[]> {
+  async getAllPedidogruas(): Promise<PedidoGrua[]> {
     return this.prisma.pedidoGrua.findMany(
       {
         where: { DeAlta: true }
@@ -27,13 +27,13 @@ export class PedidogruaService {
     );
   }
 
-  async getPedidogrua(id: number): Promise<PedidogruaModel> {
+  async getPedidogrua(id: number): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.findUnique({
       where: { PedidoID: id },
     });
   }
 
-  async updatePedidogruaById(idPedido: number, urlFactura: string): Promise<PedidogruaModel> {
+  async updatePedidogruaById(idPedido: number, urlFactura: string): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.update({
       where: { PedidoID: idPedido },
       data: {
@@ -42,7 +42,7 @@ export class PedidogruaService {
     });
   }
 
-  async updateMontoPedidogrua(idPedido: number, monto: number): Promise<PedidogruaModel> {
+  async updateMontoPedidogrua(idPedido: number, monto: number): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.update({
       where: { PedidoID: idPedido },
       data: { Monto: monto },
@@ -50,7 +50,7 @@ export class PedidogruaService {
   }
   
 
-  async deletePedidogrua(id: number): Promise<PedidogruaModel> {
+  async deletePedidogrua(id: number): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.update({
       where: { 
         PedidoID: id 
