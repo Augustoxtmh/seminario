@@ -3,7 +3,7 @@ FROM node:20 AS build
 
 WORKDIR /app
 
-# Copiar package.json y package-lock.json (si existe)
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
 RUN npm install
@@ -16,6 +16,9 @@ RUN npm run build --configuration=production
 
 # Etapa de despliegue con Nginx
 FROM nginx:alpine
+
+# Copiar el archivo de configuración Nginx personalizado
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos generados de Angular al servidor de Nginx
 COPY --from=build /app/dist/proyecto-seminario /usr/share/nginx/html

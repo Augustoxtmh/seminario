@@ -25,8 +25,8 @@ export class ModalVehiculoService {
         <form [formGroup]="formularioGrueroModal"">
           <div class="row mb-4 my-3 form-div">
             <div class="col-md-5">
-              <label for="Patente" class="form-label">Patente:</label>
-              <input type="text" class="form-control" id="Patente" formControlName="Patente">
+              <label for="Nombre" class="form-label">Titular:</label>
+              <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
             </div>
             <div class="col-md-3">
               <label for="Patente" class="form-label">Patente:</label>
