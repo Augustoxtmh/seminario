@@ -6,11 +6,10 @@ import { Cuota } from 'src/app/models/cuota';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { jsPDF } from "jspdf";
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
-import { Vehiculo } from 'src/app/models/vehiculo';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-generador-cuota',
