@@ -67,15 +67,20 @@ export class ReportesDePolizasComponent implements OnInit {
     cuotas.forEach((cuota) => {
       const fechaObj = new Date(cuota.FechaVencimiento);
       const fechaStr = fechaObj.toLocaleDateString();
-
-      if (fechaObj.getMonth() === currentMonth && fechaObj.getFullYear() === currentYear) {
+      let mesAnterior = fechaObj.getMonth() - 1;
+      if (mesAnterior == 0)
+        mesAnterior = 12;
+      if (mesAnterior === currentMonth && fechaObj.getFullYear() === currentYear) {
         montoTotal += Number(cuota.Monto);
-        this.cuotasGeneradasMes++;
 
         cuotasPorDia[fechaStr] = (cuotasPorDia[fechaStr] || 0) + 1;
         cuotasPorUsuario[cuota.UsuarioId.toString()] = 
           (cuotasPorUsuario[cuota.UsuarioId.toString()] || 0) + Number(cuota.Monto);
       }
+
+      if (fechaObj.getMonth() === currentMonth && fechaObj.getFullYear() === currentYear) 
+        this.cuotasGeneradasMes++;
+      
     });
 
     this.montoTotalCuotas = montoTotal;
