@@ -28,14 +28,14 @@ Pasos para ejecutar el proyecto
 10. docker build -t frontend-seminario .
 11. docker run -p 4200:4200 frontend-seminario
 
-Si todo salió bien, las siguientes rutas estaran disponibles:
+Si todo salió bien, las siguientes rutas estarán disponibles:
 http://localhost:8080/index.php -> permite gestionar las bases de datos.
 Usuario: root Contraseña: root
 
 http://localhost:3000/ -> es el backend, muestra un mensaje predeterminado.
 
-http://localhost:4200/ -> es el frontend, tiene un boton para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar.
+http://localhost:4200/ -> es el frontend, tiene un botón para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar.
 
-Este botón genera 2 usuarios -> Admininistrador y Usuario, las claves son: admin admin y usuario usuario.
+Este botón genera 2 usuarios -> Administrador y Usuario, las claves son: admin admin y usuario usuario.
 Espero que funcione bien.
 Fin.
