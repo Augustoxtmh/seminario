@@ -1,6 +1,6 @@
 Proyecto Seminario
 
-Este es un proyecto de ejemplo que utiliza Docker y Docker Compose para ejecutar una aplicación con un backend en NestJS y una base de datos MySQL.
+Este es un proyecto utiliza Docker y Docker Compose para ejecutar una aplicación con un backend en NestJS, frontend en Angular y una base de datos MySQL.
 
 Requisitos
 
