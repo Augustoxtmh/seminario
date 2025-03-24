@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Usuario } from '../models/usuario';
+import { UsuarioService } from '../service/usuario/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +16,15 @@ export class LoginComponent {
   loginForm: FormGroup;
   error: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService
+    , private router: Router, private usuarioServ: UsuarioService) {
     this.loginForm = this.fb.group({
       Nombre: ['', Validators.required],
       Contra: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {  }
 
   onSubmit() {
     if (this.loginForm.valid) {
@@ -51,5 +51,49 @@ export class LoginComponent {
         
       });  
     }
+  }
+
+  generarDatosDePrueba()
+  {
+    this.usuarioServ.createUsuario(new Usuario("admin", "admin", 'A', true)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
+      console.log(res)
+    }); 
+    this.usuarioServ.createUsuario(new Usuario("usuario", "usuario", 'U', true)).pipe(
+      catchError(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al guardar",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '20vw',
+          padding: '20px',
+        });
+        return [];
+      })
+    ).subscribe((res) => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Creado con éxito",
+        showConfirmButton: false,
+        timer: 1500,
+        width: '25vw',
+        padding: '20px',
+      });
+    }); 
   }
 }

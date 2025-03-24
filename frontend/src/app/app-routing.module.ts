@@ -21,32 +21,35 @@ import { GeneradorCuotaComponent } from './cuota/generador-cuota/generador-cuota
 import { UsuarioComponent } from './usuario/usuario.component';
 import { VerCuotasComponent } from './cuota/ver-cuotas/ver-cuotas.component';
 import { ModificarCuotaComponent } from './cuota/modificar-cuota/modificar-cuota.component';
+import { authLoggedGuard } from './guards/auth-logged.guard';
 import { authGuard } from './guards/auth.guard';
+
+
 
 const routes: Routes = [
 
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent },
+    { path: 'home', component: HomeComponent, canActivate: [authLoggedGuard] },
 
-    { path: 'grueros', component: GrueroComponent },
+    { path: 'grueros', component: GrueroComponent, canActivate: [authLoggedGuard] },
 
-    { path: 'agregarPedidoGrua', component: AgregarPGruaComponent },
-    { path: 'modificarPedidoGrua', component: ModificarPGruaComponent },
-    { path: 'verPedidosDeGrua', component: VerPGruasComponent },
-    { path: 'verPedidoDeGrua', component: VerPGruaComponent },
+    { path: 'agregarPedidoGrua', component: AgregarPGruaComponent, canActivate: [authLoggedGuard] },
+    { path: 'modificarPedidoGrua', component: ModificarPGruaComponent, canActivate: [authLoggedGuard] },
+    { path: 'verPedidosDeGrua', component: VerPGruasComponent, canActivate: [authLoggedGuard] },
+    { path: 'verPedidoDeGrua', component: VerPGruaComponent, canActivate: [authLoggedGuard] },
 
-    { path: 'agregarVehiculo', component: AgregarVehiculoComponent },
-    { path: 'modificarVehiculo', component: ModificarVehiculoComponent },
-    { path: 'verVehiculos', component: VerVehiculosComponent },
-    { path: 'verVehiculo', component: VerVehiculoComponent },
+    { path: 'agregarVehiculo', component: AgregarVehiculoComponent, canActivate: [authLoggedGuard] },
+    { path: 'modificarVehiculo', component: ModificarVehiculoComponent, canActivate: [authLoggedGuard] },
+    { path: 'verVehiculos', component: VerVehiculosComponent, canActivate: [authLoggedGuard] },
+    { path: 'verVehiculo', component: VerVehiculoComponent, canActivate: [authLoggedGuard] },
 
-    { path: 'agregarPoliza', component: AgregarPolizaComponent },
-    { path: 'modificarPoliza', component: ModificarPolizaComponent },
-    { path: 'verPolizas', component: VerPolizasComponent },
+    { path: 'agregarPoliza', component: AgregarPolizaComponent, canActivate: [authLoggedGuard] },
+    { path: 'modificarPoliza', component: ModificarPolizaComponent, canActivate: [authLoggedGuard] },
+    { path: 'verPolizas', component: VerPolizasComponent, canActivate: [authLoggedGuard] },
 
-    { path: 'generarCuota', component: GeneradorCuotaComponent },
-    { path: 'modificarCuota', component: ModificarCuotaComponent },
-    { path: 'verCuotas', component: VerCuotasComponent },
+    { path: 'generarCuota', component: GeneradorCuotaComponent, canActivate: [authLoggedGuard] },
+    { path: 'modificarCuota', component: ModificarCuotaComponent, canActivate: [authLoggedGuard] },
+    { path: 'verCuotas', component: VerCuotasComponent, canActivate: [authLoggedGuard] },
 
     { path: 'gestionUsuarios', component: UsuarioComponent, canActivate: [authGuard] },
 

@@ -23,8 +23,8 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 # Copiar los archivos generados de Angular al servidor de Nginx
 COPY --from=build /app/dist/proyecto-seminario /usr/share/nginx/html
 
-# Exponer el puerto 80
-EXPOSE 80
+# Exponer el puerto 4200 en lugar del 80
+EXPOSE 4200
 
 # Iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
