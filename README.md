@@ -12,6 +12,7 @@ Pasos para ejecutar el proyecto
 1. Clona el repositorio:
 
  git clone https://github.com/Augustoxtmh/seminario.git
+ 
  cd proyecto-seminario/backend
 
 2. Modifica el nombre del archivo .env.example => .env
