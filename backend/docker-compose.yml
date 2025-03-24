@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  nestjs-app:
+    container_name: backend-app
+    depends_on:
+      - mysql-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # Map port 3000 of the container to port 3000 on the host
+    ports:
+      - "3000:3000" 
+    stdin_open: true
+    tty: true
+    volumes:
+    # Mount the current directory to /usr/src/app in the container
+      - .:/usr/src/app  
+      - /app/node_modules  # Persist node_modules
+      # Use the default network
+    networks:
+      - default  
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Set the root password for MySQL
+      MYSQL_DATABASE: servicio_grua  # Create a database named 'nest'
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      TZ: Argentina/Buenos_Aires  # Set timezone to America/New_York
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - default  # Use the default network
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql-db
+    restart: unless-stopped
+    environment:
+    # Hostname of the MySQL database container
+      PMA_HOST: mysql-db  
+      # Root password for MySQL
+      MYSQL_ROOT_PASSWORD: root  
+    ports:
+      - "8080:80" 
+      # Use the default network
+    networks:
+      - default  
+
+# Define a named volume for MySQL data
+volumes: 
+  db_data:

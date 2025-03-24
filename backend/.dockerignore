@@ -1,5 +1,26 @@
-.git
-.editorconfig
+# Ignore Dockerfiles 
+Dockerfile
+.dockerignore
 
-/gitignore
-/node_modules
+# Avoid node_modules directory
+node_modules
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Evitar build directory (pero NO dist/)
+build
+
+# git directory and files
+.git
+.gitignore
+
+# Editor directories and files
+.vscode
+.idea
+
+# OS-specific files
+.DS_Store
+Thumbs.db

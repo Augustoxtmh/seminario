@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';  // Si usas Prisma, importa el servicio de Prisma
-import { Usuario } from '@prisma/client'; // Ajusta según el modelo de Prisma
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Usuario } from '@prisma/client';
 
 @Injectable()
 export class SeederService {
