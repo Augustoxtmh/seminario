@@ -13,8 +13,14 @@ export class ModalGrueroService {
 
   constructor(private fb: FormBuilder, private grueroServ: GrueroService) {
     this.formularioGrueroModal = this.fb.group({
-      nombre: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
+      nombre: [
+        '',
+        [Validators.required, Validators.minLength(5)],
+      ],
+      telefono: [
+        '',
+        [Validators.required, Validators.minLength(10)],
+      ],
     });
   }
 
@@ -22,7 +28,7 @@ export class ModalGrueroService {
     return Swal.fire({
       title: 'Nuevo Gruero',
       html: `
-        <form [formGroup]="formularioGrueroModal"">
+        <form [formGroup]="formularioGrueroModal">
           <div class="row mb-4 my-3 form-div">
             <div class="col-md-6">
               <label for="nombre" class="form-label">Nombre:</label>
@@ -34,6 +40,7 @@ export class ModalGrueroService {
             </div>
           </div>
         </form>
+
       `,
       showCancelButton: true,
       confirmButtonText: 'Guardar',
@@ -42,8 +49,7 @@ export class ModalGrueroService {
         const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
         const telefono = (document.getElementById('telefono') as HTMLInputElement).value.trim();
 
-        if (nombre == '' || telefono == '') {
-          console.log('error')
+        if (!nombre || !telefono || !(nombre.length > 4) || !(telefono.length > 9)) {
           Swal.fire({
             position: "top-end",
             icon: "error",
@@ -55,23 +61,34 @@ export class ModalGrueroService {
           });
           return;
         }
+        else
+        {
 
-        this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
-          catchError(() => {
+          this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
+            catchError(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error al guardar",
+                showConfirmButton: false,
+                timer: 1500,
+                width: '20vw',
+                padding: '20px',
+              });
+              return [];
+            })
+          ).subscribe(() => {
             Swal.fire({
               position: "top-end",
-              icon: "error",
-              title: "Error al guardar",
+              icon: "success",
+              title: "Guardado",
               showConfirmButton: false,
               timer: 1500,
               width: '20vw',
               padding: '20px',
             });
-            return [];
-          })
-        ).subscribe((res) => {
-          console.log(res)
-        });
+          });
+        }        
     }})
   };
 }

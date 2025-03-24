@@ -118,7 +118,6 @@ export class UsuarioComponent {
         const nombre = this.formularioUsuarioModificar.controls['nombre'].value;
         const contraseña = this.formularioUsuarioModificar.controls['contra'].value;
         const autoridad = this.formularioUsuarioModificar.controls['autoridad'].value;
-        console.log('actualizando?')
 
         this.usuarioServ.updateUsuario(new Usuario(nombre, contraseña, autoridad, true, this.usuarioSeleccionado.UsuarioId))
         .pipe(

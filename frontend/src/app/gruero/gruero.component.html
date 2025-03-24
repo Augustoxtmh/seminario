@@ -1,13 +1,23 @@
 <h1 class="col-md-4 title-div my-3">Grueros</h1>
+
 <form [formGroup]="formularioGruero" (ngSubmit)="onSubmit()" [ngClass]="{ 'd-block': grueroSeleccionado.GrueroID == 0, 'd-none': grueroSeleccionado.GrueroID != 0 }">
   <div class="row mb-4 my-3 form-div">
     <div class="col-md-6">
       <label for="nombre" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombre" formControlName="nombre">
+      <small class="error" *ngIf="formularioGruero.get('nombre')?.touched && formularioGruero.get('nombre')?.invalid">
+        <span *ngIf="formularioGruero.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioGruero.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+    
     <div class="col-md-6">
       <label for="telefono" class="form-label">Teléfono:</label>
       <input type="text" class="form-control" id="telefono" formControlName="telefono">
+      <small class="error" *ngIf="formularioGruero.get('telefono')?.touched && formularioGruero.get('telefono')?.invalid">
+        <span *ngIf="formularioGruero.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioGruero.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
+      </small>
     </div>
   </div>
   <button class="btn btn-success my-3" [disabled]="formularioGruero.invalid">Guardar</button>
@@ -18,10 +28,19 @@
     <div class="col-md-6">
       <label for="nombreModificar" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombreModificar" formControlName="nombre">
+      <small class="error" *ngIf="formularioGrueroModificar.get('nombre')?.touched && formularioGrueroModificar.get('nombre')?.invalid">
+        <span *ngIf="formularioGrueroModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioGrueroModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-6">
       <label for="telefonoModificar" class="form-label">Teléfono:</label>
       <input type="text" class="form-control" id="telefonoModificar" formControlName="telefono">
+      <small class="error" *ngIf="formularioGrueroModificar.get('telefono')?.touched && formularioGrueroModificar.get('telefono')?.invalid">
+        <span *ngIf="formularioGrueroModificar.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioGrueroModificar.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
+      </small>
     </div>
   </div>
   <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
@@ -29,11 +48,9 @@
   <button class="btn btn-danger my-3" (click)="onDelete()">Eliminar</button>
 </form>
 
-
 <h2>Lista de grueros</h2>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-table">
-    
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Nombre </th>
       <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.NombreGruero }} </td>
@@ -46,7 +63,6 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns" [hidden]="!element.DeAlta"></tr>
-
   </table>
 
   <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>

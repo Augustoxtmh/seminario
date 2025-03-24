@@ -34,7 +34,6 @@ export class ModificarPGruaComponent {
   {
     const navigation = this.router.getCurrentNavigation();
     this.pedidoGruaRecibido = navigation?.extras.state?.['pgrua'];
-    console.log(this.pedidoGruaRecibido.urlFactura == null);
     const gruero = navigation?.extras.state?.['grueroN'];;
 
     this.formularioPGrua = this.fb.group({
@@ -60,8 +59,6 @@ export class ModificarPGruaComponent {
   onSave() {
     if(this.formularioPGrua.valid)
     {
-      console.log('guardando');
-      console.log(this.pedidoGruaRecibido);
 
       const gruero = this.formularioPGrua.controls['gruero'].value;
       const nombreCliente = this.formularioPGrua.controls['nCliente'].value;
@@ -73,7 +70,6 @@ export class ModificarPGruaComponent {
       let fechaE: Date = new Date();
 
       if (gruero == '' || nombreCliente == '' || fecha == '' || patente == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -109,7 +105,6 @@ export class ModificarPGruaComponent {
         })
       ).subscribe((res) => {
         grueroId = res.GrueroID ?? 0;
-        console.log(this.pedidoGruaRecibido.PedidoID)
         this.pGruaServ.updatePedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, 1, this.pedidoGruaRecibido.Monto, this.pedidoGruaRecibido.PedidoID)
         ).pipe(
           catchError(() => {
@@ -127,7 +122,6 @@ export class ModificarPGruaComponent {
         ).subscribe((res) => {
 
           this.router.navigate(['/verPedidosDeGrua']);
-          console.log('Pedido guardado:', res);
           
           Swal.fire({
             position: "top-end",
@@ -198,8 +192,9 @@ export class ModificarPGruaComponent {
         });
         return [];
       })
-    ).subscribe((res) => {
-      this.grueroSugerido = res
+    ).subscribe((grueros) => {
+      this.grueroSugerido = grueros
+        .filter(gruero => gruero.DeAlta)
         .map(gruero => gruero.NombreGruero)
         .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
     });

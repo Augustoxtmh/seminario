@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { Poliza } from 'src/app/models/poliza';
+import { ModalVehiculoService } from 'src/app/service/modals/modalVehiculo/modal-vehiculo.service';
 import { PolizaService } from 'src/app/service/poliza/poliza.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import Swal from 'sweetalert2';
@@ -15,6 +16,7 @@ import Swal from 'sweetalert2';
 export class ModificarPolizaComponent {
   formularioPoliza: FormGroup;
   patentesSugeridas: String[] = [];
+  vehiculoSeleccionado: boolean = false;
   polizaRecibida: Poliza;
   date: Date = new Date();
 
@@ -22,7 +24,8 @@ export class ModificarPolizaComponent {
     private fb: FormBuilder, 
     private polizaServ: PolizaService,
     private router: Router,
-    private vehiculoServ: VehiculoService
+    private vehiculoServ: VehiculoService,
+    private vehiculoModal: ModalVehiculoService
   ) {
 
     const navigation = this.router.getCurrentNavigation();
@@ -43,7 +46,6 @@ export class ModificarPolizaComponent {
   onSave() {
     if(this.formularioPoliza.valid)
     {
-      console.log('creando');
     
       const poliza = this.formularioPoliza.value.poliza;
       const telefono = this.formularioPoliza.value.telefono;
@@ -130,6 +132,7 @@ export class ModificarPolizaComponent {
   }
   
   setValuePatente(patente: String) {
+    this.vehiculoSeleccionado = true;
     this.formularioPoliza.controls['patente'].setValue(patente);
     this.patentesSugeridas = [];
   }  
@@ -151,5 +154,10 @@ export class ModificarPolizaComponent {
       this.patentesSugeridas = vehiculos.map(vehiculo => vehiculo);
     }
   )};
-}
 
+  openVehiculoModal()
+  {
+    this.vehiculoModal.openFormModal()
+  }
+  
+}

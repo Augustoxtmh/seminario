@@ -1,4 +1,4 @@
-<h1 class="col-md-4 title-div my-3">Polizas</h1> 
+<h1 class="col-md-4 title-div my-3">Nueva poliza</h1>
 
 <div class="col-md-4 title-div">
   <label>Fecha de emisión:</label>
@@ -10,11 +10,21 @@
     <div class="col-md-4 my-2">
       <label for="poliza" class="form-label">Num. de Poliza:</label>
       <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza">
+      <small class="error" *ngIf="formularioPoliza.get('poliza')?.touched && formularioPoliza.get('poliza')?.invalid">
+        <span *ngIf="formularioPoliza.get('poliza')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioPoliza.get('poliza')?.hasError('minlength')">El número de póliza debe tener al menos 7 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4 my-2">
       <label for="telefono" class="form-label">Teléfono:</label>
       <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono">
+      <small class="error" *ngIf="formularioPoliza.get('telefono')?.touched && formularioPoliza.get('telefono')?.invalid">
+        <span *ngIf="formularioPoliza.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioPoliza.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4 my-2 position-relative">
       <label for="patente" class="form-label">Patente:</label>
       <input type="text" 
@@ -38,11 +48,15 @@
           Crear nuevo vehiculo
         </button>
       </div>
+
+      <small class="error" *ngIf="formularioPoliza.get('patente')?.touched && formularioPoliza.get('patente')?.invalid">
+        <span *ngIf="formularioPoliza.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioPoliza.get('patente')?.hasError('minlength')">La patente debe tener al menos 4 caracteres.</span>
+      </small>
     </div>
-    
-    
   </div>
+
   <button class="btn btn-success my-3" [disabled]="formularioPoliza.invalid">Guardar</button>
 </form>
 
-<a class="btn btn-dark" href="verPolizas">Ver todos las polizas</a>
+<a class="btn btn-dark" href="verPolizas">Ver todas las polizas</a>

@@ -13,7 +13,6 @@ export class UploadService {
   uploadFile(file: File, idPedido: number): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    console.log(idPedido)
     return this.http.post(`${this.apiUrl}/${idPedido}`, formData);
   }
 }

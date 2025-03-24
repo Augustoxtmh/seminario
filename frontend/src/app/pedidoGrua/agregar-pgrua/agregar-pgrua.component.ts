@@ -65,7 +65,6 @@ export class AgregarPGruaComponent {
       let fechaE: Date = new Date();
 
       if (gruero == '' || nombreCliente == '' || patente == '' || fecha == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -97,15 +96,11 @@ export class AgregarPGruaComponent {
               width: '20vw',
               padding: '20px',
             });
-            console.log('error')
             return [];
           })
         ).subscribe((res) => {
 
           grueroId = res.GrueroID ?? 0;
-          
-          console.log('prev' + res.GrueroID)
-          console.log('Aca:'+nombreCliente, fechaE, patente, true, grueroId, 1)
 
           this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)
           ).pipe(
@@ -119,7 +114,6 @@ export class AgregarPGruaComponent {
                 width: '25vw',
                 padding: '20px',
               });
-              console.log('error')
               return [];
             })
           ).subscribe((res) => {
@@ -133,7 +127,6 @@ export class AgregarPGruaComponent {
               width: '25vw',
               padding: '20px',
             });
-            console.log('Pedido creado:', res);
           });
         })
     }
@@ -217,9 +210,10 @@ export class AgregarPGruaComponent {
         });
         return [];
       })).subscribe((grueros) => {
-      this.grueroSugerido = grueros
-        .map(gruero => gruero.NombreGruero)
-        .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
+        this.grueroSugerido = grueros
+          .filter(gruero => gruero.DeAlta)
+          .map(gruero => gruero.NombreGruero)
+          .filter(nombre => nombre.toLowerCase().includes(value.toLowerCase()));
       }
     );
   }
@@ -227,7 +221,6 @@ export class AgregarPGruaComponent {
   setValueGruero(nombre: String) {
     this.formularioPGrua.controls['gruero'].setValue(nombre);
     this.grueroSeleccionado = true;
-    console.log(this.grueroSeleccionado)
     this.grueroSugerido = [];
   }
 

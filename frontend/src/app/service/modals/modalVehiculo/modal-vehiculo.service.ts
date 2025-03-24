@@ -13,8 +13,30 @@ export class ModalVehiculoService {
 
   constructor(private fb: FormBuilder, private vehiculoServ: VehiculoService) {
     this.formularioGrueroModal = this.fb.group({
-      nombre: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
+      Nombre:[
+        '',
+        [Validators.required, Validators.minLength(8)],
+      ],
+      Patente: [
+        '',
+        [Validators.required, Validators.minLength(4)],
+      ],
+      Marca: [
+        '',
+        [Validators.required, Validators.minLength(4)],
+      ],
+      Color: [
+        '',
+        [Validators.required, Validators.minLength(3)],
+      ],
+      TipoPlan: [
+        '',
+        [Validators.required, Validators.maxLength(2)],
+      ],
+      Modelo: [
+        '',
+        [Validators.required, Validators.minLength(4)],
+      ],
     });
   }
 
@@ -22,7 +44,7 @@ export class ModalVehiculoService {
     return Swal.fire({
       title: 'Nuevo Vehiculo',
       html: `
-        <form [formGroup]="formularioGrueroModal"">
+        <form [formGroup]="formularioGrueroModal">
           <div class="row mb-4 my-3 form-div">
             <div class="col-md-5">
               <label for="Nombre" class="form-label">Titular:</label>
@@ -53,6 +75,8 @@ export class ModalVehiculoService {
       `,
       showCancelButton: true,
       confirmButtonText: 'Guardar',
+      width: '60vw',
+      padding: '20px',
     }).then(result => {
       if (result.isConfirmed) {
         const Nombre = (document.getElementById('Nombre') as HTMLInputElement).value.trim();
@@ -62,7 +86,10 @@ export class ModalVehiculoService {
         const TipoPlan = (document.getElementById('TipoPlan') as HTMLInputElement).value.trim();
         const Modelo = (document.getElementById('Modelo') as HTMLInputElement).value.trim();
         
-      if (!Nombre || !Patente || !Marca || !Color || !TipoPlan || !Modelo) {
+      if (!Nombre || !Patente || !Marca || !Color || !TipoPlan || !Modelo ||
+        !(Nombre.length > 7) ||  !(Patente.length > 3) ||  !(Marca.length > 3)||  !(Color.length > 2)
+          ||  !(TipoPlan.length < 2) ||  !(Modelo.length > 3)
+      ) {
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -74,30 +101,33 @@ export class ModalVehiculoService {
         });
         return;
       }
-
-      this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
-        catchError(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error al guardar",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '25vw',
-            padding: '20px',
-          });
-          return [];
-        })).subscribe((res) => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Guardado con exito",
-            showConfirmButton: false,
-            timer: 1500,
-            width: '25vw',
-            padding: '20px',
-          });
-        })
-    }})
+      else
+      {
+        this.vehiculoServ.createVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
+          catchError(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Error al guardar",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '25vw',
+              padding: '20px',
+            });
+            return [];
+          })).subscribe((res) => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Guardado con exito",
+              showConfirmButton: false,
+              timer: 1500,
+              width: '25vw',
+              padding: '20px',
+            });
+          }
+        )}
+      }
+    })
   };
 }

@@ -98,7 +98,6 @@ export class VerPGruasComponent {
       this.dataSource.data = this.pedidosGruas.filter(pedido => pedido.Monto === 0 || !pedido.urlFactura);
     }
     this.mostrandoFaltantes = !this.mostrandoFaltantes;
-    console.log(this.mostrandoFaltantes)
   }
   
 

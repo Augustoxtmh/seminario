@@ -5,11 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { AgregarPGruaComponent } from './pedidoGrua/agregar-pgrua/agregar-pgrua.component';
 import { ModificarPGruaComponent } from './pedidoGrua/modificar-pgrua/modificar-pgrua.component';
 import { VerPGruasComponent } from './pedidoGrua/ver-pgruas/ver-pgruas.component';
-import { VerPGruaComponent } from './pedidoGrua/ver-pgrua/ver-pgrua.component';
 import { AgregarVehiculoComponent } from './vehiculo/agregar-vehiculo/agregar-vehiculo.component';
 import { ModificarVehiculoComponent } from './vehiculo/modificar-vehiculo/modificar-vehiculo.component';
 import { VerVehiculosComponent } from './vehiculo/ver-vehiculos/ver-vehiculos.component';
-import { VerVehiculoComponent } from './vehiculo/ver-vehiculo/ver-vehiculo.component';
 import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.component';
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
 import { VerPolizasComponent } from './poliza/ver-polizas/ver-polizas.component';
@@ -36,12 +34,10 @@ const routes: Routes = [
     { path: 'agregarPedidoGrua', component: AgregarPGruaComponent, canActivate: [authLoggedGuard] },
     { path: 'modificarPedidoGrua', component: ModificarPGruaComponent, canActivate: [authLoggedGuard] },
     { path: 'verPedidosDeGrua', component: VerPGruasComponent, canActivate: [authLoggedGuard] },
-    { path: 'verPedidoDeGrua', component: VerPGruaComponent, canActivate: [authLoggedGuard] },
 
     { path: 'agregarVehiculo', component: AgregarVehiculoComponent, canActivate: [authLoggedGuard] },
     { path: 'modificarVehiculo', component: ModificarVehiculoComponent, canActivate: [authLoggedGuard] },
     { path: 'verVehiculos', component: VerVehiculosComponent, canActivate: [authLoggedGuard] },
-    { path: 'verVehiculo', component: VerVehiculoComponent, canActivate: [authLoggedGuard] },
 
     { path: 'agregarPoliza', component: AgregarPolizaComponent, canActivate: [authLoggedGuard] },
     { path: 'modificarPoliza', component: ModificarPolizaComponent, canActivate: [authLoggedGuard] },

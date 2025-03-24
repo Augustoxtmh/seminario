@@ -61,7 +61,6 @@ export class ModificarVehiculoComponent {
     const Modelo = this.formularioVehiculo.controls['Modelo'].value;
 
     if (Patente == '' || Marca == '' || Color == '' || TipoPlan == '' || Modelo == '') {
-      console.log('error')
       Swal.fire({
         position: "top-end",
         icon: "error",

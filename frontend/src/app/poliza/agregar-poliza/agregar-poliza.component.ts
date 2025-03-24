@@ -28,7 +28,7 @@ export class AgregarPolizaComponent {
     private vehiculoModalServ: ModalVehiculoService
   ) {
     this.formularioPoliza = this.fb.group({
-      poliza: ['', [Validators.required, Validators.minLength(7)]],
+      poliza: ['', [Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]],
       telefono: ['', [Validators.required, Validators.minLength(10)]],
       patente: ['', [Validators.required, Validators.minLength(4)]],
     });
@@ -43,7 +43,6 @@ export class AgregarPolizaComponent {
       const date = new Date();
 
       if (poliza == '' || telefono == '' || patente == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -57,7 +56,6 @@ export class AgregarPolizaComponent {
       }
 
       if (poliza == '' || telefono == '' || patente == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -93,7 +91,6 @@ export class AgregarPolizaComponent {
           width: '25vw',
           padding: '20px',
         });
-        console.log('Póliza creada:', res);
         const navigationExtras: NavigationExtras = { state: { poliza: res } };
         this.router.navigate(['/generarCuota'], navigationExtras);
       });
@@ -109,6 +106,7 @@ export class AgregarPolizaComponent {
     } else {
       this.patentesSugeridas = [];
     }
+    this.vehiculoSeleccionado = false;
   }
   
   setValuePatente(patente: String) {

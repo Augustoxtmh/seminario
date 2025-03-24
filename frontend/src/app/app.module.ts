@@ -10,11 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AgregarPGruaComponent } from './pedidoGrua/agregar-pgrua/agregar-pgrua.component';
 import { ModificarPGruaComponent } from './pedidoGrua/modificar-pgrua/modificar-pgrua.component';
-import { VerPGruaComponent } from './pedidoGrua/ver-pgrua/ver-pgrua.component';
 import { VerPGruasComponent } from './pedidoGrua/ver-pgruas/ver-pgruas.component';
 import { AgregarVehiculoComponent } from './vehiculo/agregar-vehiculo/agregar-vehiculo.component';
 import { ModificarVehiculoComponent } from './vehiculo/modificar-vehiculo/modificar-vehiculo.component';
-import { VerVehiculoComponent } from './vehiculo/ver-vehiculo/ver-vehiculo.component';
 import { VerVehiculosComponent } from './vehiculo/ver-vehiculos/ver-vehiculos.component';
 import { AgregarPolizaComponent } from './poliza/agregar-poliza/agregar-poliza.component';
 import { ModificarPolizaComponent } from './poliza/modificar-poliza/modificar-poliza.component';
@@ -40,11 +38,9 @@ import { VerCuotasComponent } from './cuota/ver-cuotas/ver-cuotas.component';
     NavbarComponent,
     AgregarPGruaComponent,
     ModificarPGruaComponent,
-    VerPGruaComponent,
     VerPGruasComponent,
     AgregarVehiculoComponent,
     ModificarVehiculoComponent,
-    VerVehiculoComponent,
     VerVehiculosComponent,
     AgregarPolizaComponent,
     ModificarPolizaComponent,

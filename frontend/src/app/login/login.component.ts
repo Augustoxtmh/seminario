@@ -68,8 +68,7 @@ export class LoginComponent {
         });
         return [];
       })
-    ).subscribe((res) => {
-      console.log(res)
+    ).subscribe(() => {
     }); 
     this.usuarioServ.createUsuario(new Usuario("usuario", "usuario", 'U', true)).pipe(
       catchError(() => {

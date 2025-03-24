@@ -1,20 +1,34 @@
 <h1 class="col-md-4 title-div my-3">Usuarios</h1>
+
 <form [formGroup]="formularioUsuario" (ngSubmit)="onSubmit()" [ngClass]="{ 'd-block': usuarioSeleccionado.UsuarioId == 0, 'd-none': usuarioSeleccionado.UsuarioId != 0 }">
   <div class="row mb-4 my-3 form-div">
     <div class="col-md-4">
       <label for="nombre" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombre" formControlName="nombre">
+      <small class="error" *ngIf="formularioUsuario.get('nombre')?.touched && formularioUsuario.get('nombre')?.invalid">
+        <span *ngIf="formularioUsuario.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioUsuario.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4">
       <label for="contra" class="form-label">Contraseña:</label>
       <input type="text" class="form-control" id="contra" formControlName="contra">
+      <small class="error" *ngIf="formularioUsuario.get('contra')?.touched && formularioUsuario.get('contra')?.invalid">
+        <span *ngIf="formularioUsuario.get('contra')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioUsuario.get('contra')?.hasError('minlength')">La contraseña debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4">
       <label for="autoridad" class="form-label">Autoridad:</label>
       <select class="form-control" id="autoridad" formControlName="autoridad">
         <option value="U">Usuario</option>
         <option value="A">Administrador</option>
       </select>
+      <small class="error" *ngIf="formularioUsuario.get('autoridad')?.touched && formularioUsuario.get('autoridad')?.invalid">
+        <span *ngIf="formularioUsuario.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
+      </small>
     </div>
   </div>
   <button class="btn btn-success my-3" [disabled]="formularioUsuario.invalid">Guardar</button>
@@ -25,17 +39,30 @@
     <div class="col-md-4">
       <label for="nombreModificar" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombreModificar" formControlName="nombre">
+      <small class="error" *ngIf="formularioUsuarioModificar.get('nombre')?.touched && formularioUsuarioModificar.get('nombre')?.invalid">
+        <span *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4">
       <label for="contraModificar" class="form-label">Contraseña:</label>
       <input type="text" class="form-control" id="contraModificar" formControlName="contra">
+      <small class="error" *ngIf="formularioUsuarioModificar.get('contra')?.touched && formularioUsuarioModificar.get('contra')?.invalid">
+        <span *ngIf="formularioUsuarioModificar.get('contra')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioUsuarioModificar.get('contra')?.hasError('minlength')">La contraseña debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
     <div class="col-md-4">
       <label for="autoridadModificar" class="form-label">Autoridad:</label>
       <select class="form-control" id="autoridadModificar" formControlName="autoridad">
         <option value="U">Usuario</option>
         <option value="A">Administrador</option>
       </select>
+      <small class="error" *ngIf="formularioUsuarioModificar.get('autoridad')?.touched && formularioUsuarioModificar.get('autoridad')?.invalid">
+        <span *ngIf="formularioUsuarioModificar.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
+      </small>
     </div>
   </div>
   <button class="btn btn-info my-3" (click)="onBack()">Volver</button>
@@ -46,7 +73,7 @@
 <h2>Lista de usuarios</h2>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-table">
-    
+
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="changeColor"> Nombre </th>
       <td mat-cell *matCellDef="let element" class="changeColor" (click)="onRowClick(element)"> {{ element.Nombre }} </td>

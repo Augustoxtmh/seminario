@@ -47,7 +47,6 @@ export class AgregarVehiculoComponent {
   onSubmit() {
     if(this.formularioVehiculo.valid)
     {
-      console.log('creando');
     
       const Nombre = this.formularioVehiculo.controls['Nombre'].value;
       const Patente = this.formularioVehiculo.controls['Patente'].value;
@@ -91,7 +90,6 @@ export class AgregarVehiculoComponent {
             width: '25vw',
             padding: '20px',
           });
-          console.log(res);
       });
     }
   }  

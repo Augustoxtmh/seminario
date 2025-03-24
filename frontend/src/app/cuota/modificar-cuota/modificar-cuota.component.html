@@ -10,28 +10,41 @@
     <div class="col-md-4 my-2">
       <label for="numCuota" class="form-label">Número de Cuota:</label>
       <input type="number" class="form-control" id="numCuota" name="numCuota" formControlName="NumCuota">
+      <small class="error" *ngIf="formularioCuota.get('NumCuota')?.touched && formularioCuota.get('NumCuota')?.invalid">
+        <span *ngIf="formularioCuota.get('NumCuota')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioCuota.get('NumCuota')?.hasError('min')">El número de cuota debe ser mayor o igual a 0.</span>
+      </small>
     </div>
+
     <div class="col-md-4 my-2">
       <label for="monto" class="form-label">Monto:</label>
       <input type="number" class="form-control" id="monto" name="monto" formControlName="Monto">
+      <small class="error" *ngIf="formularioCuota.get('Monto')?.touched && formularioCuota.get('Monto')?.invalid">
+        <span *ngIf="formularioCuota.get('Monto')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioCuota.get('Monto')?.hasError('min')">El monto debe ser mayor o igual a 1.</span>
+      </small>
     </div>
+
     <div class="col-md-4 my-2 position-relative">
-        <label for="NumeroPoliza" class="form-label">Número de Póliza:</label>
-        <input type="text" 
-            class="form-control" 
-            id="NumeroPoliza" 
-            name="NumeroPoliza" 
-            formControlName="NumeroPoliza" 
-            (input)="onPolizaInput($event)">
+      <label for="NumeroPoliza" class="form-label">Número de Póliza:</label>
+      <input type="text" 
+             class="form-control" 
+             id="NumeroPoliza" 
+             name="NumeroPoliza" 
+             formControlName="NumeroPoliza" 
+             (input)="onPolizaInput($event)">
+      <small class="error" *ngIf="formularioCuota.get('NumeroPoliza')?.touched && formularioCuota.get('NumeroPoliza')?.invalid">
+        <span *ngIf="formularioCuota.get('NumeroPoliza')?.hasError('required')">Este campo es obligatorio.</span>
+      </small>
       
-        <div *ngIf="polizasSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
-          <button *ngFor="let poliza of polizasSugeridas"
-                  type="button"
-                  class="list-group-item list-group-item-action"
-                  (click)="setValuePoliza(poliza)">
-            {{ poliza }}
-          </button>
-        </div>
+      <div *ngIf="polizasSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+        <button *ngFor="let poliza of polizasSugeridas"
+                type="button"
+                class="list-group-item list-group-item-action"
+                (click)="setValuePoliza(poliza)">
+          {{ poliza }}
+        </button>
+      </div>
     </div>
   </div>
 </form>

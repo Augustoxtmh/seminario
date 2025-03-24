@@ -1,4 +1,3 @@
-
 <h1 class="col-md-6 title-div my-3">Modificar pedido de grúa</h1> 
 <form [formGroup]="formularioPGrua">
     <div class="row mb-4 my-2 form-div">
@@ -19,12 +18,20 @@
                 {{ gruero }}
               </button>
             </div>
+
+            <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
+              <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
+              <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
+            </small>
         </div>
 
         <div class="col-md-5 my-2">
             <label for="nCliente" class="form-label">Nombre del cliente:</label>
-            <input type="text" class="form-control" id="nCliente" name="nCliente" formControlName="nCliente"
-            name="nCliente">
+            <input type="text" class="form-control" id="nCliente" name="nCliente" formControlName="nCliente">
+            <small class="error" *ngIf="formularioPGrua.get('nCliente')?.touched && formularioPGrua.get('nCliente')?.invalid">
+              <span *ngIf="formularioPGrua.get('nCliente')?.hasError('required')">Este campo es obligatorio.</span>
+              <span *ngIf="formularioPGrua.get('nCliente')?.hasError('minlength')">El nombre del cliente debe tener al menos 7 caracteres.</span>
+            </small>
         </div>
 
         <div class="col-md-3 my-2">
@@ -44,11 +51,19 @@
                 {{ patente }}
               </button>
             </div>
+
+            <small class="error" *ngIf="formularioPGrua.get('patente')?.touched && formularioPGrua.get('patente')?.invalid">
+              <span *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
+              <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 4 caracteres.</span>
+            </small>
         </div>
 
         <div class="col-md-4 my-2">
             <label for="fecha" class="form-label">Fecha de emisión:</label>
             <input type="date" class="form-control" id="fecha" formControlName="fecha">
+            <small class="error" *ngIf="formularioPGrua.get('fecha')?.touched && formularioPGrua.get('fecha')?.invalid">
+              <span *ngIf="formularioPGrua.get('fecha')?.hasError('required')">Este campo es obligatorio.</span>
+            </small>
         </div>
     </div>
 </form>

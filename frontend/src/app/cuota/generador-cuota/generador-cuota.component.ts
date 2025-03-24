@@ -67,32 +67,30 @@ export class GeneradorCuotaComponent {
       let FechaV = this.formularioCuota.controls["FechaV"].value
       let patente: String = '';
       let nombre: String = '';
-
+      console.log(poliza)
       try {
         const resPoliza = await firstValueFrom(
           this.polizaServ.getPolizaPorNPoliza(poliza).pipe(
             catchError((err) => {
-              console.error(err);
               return [];
             })
           )
         );
-    
+        console.log(poliza)
+
         if (resPoliza && resPoliza.Patente) {
           patente = resPoliza.Patente;
-          console.log(patente);
     
           const resVehiculo = await firstValueFrom(
             this.vehiculoServ.getVehiculoPorPatente(resPoliza.Patente.toString()).pipe(
-              catchError((err) => {
-                console.error(err);
+              catchError(() => {
+                console.log(resPoliza.Patente.toString())
                 return [];
               })
             )
           );
-    
+
           if (resVehiculo) {
-            console.log(resVehiculo);
             nombre = resVehiculo.Nombre;
           }
         }
@@ -139,27 +137,27 @@ export class GeneradorCuotaComponent {
         let aCuota = nCuota;
     
         const promise = new Promise<void>((resolve, reject) => {
-            this.cuotaServ
-                .createCuota(new Cuota(aCuota, fecha, Monto, poliza, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId ))
-                .pipe(
-                    catchError((error) => {
-                        console.error(`Error al guardar cuota ${aCuota}:`, error);
-                        reject(error);
-                        return [];
-                    }),
-                )
-                .subscribe(() => {
-                  if(Cantidad > 1){
-                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
-                    Cantidad = Cantidad - 2;
-                    aCuota++
-                  }
-                  if(Cantidad == 1){
-                    this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
-                    Cantidad--;
-                  }
-                  resolve();
-                });
+          this.cuotaServ
+          .createCuota(new Cuota(aCuota, fecha, Monto, poliza, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId ))
+          .pipe(
+              catchError((error) => {
+                  console.error(`Error al guardar cuota ${aCuota}:`, error);
+                  reject(error);
+                  return [];
+              }),
+          )
+          .subscribe(() => {
+            if(Cantidad > 1){
+              this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
+              Cantidad = Cantidad - 2;
+              aCuota++
+            }
+            if(Cantidad == 1){
+              this.agregarDatosAlPDF(aCuota, fecha, Monto, poliza, Cantidad, patente, nombre);
+              Cantidad--;
+            }
+            resolve();
+          });
         });
     
         promises.push(promise);
@@ -171,7 +169,7 @@ export class GeneradorCuotaComponent {
       try {
         
         await Promise.all(promises)
-        this.generarDocumentoPDF()
+        this.generarDocumentoPDF(nombre, FechaV)
 
       } catch (error) {
         console.error("Error al procesar las cuotas:", error)
@@ -188,9 +186,8 @@ export class GeneradorCuotaComponent {
     }
   }
 
-  generarDocumentoPDF() {
-    console.log("guardando")
-    this.doc.save("Cupon_Pago.pdf")
+  generarDocumentoPDF(nombre: String, fecha: string) {
+    this.doc.save((nombre[0] + this.polizaRecibida.NumeroPoliza[0] + this.polizaRecibida.Telefono[0] + fecha + "Cupon_Pago.pdf"))
     this.doc = new jsPDF()
   }
 

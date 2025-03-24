@@ -65,8 +65,8 @@ export class GrueroComponent {
       });
       return [];
     })).subscribe((res) => {
-      this.grueros = res;
-      this.dataSource.data = res;
+      this.grueros = res.filter(gruero => gruero.DeAlta);
+      this.dataSource.data = this.grueros;
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -84,7 +84,6 @@ export class GrueroComponent {
       const telefono = this.formularioGruero.controls['telefono'].value;
   
       if (nombre == '' || telefono == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -141,7 +140,6 @@ export class GrueroComponent {
       const telefono = this.formularioGrueroModificar.controls['telefono'].value;
 
       if (nombre == '' || telefono == '') {
-        console.log('error')
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -168,7 +166,6 @@ export class GrueroComponent {
           });
           return [];
         })).subscribe((res) => {
-        console.log(res)
           Swal.fire({
             position: "top-end",
             icon: "success",

@@ -39,7 +39,6 @@ export class VehiculoService {
   }
   
   public deleteVehiculo(DPatente: string): Observable<any> {
-    console.log(DPatente)
     return this.http.put<any>(this.url + '/unable/' + DPatente, {});
   }  
   
