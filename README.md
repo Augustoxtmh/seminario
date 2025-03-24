@@ -34,7 +34,8 @@ Usuario: root Contraseña: root
 
 http://localhost:3000/ -> es el backend, muestra un mensaje predeterminado.
 
-http://localhost:4200/ -> es el frontend, tiene un boton para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar
+http://localhost:4200/ -> es el frontend, tiene un boton para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar.
+
 Este botón genera 2 usuarios -> Admininistrador y Usuario, las claves son: admin admin y usuario usuario.
 Espero que funcione bien.
 Fin.
