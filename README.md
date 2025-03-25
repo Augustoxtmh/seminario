@@ -3,9 +3,8 @@ Proyecto Seminario
 Este es un proyecto utiliza Docker y Docker Compose para ejecutar una aplicación con un backend en NestJS, frontend en Angular y una base de datos MySQL.
 
 Requisitos
-
-- Docker
-- Docker Compose
+- Descargar Docker Desktop
+- Subsistema de linux (Se instalará durante la instalacion de docker desktop)
 
 Pasos para ejecutar el proyecto
 
