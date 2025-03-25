@@ -35,7 +35,7 @@ Regresamos a la terminal de VSC.
 
 7.  npx prisma generate
 
-8.  npx prisma migrate dev --name nombre_de_la_migracion
+8.  npx prisma migrate dev --name inicio
 
 9.  npx prisma migrate deploy
 
