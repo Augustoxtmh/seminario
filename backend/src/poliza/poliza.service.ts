@@ -55,14 +55,42 @@ export class PolizaService {
     return polizas.map(v => v.NumeroPoliza);
   }
 
-  async updatePoliza(data: Poliza): Promise<Poliza> {
-    return this.prisma.poliza.update({
+  async updatePoliza(data: Poliza, VPoliza: string): Promise<Poliza> {
+    const updatedPoliza = await this.prisma.poliza.update({
+      where: {
+        NumeroPoliza: VPoliza,
+      },
+      data: {
+        ...data,
+        NumeroPoliza: data.NumeroPoliza,
+      },
+    });
+  
+
+    const polizaExistente = await this.prisma.poliza.findUnique({
       where: {
         NumeroPoliza: data.NumeroPoliza,
       },
-      data,
     });
+
+    if (!polizaExistente) {
+      throw new Error(`La póliza con el número ${VPoliza} asa ${data.NumeroPoliza}  no existe.`);
+    }
+
+    // Solo actualiza las cuotas si el NumeroPoliza cambió y existe
+    await this.prisma.cuota.updateMany({
+      where: {
+        NumeroPoliza: VPoliza,
+      },
+      data: {
+        NumeroPoliza: data.NumeroPoliza,  // Se actualiza a la nueva póliza
+      },
+    });
+    
+  
+    return updatedPoliza;
   }
+  
 
   async deletePoliza(NumeroPoliza: string): Promise<Poliza> {
     return this.prisma.poliza.update({

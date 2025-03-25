@@ -25,10 +25,10 @@ export class VehiculoController {
     return res;
   }
   
-  @Put()
+  @Put('actu/:DPatente')
   async updateVehiculo(
-    @Body() vehiculo: Vehiculo): Promise<Vehiculo> {
-    return this.vehiculoService.updateVehiculo(vehiculo);
+    @Body() vehiculo: Vehiculo, @Param('DPatente') patenteV: string): Promise<Vehiculo> {
+    return this.vehiculoService.updateVehiculo(vehiculo, patenteV);
   }
   
   @Put('unable/:DPatente')

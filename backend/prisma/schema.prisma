@@ -15,31 +15,46 @@ model Gruero {
   pedidos           PedidoGrua[]
 }
 
-model PedidoGrua {
-  PedidoID          Int         @id @default(autoincrement())
-  UsuarioId         Int
-  FechaHoraPedido   DateTime
-  NombreCliente     String
-  GrueroID          Int         
-  Patente           String
-  urlFactura        String?
-  DeAlta            Boolean     @default(true)
-  Monto             Int?
-  Gruero            Gruero?     @relation(fields: [GrueroID], references: [GrueroID])
-  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
-}
 
 model Vehiculo {
-  Patente           String  @id
-  Nombre            String
-  Marca             String
-  Color             String
-  TipoPlan          String
-  Modelo            String
-  DeAlta            Boolean     @default(true)
-  Poliza            Poliza?
-  UsuarioId         Int
-  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+  Patente   String       @id
+  Nombre    String
+  Marca     String
+  Color     String
+  TipoPlan  String
+  Modelo    String
+  DeAlta    Boolean      @default(true)
+  Polizas   Poliza[]
+  Pedidos   PedidoGrua[]
+  UsuarioId Int
+  Usuario   Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
+}
+
+model PedidoGrua {
+  PedidoID        Int       @id @default(autoincrement())
+  UsuarioId       Int
+  FechaHoraPedido DateTime
+  NombreCliente   String
+  GrueroID        Int         
+  Patente         String
+  urlFactura      String?
+  DeAlta          Boolean   @default(true)
+  Monto           Int?
+  Gruero          Gruero?   @relation(fields: [GrueroID], references: [GrueroID])
+  Usuario         Usuario?  @relation(fields: [UsuarioId], references: [UsuarioId])
+  Vehiculo        Vehiculo  @relation(fields: [Patente], references: [Patente])
+}
+
+model Poliza {
+  NumeroPoliza String   @id
+  Vigencia     DateTime
+  Telefono     String
+  DeAlta       Boolean  @default(true)
+  Patente      String
+  Vehiculo     Vehiculo @relation(fields: [Patente], references: [Patente])
+  cuotas       Cuota[]
+  UsuarioId    Int
+  Usuario      Usuario? @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
 model Cuota {
@@ -53,17 +68,6 @@ model Cuota {
   Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
 }
 
-model Poliza {
-  NumeroPoliza      String  @id
-  Vigencia          DateTime
-  Telefono          String
-  DeAlta            Boolean     @default(true)
-  Patente           String   @unique
-  Vehiculo          Vehiculo @relation(fields: [Patente], references: [Patente])
-  cuotas            Cuota[]
-  UsuarioId         Int
-  Usuario           Usuario?     @relation(fields: [UsuarioId], references: [UsuarioId])
-}
 
 enum TipoUsuario {
   A

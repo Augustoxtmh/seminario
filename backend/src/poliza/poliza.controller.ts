@@ -31,9 +31,9 @@ export class PolizaController {
     return this.polizaService.getPoliza(id);
   }
 
-  @Put()
-  async updatePoliza(@Body() data: Poliza): Promise<Poliza> {
-    return this.polizaService.updatePoliza(data);
+  @Put('actu/:VPoliza')
+  async updatePoliza(@Body() data: Poliza, @Param('VPoliza') polizaV: string): Promise<Poliza> {
+    return this.polizaService.updatePoliza(data, polizaV);
   }
 
   @Delete(':id')

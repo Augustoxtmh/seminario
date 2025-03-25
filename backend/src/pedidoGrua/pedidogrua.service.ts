@@ -12,12 +12,23 @@ export class PedidogruaService {
     });
   }
 
-  async updatePedidogrua(data: PedidoGrua): Promise<PedidoGrua> {
-    return this.prisma.pedidoGrua.update({
+  async updatePedidoGrua(data: PedidoGrua): Promise<PedidoGrua> {
+    // Primero, actualizas el pedido de grúa específico
+    const updatedPedidoGrua = await this.prisma.pedidoGrua.update({
       where: { PedidoID: data.PedidoID },
       data,
     });
-  }
+  
+    // Luego, si la patente se actualiza, también debes actualizar todos los pedidos de grúa asociados
+    if (data.Patente) {
+      await this.prisma.pedidoGrua.updateMany({
+        where: { Patente: data.Patente },
+        data: { Patente: data.Patente }, // Actualizas la patente de todos los pedidos asociados
+      });
+    }
+  
+    return updatedPedidoGrua;
+  }  
 
   async getAllPedidogruas(): Promise<PedidoGrua[]> {
     return this.prisma.pedidoGrua.findMany(
@@ -30,6 +41,12 @@ export class PedidogruaService {
   async getPedidogrua(id: number): Promise<PedidoGrua> {
     return this.prisma.pedidoGrua.findUnique({
       where: { PedidoID: id },
+    });
+  }
+
+  async getPedidogruaPorPatente(id: string): Promise<PedidoGrua[]> {
+    return this.prisma.pedidoGrua.findMany({
+      where: { Patente: id },
     });
   }
 

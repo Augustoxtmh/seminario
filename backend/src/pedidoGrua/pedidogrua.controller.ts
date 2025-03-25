@@ -16,7 +16,7 @@ export class PedidogruaController {
 
   @Put()
   async updatePedidogrua(@Body() data: PedidoGrua): Promise<PedidoGrua> {
-    return this.pedidogruaService.updatePedidogrua(data);
+    return this.pedidogruaService.updatePedidoGrua(data);
   }
 
   @Put('montoUpd/:idPedido')
@@ -35,6 +35,11 @@ export class PedidogruaController {
   @Get(':id')
   async getPedidogrua(@Param('id') id: string): Promise<PedidoGrua> {
     return this.pedidogruaService.getPedidogrua(Number(id));
+  }
+
+  @Get(':patente')
+  async getPedidogruaPorPatente(@Param('patente') id: string): Promise<PedidoGrua[]> {
+    return this.pedidogruaService.getPedidogruaPorPatente(id);
   }
 
   @Delete(':id')

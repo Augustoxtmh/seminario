@@ -19,12 +19,6 @@ async function bootstrap() {
     fs.mkdirSync(uploadPath);
   }
   
-  const args = process.argv.slice(2);
-  if (args.includes('seed')) {
-    const seederService = app.get(SeederService);
-    await seederService.run();
-  }
-  
   await app.listen(3000);
 }
 bootstrap();

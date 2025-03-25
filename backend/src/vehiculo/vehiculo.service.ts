@@ -61,12 +61,29 @@ export class VehiculoService {
     return vehiculos.map(v => v.Patente);
   }
 
-  async updateVehiculo(data: Vehiculo): Promise<Vehiculo> {
-    return this.prisma.vehiculo.update({
-      where: { Patente: data.Patente },
+  async updateVehiculo(data: Vehiculo, patenteV: string): Promise<Vehiculo> {
+    const updatedVehiculo = await this.prisma.vehiculo.update({
+      where: { Patente: patenteV },
       data,
     });
+  
+    if (data.Patente && data.Patente !== patenteV) {
+      await this.prisma.pedidoGrua.updateMany({
+        where: { Patente: patenteV },
+        data: { Patente: data.Patente },
+      });
+    }
+  
+    if (data.Patente && data.Patente !== patenteV) {
+      await this.prisma.poliza.updateMany({
+        where: { Patente: patenteV },
+        data: { Patente: data.Patente },
+      });
+    }
+  
+    return updatedVehiculo;
   }
+  
 
   async unableVehiculoByPatente(Patente: string): Promise<Vehiculo> {
     return await this.prisma.vehiculo.update({

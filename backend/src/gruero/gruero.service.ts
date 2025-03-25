@@ -29,7 +29,6 @@ export class GrueroService {
       throw new Error('Error al crear el gruero.');
     }
   }
-  
 
   async getAllGrueros(): Promise<Gruero[]> {
     return this.prisma.gruero.findMany();
