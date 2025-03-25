@@ -41,20 +41,24 @@ Espero que funcione bien, en caso de que no sea asi:
 
 Plan B denominado: "camino largo":
 
-b1.  cd seminario/backend
+b1.  Instalar Node: https://nodejs.org/es/download
 
-b2.  npm i
+Una vez instalado entramos a VSC y en una terminal ejecutamos:
 
-b3.  Instalar xampp y habilitar los servicios de mysql y apache
+b2.  cd seminario/backend
 
-b4.  npm run start
+b3.  npm i
 
-b5.  cd ..
+b4.  Instalar xampp y habilitar los servicios de mysql y apache
 
-b6.  cd /frontend
+b5.  npm run start
 
-b7.  npm i
+b6.  cd ..
 
-b8.  ng serve --open
+b7.  cd /frontend
+
+b8.  npm i
+
+b9.  ng serve --open
 
 Fin.
