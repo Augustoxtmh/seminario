@@ -51,7 +51,7 @@
 
       <small class="error" *ngIf="formularioPoliza.get('patente')?.touched && formularioPoliza.get('patente')?.invalid">
         <span *ngIf="formularioPoliza.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioPoliza.get('patente')?.hasError('minlength')">La patente debe tener al menos 4 caracteres.</span>
+        <span *ngIf="formularioPoliza.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
       </small>
     </div>
   </div>

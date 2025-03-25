@@ -15,13 +15,23 @@ export class ModalGrueroService {
     this.formularioGrueroModal = this.fb.group({
       nombre: [
         '',
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       telefono: [
         '',
-        [Validators.required, Validators.minLength(10)],
-      ],
+        [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()\\s]+$')]
+      ]      
     });
+  }
+
+  validarNombreTelefono(nombre: string, telefono: string): boolean {
+    const soloLetrasEspacios = /^[a-zA-Z\s]+$/;
+    const soloNumerosSimbolos = /^[0-9+\-()\s]+$/;
+  
+    return (
+      !nombre || nombre.length < 5 || !soloLetrasEspacios.test(nombre) ||
+      !telefono || telefono.length < 10 || !soloNumerosSimbolos.test(telefono)
+    )
   }
 
   openFormModal(): Promise<any> {
@@ -49,7 +59,7 @@ export class ModalGrueroService {
         const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
         const telefono = (document.getElementById('telefono') as HTMLInputElement).value.trim();
 
-        if (!nombre || !telefono || !(nombre.length > 4) || !(telefono.length > 9)) {
+        if (this.validarNombreTelefono(nombre, telefono)) {
           Swal.fire({
             position: "top-end",
             icon: "error",

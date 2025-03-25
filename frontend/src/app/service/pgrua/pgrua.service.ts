@@ -20,6 +20,11 @@ url = "http://localhost:3000/pedidosgrua"
     return this.http.get<PGrua>(this.url, { params });
   }
 
+  public getPedidogruaPorPatente(Patente: string): Observable<PGrua[]> {
+    const params = { Patente };
+    return this.http.get<PGrua[]>(this.url, { params });
+  }
+
   public updatePedidogrua(pgrua: PGrua): Observable<any>{
     return this.http.put<any>(this.url, pgrua);
   }

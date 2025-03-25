@@ -30,10 +30,10 @@ export class ModificarCuotaComponent {
     this.cuotaRecibida = navigation?.extras.state?.['cuota'];
 
     this.formularioCuota = this.fb.group({
-      NumCuota: [this.cuotaRecibida?.NumCuota, [Validators.required, Validators.min(0)]],
+      NumCuota: [this.cuotaRecibida?.NumCuota, [Validators.required, Validators.min(0), Validators.pattern('^\\d+$')]],
       FechaVencimiento: [this.cuotaRecibida?.FechaVencimiento, [Validators.required]],
-      Monto: [this.cuotaRecibida?.Monto, [Validators.required, Validators.min(1)]],
-      NumeroPoliza: [this.cuotaRecibida?.NumeroPoliza, [Validators.required]],
+      Monto: [this.cuotaRecibida?.Monto, [Validators.required, Validators.minLength(1), Validators.pattern('^\\d+$')]],
+      NumeroPoliza: [this.cuotaRecibida?.NumeroPoliza, [Validators.required, Validators.pattern('^\\d+$')]],
       UsuarioId: [this.cuotaRecibida?.UsuarioId, [Validators.required]]
     });
   }

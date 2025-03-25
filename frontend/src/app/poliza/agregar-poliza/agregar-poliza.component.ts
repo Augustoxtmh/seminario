@@ -29,8 +29,8 @@ export class AgregarPolizaComponent {
   ) {
     this.formularioPoliza = this.fb.group({
       poliza: ['', [Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]],
-      telefono: ['', [Validators.required, Validators.minLength(10)]],
-      patente: ['', [Validators.required, Validators.minLength(4)]],
+      telefono: ['', [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()\\s]+$')]],
+      patente: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
     });
   }
 
@@ -42,20 +42,7 @@ export class AgregarPolizaComponent {
       const patente = this.formularioPoliza.value.patente;
       const date = new Date();
 
-      if (poliza == '' || telefono == '' || patente == '') {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Todos los campos son requeridos",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '25vw',
-          padding: '20px',
-        });
-        return;
-      }
-
-      if (poliza == '' || telefono == '' || patente == '') {
+      if(this.formularioPoliza.invalid){
         Swal.fire({
           position: "top-end",
           icon: "error",

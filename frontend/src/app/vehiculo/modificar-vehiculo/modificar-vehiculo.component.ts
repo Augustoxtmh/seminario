@@ -21,31 +21,34 @@ export class ModificarVehiculoComponent {
   {
     const navigation = this.router.getCurrentNavigation();
     this.vehiculoRecibido = navigation?.extras.state?.['vehiculo'];
-
+    /*Validators.pattern('^[0-9]+$')
+    Validators.pattern('^[a-zA-Z0-9\\s]+$')
+    [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()]+$')],
+    , Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')*/
     this.formularioVehiculo = this.fb.group({
       Nombre: [
         this.vehiculoRecibido?.Nombre,
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       Patente: [
         this.vehiculoRecibido?.Patente,
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')],
       ],
       Marca: [
         this.vehiculoRecibido?.Marca,
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(4), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       Color: [
         this.vehiculoRecibido?.Color,
-        [Validators.required, Validators.minLength(3)],
+        [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       TipoPlan: [
         this.vehiculoRecibido?.TipoPlan,
-        [Validators.required, Validators.maxLength(2)],
+        [Validators.required, Validators.maxLength(1), Validators.pattern('^[0-9]+$')],
       ],
       Modelo: [
         this.vehiculoRecibido?.Modelo,
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(4),  Validators.pattern('^[a-zA-Z0-9\\s]+$')],
       ],}
     )
   }
@@ -73,7 +76,7 @@ export class ModificarVehiculoComponent {
       return;
     }
 
-    this.vehiculoServ.updateVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)).pipe(
+    this.vehiculoServ.updateVehiculo(new Vehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId), this.vehiculoRecibido.Patente).pipe(
       catchError(() => {
         Swal.fire({
           position: "top-end",

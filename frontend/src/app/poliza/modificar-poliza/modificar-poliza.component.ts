@@ -27,16 +27,16 @@ export class ModificarPolizaComponent {
     private vehiculoServ: VehiculoService,
     private vehiculoModal: ModalVehiculoService
   ) {
-
     const navigation = this.router.getCurrentNavigation();
     this.polizaRecibida = navigation?.extras.state?.['poliza'];
 
     this.formularioPoliza = this.fb.group({
-      poliza: [this.polizaRecibida.NumeroPoliza, [Validators.required, Validators.minLength(7)]],
-      telefono: [this.polizaRecibida.Telefono, [Validators.required, Validators.minLength(10)]],
-      patente: [this.polizaRecibida.Patente, [Validators.required, Validators.minLength(4)]],
+      poliza: [this.polizaRecibida.NumeroPoliza, [Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]],
+      telefono: [this.polizaRecibida.Telefono, [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()\\s]+$')]],
+      patente: [this.polizaRecibida.Patente, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
     });
   }
+
 
   onGenerateCuota() {
     const navigationExtras: NavigationExtras = { state: { poliza: this.polizaRecibida } };
@@ -52,7 +52,20 @@ export class ModificarPolizaComponent {
       const patente = this.formularioPoliza.value.patente;
       const date = new Date();
 
-      this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, date, 1)).pipe(
+      if (this.formularioPoliza.invalid) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Todos los campos son requeridos",
+          showConfirmButton: false,
+          timer: 1500,
+          width: '25vw',
+          padding: '20px',
+        });
+        return;
+      }
+
+      this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, date, this.polizaRecibida.UsuarioId), this.polizaRecibida.NumeroPoliza).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",

@@ -31,23 +31,23 @@ export class GrueroComponent {
     this.formularioGruero = this.fb.group({
       nombre: [
         '',
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       telefono: [
         '',
-        [Validators.required, Validators.minLength(10)],
-      ],
+        [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()\\s]+$')]
+      ]      
     });
     
     this.formularioGrueroModificar = this.fb.group({
       nombre: [
         '',
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       telefono: [
         '',
-        [Validators.required, Validators.minLength(10)],
-      ],
+        [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9+\\-()\\s]+$')]
+      ]       
     });    
   }
 
@@ -83,7 +83,7 @@ export class GrueroComponent {
       const nombre = this.formularioGruero.controls['nombre'].value;
       const telefono = this.formularioGruero.controls['telefono'].value;
   
-      if (nombre == '' || telefono == '') {
+      if (nombre == '' || telefono == '' || nombre.length < 5 || telefono.length < 10) {
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -95,6 +95,7 @@ export class GrueroComponent {
         });
         return;
       }
+
       this.grueroServ.createGruero(new Gruero(nombre, telefono, true)).pipe(
         catchError(() => {
           Swal.fire({
@@ -139,7 +140,7 @@ export class GrueroComponent {
       const nombre = this.formularioGrueroModificar.controls['nombre'].value;
       const telefono = this.formularioGrueroModificar.controls['telefono'].value;
 
-      if (nombre == '' || telefono == '') {
+      if (nombre == '' || telefono == '' || nombre.length < 5 || telefono.length < 10) {
         Swal.fire({
           position: "top-end",
           icon: "error",

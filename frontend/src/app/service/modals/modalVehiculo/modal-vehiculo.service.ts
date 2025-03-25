@@ -9,35 +9,24 @@ import { Vehiculo } from 'src/app/models/vehiculo';
   providedIn: 'root'
 })
 export class ModalVehiculoService {
-  formularioGrueroModal: FormGroup;
 
-  constructor(private fb: FormBuilder, private vehiculoServ: VehiculoService) {
-    this.formularioGrueroModal = this.fb.group({
-      Nombre:[
-        '',
-        [Validators.required, Validators.minLength(8)],
-      ],
-      Patente: [
-        '',
-        [Validators.required, Validators.minLength(4)],
-      ],
-      Marca: [
-        '',
-        [Validators.required, Validators.minLength(4)],
-      ],
-      Color: [
-        '',
-        [Validators.required, Validators.minLength(3)],
-      ],
-      TipoPlan: [
-        '',
-        [Validators.required, Validators.maxLength(2)],
-      ],
-      Modelo: [
-        '',
-        [Validators.required, Validators.minLength(4)],
-      ],
-    });
+  constructor(private vehiculoServ: VehiculoService) {
+    
+  }
+
+  validarDatosVehiculo(Nombre: string, Patente: string, Marca: string, Color: string, TipoPlan: string, Modelo: string): boolean {
+    const soloLetrasEspacios = /^[a-zA-Z\s]+$/;
+    const soloLetrasNumerosEspacios = /^[a-zA-Z0-9\s]+$/;
+    const soloNumeros = /^[0-9]+$/;
+  
+    return (
+      !Nombre || Nombre.length < 8 || !soloLetrasEspacios.test(Nombre) ||
+      !Patente || Patente.length < 6 || !soloLetrasNumerosEspacios.test(Patente) ||
+      !Marca || Marca.length < 4 || !soloLetrasEspacios.test(Marca) ||
+      !Color || Color.length < 3 || !soloLetrasEspacios.test(Color) ||
+      !TipoPlan || TipoPlan.length !== 1 || !soloNumeros.test(TipoPlan) ||
+      !Modelo || Modelo.length < 4 || !soloLetrasNumerosEspacios.test(Modelo)
+    ) 
   }
 
   openFormModal(): Promise<any> {
@@ -56,7 +45,12 @@ export class ModalVehiculoService {
             </div>
             <div class="col-md-4">
               <label for="TipoPlan" class="form-label">Plan:</label>
-              <input type="text" class="form-control" id="TipoPlan" formControlName="TipoPlan">
+              <select class="form-control" id="TipoPlan" name="TipoPlan" formControlName="TipoPlan">
+                <option value="" disabled selected>Tipo de plan</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>   
             </div>
             <div class="col-md-4 my-3">
               <label for="Marca" class="form-label">Marca:</label>
@@ -86,10 +80,7 @@ export class ModalVehiculoService {
         const TipoPlan = (document.getElementById('TipoPlan') as HTMLInputElement).value.trim();
         const Modelo = (document.getElementById('Modelo') as HTMLInputElement).value.trim();
         
-      if (!Nombre || !Patente || !Marca || !Color || !TipoPlan || !Modelo ||
-        !(Nombre.length > 7) ||  !(Patente.length > 3) ||  !(Marca.length > 3)||  !(Color.length > 2)
-          ||  !(TipoPlan.length < 2) ||  !(Modelo.length > 3)
-      ) {
+      if (this.validarDatosVehiculo(Nombre, Patente, Marca, Color, TipoPlan, Modelo)) {
         Swal.fire({
           position: "top-end",
           icon: "error",

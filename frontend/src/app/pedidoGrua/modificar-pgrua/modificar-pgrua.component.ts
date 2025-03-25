@@ -39,11 +39,11 @@ export class ModificarPGruaComponent {
     this.formularioPGrua = this.fb.group({
       gruero: [
         gruero,
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')]
       ],
       nCliente: [
         this.pedidoGruaRecibido.NombreCliente,
-        [Validators.required, Validators.minLength(7)],,
+        [Validators.required, Validators.minLength(7), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')]
       ],
       fecha: [
         this.formatearFecha(this.pedidoGruaRecibido.FechaHoraPedido),
@@ -51,7 +51,7 @@ export class ModificarPGruaComponent {
       ],
       patente: [
         this.pedidoGruaRecibido.Patente,
-        [Validators.required, Validators.minLength(4)],,
+        [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')]
       ],}
     )
   }

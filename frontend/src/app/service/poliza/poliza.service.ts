@@ -23,8 +23,8 @@ export class PolizaService {
     return this.http.get<String[]>(`${this.url}/buscarV`, { params: { NPoliza: NPoliza.toString() } });
   }
 
-  public updatePoliza(poliza: Poliza): Observable<any>{
-    return this.http.put<any>(this.url, poliza);
+  public updatePoliza(poliza: Poliza, VPoliza: String): Observable<any>{
+    return this.http.put<any>(this.url + '/actu/' + VPoliza, poliza);
   }
 
   public createPoliza(poliza: Poliza): Observable<any>{

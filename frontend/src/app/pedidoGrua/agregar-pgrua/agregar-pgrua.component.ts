@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map, throwError } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { PGrua } from 'src/app/models/pgrua';
 import { CuotaService } from 'src/app/service/cuota/cuota.service';
@@ -30,15 +31,15 @@ export class AgregarPGruaComponent {
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
       private cuotaServ: CuotaService, private router: Router
       , private grueroModalServ: ModalGrueroService, private vehiculoModalServ: ModalVehiculoService)
-  {
+  {   
     this.formularioPGrua = this.fb.group({
       gruero: [
         '',
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, Validators.minLength(5), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       nCliente: [
         '',
-        [Validators.required, Validators.minLength(7)],,
+        [Validators.required, Validators.minLength(7), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],,
       ],
       fecha: [
         this.formatearFecha(this.date),
@@ -46,7 +47,7 @@ export class AgregarPGruaComponent {
       ],
       patente: [
         '',
-        [Validators.required, Validators.minLength(4)],,
+        [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')]
       ],}
     )
   }
@@ -99,35 +100,76 @@ export class AgregarPGruaComponent {
             return [];
           })
         ).subscribe((res) => {
-
           grueroId = res.GrueroID ?? 0;
-
-          this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)
-          ).pipe(
-            catchError(() => {
+          this.pGruaServ.getPedidogruaPorPatente(patente.valueOf()).pipe(
+            map((pedidos) => {
+              const pedidosTotal = pedidos.length;
+              
+              const fechaActual = new Date();
+              const mesActual = fechaActual.getMonth();
+              const anioActual = fechaActual.getFullYear();
+          
+              const pedidosEsteMes = pedidos.filter((p) => {
+                const fechaPedido = new Date(p.FechaHoraPedido);
+                return fechaPedido.getMonth() === mesActual && fechaPedido.getFullYear() === anioActual;
+              });
+                      
+              if (pedidosTotal >= 3 || pedidosEsteMes.length > 0) {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "error",
+                  title: "Se han realizado demasiados pedidos de grúa para este vehículo",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  width: "25vw",
+                  padding: "20px",
+                });
+                throw new Error("Exceso de pedidos de grúa");
+              }       
+              return pedidosTotal;
+            }),
+            catchError((error) => {
               Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Error al crear el pedido de grúa, revise los datos",
+                title: "Error al traer los pedidos de grúa realizados",
                 showConfirmButton: false,
-                timer: 3500,
+                timer: 1500,
+                width: "25vw",
+                padding: "20px",
+              });
+              return throwError(() => error);
+            })
+          ).subscribe(() => {
+
+            this.pGruaServ.createPedidogrua(new PGrua(nombreCliente, fechaE, patente, true, grueroId, JSON.parse(localStorage.getItem("User") || '{}').UsuarioId)
+            ).pipe(
+              catchError(() => {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "error",
+                  title: "Error al crear el pedido de grúa, revise los datos",
+                  showConfirmButton: false,
+                  timer: 3500,
+                  width: '25vw',
+                  padding: '20px',
+                });
+                return [];
+              })
+            ).subscribe(() => {
+              this.router.navigate(['/verPedidosDeGrua']);
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Creado con exito",
+                showConfirmButton: false,
+                timer: 1500,
                 width: '25vw',
                 padding: '20px',
               });
-              return [];
-            })
-          ).subscribe((res) => {
-            this.router.navigate(['/verPedidosDeGrua']);
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Creado con exito",
-              showConfirmButton: false,
-              timer: 1500,
-              width: '25vw',
-              padding: '20px',
             });
           });
+
         })
     }
   }

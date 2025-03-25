@@ -19,27 +19,27 @@ export class AgregarVehiculoComponent {
     this.formularioVehiculo = this.fb.group({
       Nombre:[
         '',
-        [Validators.required, Validators.minLength(8)],
+        [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       Patente: [
         '',
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9\\s]+$')],
       ],
       Marca: [
         '',
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(4), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       Color: [
         '',
-        [Validators.required, Validators.minLength(3)],
+        [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-ZÀ-ÿ\\s]+$')],
       ],
       TipoPlan: [
         '',
-        [Validators.required, Validators.maxLength(2)],
+        [Validators.required, Validators.maxLength(1), Validators.pattern('^[0-9]+$')],
       ],
       Modelo: [
         '',
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(4), Validators.pattern('^[a-zA-Z0-9\\s]+$')],
       ],}
     )
   }

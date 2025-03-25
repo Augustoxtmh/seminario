@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,7 +30,6 @@ export class VerPGruasComponent {
     private pedidoGrua: PgruaService, 
     private grueroServ: GrueroService,
     private router: Router,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {       

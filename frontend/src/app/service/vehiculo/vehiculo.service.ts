@@ -34,8 +34,8 @@ export class VehiculoService {
     return this.http.post<any>(this.url, vehiculo);
   }
 
-  public updateVehiculo(vehiculo: Vehiculo): Observable<any> {
-    return this.http.put<any>(this.url, vehiculo);
+  public updateVehiculo(vehiculo: Vehiculo, VPatente: String): Observable<any> {
+    return this.http.put<any>(this.url + '/actu/' + VPatente, vehiculo);
   }
   
   public deleteVehiculo(DPatente: string): Observable<any> {

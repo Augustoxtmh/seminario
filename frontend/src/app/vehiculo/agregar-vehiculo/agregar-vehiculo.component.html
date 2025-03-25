@@ -23,7 +23,7 @@
                   La patente es requerida.
                 </small>
                 <small class="error" *ngIf="formularioVehiculo.get('Patente')?.hasError('minlength')">
-                  La patente debe tener al menos 4 caracteres.
+                  La patente debe tener al menos 6 caracteres.
                 </small>
             </div>
         </div>
@@ -43,44 +43,49 @@
     </div>
 
     <div class="row mb-4 my-2 form-div">
-        <div class="col-md-3">
-            <label for="TipoPlan" class="form-label">Tipo de plan:</label>
-            <input type="text" class="form-control" id="TipoPlan" name="TipoPlan" formControlName="TipoPlan">
-            <div *ngIf="formularioVehiculo.get('TipoPlan')?.touched && formularioVehiculo.get('TipoPlan')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('required')">
-                  El tipo de plan es requerido.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('maxlength')">
-                  El tipo de plan debe tener como máximo 2 caracteres.
-                </small>
-            </div>
+      <div class="col-md-3">
+        <label for="TipoPlan" class="form-label">Tipo de plan:</label>
+        <select class="form-control" id="TipoPlan" name="TipoPlan" formControlName="TipoPlan">
+          <option value="" disabled selected>Tipo de plan</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <div *ngIf="formularioVehiculo.get('TipoPlan')?.touched && formularioVehiculo.get('TipoPlan')?.invalid">
+          <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('required')">
+            El tipo de plan es requerido.
+          </small>
+          <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('maxlength')">
+            El tipo de plan debe tener como máximo 2 caracteres.
+          </small>
         </div>
+      </div>
 
-        <div class="col-md-4">
-            <label for="Marca" class="form-label">Marca:</label>
-            <input type="text" class="form-control" id="Marca" name="Marca" formControlName="Marca">
-            <div *ngIf="formularioVehiculo.get('Marca')?.touched && formularioVehiculo.get('Marca')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('required')">
-                  La marca es requerida.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('minlength')">
-                  La marca debe tener al menos 4 caracteres.
-                </small>
-            </div>
-        </div>
+      <div class="col-md-4">
+          <label for="Marca" class="form-label">Marca:</label>
+          <input type="text" class="form-control" id="Marca" name="Marca" formControlName="Marca">
+          <div *ngIf="formularioVehiculo.get('Marca')?.touched && formularioVehiculo.get('Marca')?.invalid">
+              <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('required')">
+                La marca es requerida.
+              </small>
+              <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('minlength')">
+                La marca debe tener al menos 4 caracteres.
+              </small>
+          </div>
+      </div>
 
-        <div class="col-md-5">
-            <label for="Modelo" class="form-label">Modelo:</label>
-            <input type="text" class="form-control" id="Modelo" name="Modelo" formControlName="Modelo">
-            <div *ngIf="formularioVehiculo.get('Modelo')?.touched && formularioVehiculo.get('Modelo')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('required')">
-                  El modelo es requerido.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('minlength')">
-                  El modelo debe tener al menos 4 caracteres.
-                </small>
-            </div>
-        </div>
+      <div class="col-md-5">
+          <label for="Modelo" class="form-label">Modelo:</label>
+          <input type="text" class="form-control" id="Modelo" name="Modelo" formControlName="Modelo">
+          <div *ngIf="formularioVehiculo.get('Modelo')?.touched && formularioVehiculo.get('Modelo')?.invalid">
+              <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('required')">
+                El modelo es requerido.
+              </small>
+              <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('minlength')">
+                El modelo debe tener al menos 4 caracteres.
+              </small>
+          </div>
+      </div>
     </div>
 
     <button class="btn btn-success my-3" [disabled]="formularioVehiculo.invalid">Guardar</button>

@@ -66,7 +66,7 @@
 
             <small class="error" *ngIf="formularioPGrua.get('patente')?.touched && formularioPGrua.get('patente')?.invalid">
               <span *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
-              <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 4 caracteres.</span>
+              <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
             </small>
         </div>
 
