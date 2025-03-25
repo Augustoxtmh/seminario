@@ -37,5 +37,17 @@ http://localhost:3000/ -> es el backend, muestra un mensaje predeterminado.
 http://localhost:4200/ -> es el frontend, tiene un botón para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar.
 
 Este botón genera 2 usuarios -> Administrador y Usuario, las claves son: admin admin y usuario usuario.
-Espero que funcione bien.
+Espero que funcione bien, en caso de que no sea asi:
+
+Plan B denominado: "camino largo":
+
+b1.  cd seminario/backend
+b2.  npm i
+b3.  Instalar xampp y habilitar los servicios de mysql y apache
+b4.  npm run start
+b5.  cd ..
+b6.  cd /frontend
+b7.  npm i
+b8.  ng serve --open
+
 Fin.
