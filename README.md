@@ -13,7 +13,7 @@ Pasos para ejecutar el proyecto
 
  git clone https://github.com/Augustoxtmh/seminario.git
  
- cd proyecto-seminario/backend
+ cd seminario/backend
 
 2. Modifica el nombre del archivo .env.example => .env
 
