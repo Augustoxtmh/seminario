@@ -1,12 +1,10 @@
 Proyecto Seminario
 
-Este es un proyecto utiliza Docker y Docker Compose para ejecutar una aplicación con un backend en NestJS, frontend en Angular y una base de datos MySQL.
+Este es un proyecto que utiliza Node.js para ejecutar una aplicación con un backend en NestJS, frontend en Angular y una base de datos MySQL.
 
 Requisitos
-- Descargar Docker Desktop
-- Subsistema de linux (Se instalará durante la instalacion de docker desktop)
-
-Pasos para ejecutar el proyecto
+- Descargar Node.js -> https://nodejs.org/es/download
+- Descargar Xampp -> https://www.apachefriends.org/download.html
 
 1. Clona el repositorio:
 
@@ -16,49 +14,45 @@ Pasos para ejecutar el proyecto
 
 2. Modifica el nombre del archivo .env.example => .env
 
-3. docker-compose build
-  
-5. docker-compose up => Esperar hasta ver el mensaje en verde en la consola: Nest application successfully started
-   
-7. docker-compose exec nestjs-app sh -c "npx prisma migrate deploy"
+3.  Instalar Node: 
 
-8. cd ..
-9. cd /frontend
+Una vez instalado reiniciamos la pc, tras eso entramos al proyecto seminario en VSC y en una terminal ejecutamos:
 
-10. docker build -t frontend-seminario .
-11. docker run -p 4200:4200 frontend-seminario
+1.  cd seminario/backend
 
-Si todo salió bien, las siguientes rutas estarán disponibles:
-http://localhost:8080/index.php -> permite gestionar las bases de datos.
-Usuario: root Contraseña: root
+2.  npm i
 
-http://localhost:3000/ -> es el backend, muestra un mensaje predeterminado.
+3.  Instalar xampp y habilitar los servicios de mysql y apache
 
-http://localhost:4200/ -> es el frontend, tiene un botón para generar los datos de login solo para este caso, lo hice por problemas con los seeders que me cansé de intentar arreglar.
+5.  Entramos a esta ruta en cualquier navegador -> http://localhost/phpmyadmin/index.php?route=/
+
+usuario: root contraseña: root
+en caso de no ser asi probar sin contraseña
+
+6.  Creamos una base de datos nueva llamada: servicio_grua
+
+Regresamos a la terminal de VSC.
+
+7.  npx prisma generate
+
+8.  npx prisma migrate dev --name nombre_de_la_migracion
+
+9.  npx prisma migrate deploy
+
+10.  npm run start
+
+Abrimos otra terminal:
+
+1.  cd ..
+
+2.  cd /frontend
+
+3.  npm i
+
+4.  npm i @angular/cli
+
+5.  ng serve --open
 
 Este botón genera 2 usuarios -> Administrador y Usuario, las claves son: admin admin y usuario usuario.
-Espero que funcione bien, en caso de que no sea asi:
+Espero que funcione bien, Fin.
 
-Plan B denominado: "camino largo":
-
-b1.  Instalar Node: https://nodejs.org/es/download
-
-Una vez instalado entramos a VSC y en una terminal ejecutamos:
-
-b2.  cd seminario/backend
-
-b3.  npm i
-
-b4.  Instalar xampp y habilitar los servicios de mysql y apache
-
-b5.  npm run start
-
-b6.  cd ..
-
-b7.  cd /frontend
-
-b8.  npm i
-
-b9.  ng serve --open
-
-Fin.
