@@ -42,12 +42,19 @@ Espero que funcione bien, en caso de que no sea asi:
 Plan B denominado: "camino largo":
 
 b1.  cd seminario/backend
+
 b2.  npm i
+
 b3.  Instalar xampp y habilitar los servicios de mysql y apache
+
 b4.  npm run start
+
 b5.  cd ..
+
 b6.  cd /frontend
+
 b7.  npm i
+
 b8.  ng serve --open
 
 Fin.
