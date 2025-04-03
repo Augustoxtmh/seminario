@@ -52,47 +52,4 @@ export class LoginComponent {
       });  
     }
   }
-
-  generarDatosDePrueba()
-  {
-    this.usuarioServ.createUsuario(new Usuario("admin", "admin", 'A', true)).pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al guardar",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
-        });
-        return [];
-      })
-    ).subscribe(() => {
-    }); 
-    this.usuarioServ.createUsuario(new Usuario("usuario", "usuario", 'U', true)).pipe(
-      catchError(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error al guardar",
-          showConfirmButton: false,
-          timer: 1500,
-          width: '20vw',
-          padding: '20px',
-        });
-        return [];
-      })
-    ).subscribe((res) => {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Creado con éxito",
-        showConfirmButton: false,
-        timer: 1500,
-        width: '25vw',
-        padding: '20px',
-      });
-    }); 
-  }
 }
