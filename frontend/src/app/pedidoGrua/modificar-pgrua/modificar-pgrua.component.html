@@ -1,72 +1,85 @@
 <h1 class="col-md-6 title-div my-3">Modificar pedido de grúa</h1> 
 <form [formGroup]="formularioPGrua">
-    <div class="row mb-4 my-2 form-div">
-        <div class="col-md-3 my-2 position-relative">
-            <label for="gruero" class="form-label">Gruero:</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="gruero" 
-                   name="gruero" 
-                   formControlName="gruero" 
-                   (input)="onGrueroInput($event)">
-          
-            <div *ngIf="grueroSugerido.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
-              <button *ngFor="let gruero of grueroSugerido"
-                      type="button"
-                      class="list-group-item list-group-item-action"
-                      (click)="setValueGruero(gruero)">
-                {{ gruero }}
-              </button>
-            </div>
+  <div class="row mb-4 my-2 form-div">
+    <div class="col-md-3 my-2 position-relative">
+      <label for="gruero" class="form-label">Gruero:</label>
+      <input type="text" 
+              class="form-control" 
+              id="gruero" 
+              name="gruero" 
+              formControlName="gruero" 
+              (input)="onGrueroInput($event)">
+    
+      <div *ngIf="grueroSugerido.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+        <button *ngFor="let gruero of grueroSugerido"
+                type="button"
+                class="list-group-item list-group-item-action "
+                (click)="setValueGruero(gruero)">
+          {{ gruero }}
+        </button>
+      </div>
 
-            <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
-              <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
-              <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
-            </small>
-        </div>
+      <div *ngIf="grueroSugerido.length == 0 && this.formularioPGrua.controls['gruero'].dirty && !this.grueroSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
+        <button class="list-group-item list-group-item-action" type="button" (click)="openGrueroModal()">  
+          Crear nuevo gruero
+        </button>
+      </div>
 
-        <div class="col-md-5 my-2">
-            <label for="nCliente" class="form-label">Nombre del cliente:</label>
-            <input type="text" class="form-control" id="nCliente" name="nCliente" formControlName="nCliente">
-            <small class="error" *ngIf="formularioPGrua.get('nCliente')?.touched && formularioPGrua.get('nCliente')?.invalid">
-              <span *ngIf="formularioPGrua.get('nCliente')?.hasError('required')">Este campo es obligatorio.</span>
-              <span *ngIf="formularioPGrua.get('nCliente')?.hasError('minlength')">El nombre del cliente debe tener al menos 7 caracteres.</span>
-            </small>
-        </div>
-
-        <div class="col-md-3 my-2">
-            <label for="patente" class="form-label">Patente:</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="patente" 
-                   name="patente" 
-                   formControlName="patente" 
-                   (input)="onPatenteInput($event)">
-          
-            <div *ngIf="patentesSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
-              <button *ngFor="let patente of patentesSugeridas"
-                      type="button"
-                      class="list-group-item list-group-item-action"
-                      (click)="setValuePatente(patente)">
-                {{ patente }}
-              </button>
-            </div>
-
-            <small class="error" *ngIf="formularioPGrua.get('patente')?.touched && formularioPGrua.get('patente')?.invalid">
-              <span *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
-              <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
-            </small>
-        </div>
-
-        <div class="col-md-4 my-2">
-            <label for="fecha" class="form-label">Fecha de emisión:</label>
-            <input type="date" class="form-control" id="fecha" formControlName="fecha">
-            <small class="error" *ngIf="formularioPGrua.get('fecha')?.touched && formularioPGrua.get('fecha')?.invalid">
-              <span *ngIf="formularioPGrua.get('fecha')?.hasError('required')">Este campo es obligatorio.</span>
-            </small>
-        </div>
+      <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
+        <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
+      </small>
     </div>
+
+    <div class="col-md-5 my-2">
+        <label for="nCliente" class="form-label">Nombre del cliente:</label>
+        <input type="text" class="form-control" id="nCliente" name="nCliente" formControlName="nCliente">
+        <small class="error" *ngIf="formularioPGrua.get('nCliente')?.touched && formularioPGrua.get('nCliente')?.invalid">
+          <span *ngIf="formularioPGrua.get('nCliente')?.hasError('required')">Este campo es obligatorio.</span>
+          <span *ngIf="formularioPGrua.get('nCliente')?.hasError('minlength')">El nombre del cliente debe tener al menos 7 caracteres.</span>
+        </small>
+    </div>
+
+    <div class="col-md-4 my-2 position-relative">
+      <label for="patente" class="form-label">Patente:</label>
+      <input type="text" 
+              class="form-control" 
+              id="patente" 
+              name="patente" 
+              formControlName="patente" 
+              (input)="onPatenteInput($event)">
+    
+      <div *ngIf="patentesSugeridas.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+        <button *ngFor="let patente of patentesSugeridas"
+                type="button"
+                class="list-group-item list-group-item-action"
+                (click)="setValuePatente(patente)">
+          {{ patente }}
+        </button>
+      </div>
+
+      <div *ngIf="patentesSugeridas.length == 0 && this.formularioPGrua.controls['patente']?.dirty && !this.vehiculoSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
+        <button class="list-group-item list-group-item-action" type="button" (click)="openVehiculoModal()">  
+          Crear nuevo vehiculo
+        </button>
+      </div>
+
+      <small class="error" *ngIf="formularioPGrua.get('patente')?.touched && formularioPGrua.get('patente')?.invalid">
+        <span *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
+        <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
+      </small>
+    </div>
+
+    <div class="col-md-4 my-2">
+        <label for="fecha" class="form-label">Fecha de emisión:</label>
+        <input type="date" class="form-control" id="fecha" formControlName="fecha">
+        <small class="error" *ngIf="formularioPGrua.get('fecha')?.touched && formularioPGrua.get('fecha')?.invalid">
+          <span *ngIf="formularioPGrua.get('fecha')?.hasError('required')">Este campo es obligatorio.</span>
+        </small>
+    </div>
+  </div>
 </form>
+
 <div class="row form-div">
   <div class="title-div mb-10">
     <button class="btn btn-info my-3" (click)="onBack()">Volver</button>

@@ -2,33 +2,33 @@
 <form [formGroup]="formularioPGrua" (ngSubmit)="onSubmit()">
     <div class="row mb-4 my-3 form-div">
         <div class="col-md-3 my-2 position-relative">
-            <label for="gruero" class="form-label">Gruero:</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="gruero" 
-                   name="gruero" 
-                   formControlName="gruero" 
-                   (input)="onGrueroInput($event)">
-          
-            <div *ngIf="grueroSugerido.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
-              <button *ngFor="let gruero of grueroSugerido"
-                      type="button"
-                      class="list-group-item list-group-item-action "
-                      (click)="setValueGruero(gruero)">
-                {{ gruero }}
-              </button>
-            </div>
+          <label for="gruero" class="form-label">Gruero:</label>
+          <input type="text" 
+                  class="form-control" 
+                  id="gruero" 
+                  name="gruero" 
+                  formControlName="gruero" 
+                  (input)="onGrueroInput($event)">
+        
+          <div *ngIf="grueroSugerido.length > 0" class="list-group position-absolute w-100 mt-1 shadow">
+            <button *ngFor="let gruero of grueroSugerido"
+                    type="button"
+                    class="list-group-item list-group-item-action "
+                    (click)="setValueGruero(gruero)">
+              {{ gruero }}
+            </button>
+          </div>
 
-            <div *ngIf="grueroSugerido.length == 0 && this.formularioPGrua.controls['gruero'].dirty && !this.grueroSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
-              <button class="list-group-item list-group-item-action" type="button" (click)="openGrueroModal()">  
-                Crear nuevo gruero
-              </button>
-            </div>
+          <div *ngIf="grueroSugerido.length == 0 && this.formularioPGrua.controls['gruero'].dirty && !this.grueroSeleccionado" class="list-group position-absolute w-100 mt-1 shadow">
+            <button class="list-group-item list-group-item-action" type="button" (click)="openGrueroModal()">  
+              Crear nuevo gruero
+            </button>
+          </div>
 
-            <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
-              <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
-              <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
-            </small>
+          <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
+            <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
+            <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
+          </small>
         </div>
 
         <div class="col-md-5 my-2">

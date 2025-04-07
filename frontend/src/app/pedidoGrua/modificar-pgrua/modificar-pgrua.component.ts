@@ -10,6 +10,8 @@ import { PgruaService } from 'src/app/service/pgrua/pgrua.service';
 import { VehiculoService } from 'src/app/service/vehiculo/vehiculo.service';
 import { UploadService } from 'src/app/service/upload/upload.service';
 import Swal from 'sweetalert2';
+import { ModalVehiculoService } from 'src/app/service/modals/modalVehiculo/modal-vehiculo.service';
+import { ModalGrueroService } from 'src/app/service/modals/modalGruero/modal-gruero.service';
 
 @Component({
   selector: 'app-modificar-pgrua',
@@ -26,11 +28,13 @@ export class ModificarPGruaComponent {
   date: Date = new Date();
   selectedFile!: File;
   grueroSeleccionado: boolean = false;
+  vehiculoSeleccionado: boolean = false;
   baseUrl = 'http://localhost:3000';
 
   constructor(private fb: FormBuilder, private pGruaServ: PgruaService,
       private vehiculoServ: VehiculoService, private grueroServ: GrueroService,
-      private router: Router, private uploadService: UploadService,)
+      private router: Router, private uploadService: UploadService,
+      private grueroModalServ: ModalGrueroService, private vehiculoModalServ: ModalVehiculoService)
   {
     const navigation = this.router.getCurrentNavigation();
     this.pedidoGruaRecibido = navigation?.extras.state?.['pgrua'];
@@ -152,11 +156,13 @@ export class ModificarPGruaComponent {
     } else {
       this.patentesSugeridas = [];
     }
+    this.vehiculoSeleccionado = false;
   }
   
   setValuePatente(patente: String) {
     this.formularioPGrua.controls['patente'].setValue(patente);
     this.patentesSugeridas = [];
+    this.vehiculoSeleccionado = true;
   }  
 
   buscarPatentes(query: string) {
@@ -176,6 +182,7 @@ export class ModificarPGruaComponent {
     } else {
       this.grueroSugerido = [];
     }
+    this.grueroSeleccionado = false;
   }
   
   buscarGrueros(value: string) {
@@ -203,6 +210,7 @@ export class ModificarPGruaComponent {
   setValueGruero(nombre: String) {
     this.formularioPGrua.controls['gruero'].setValue(nombre);
     this.grueroSugerido = [];
+    this.grueroSeleccionado = true;
   }
 
   onBack()
@@ -319,5 +327,14 @@ export class ModificarPGruaComponent {
           padding: '20px',
         });
     });
+  }
+
+  openGrueroModal() {
+    this.grueroModalServ.openFormModal();
+  }
+
+  openVehiculoModal()
+  {
+    this.vehiculoModalServ.openFormModal()
   }
 }
