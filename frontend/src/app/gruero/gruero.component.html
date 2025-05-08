@@ -6,8 +6,8 @@
       <label for="nombre" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombre" formControlName="nombre">
       <small class="error" *ngIf="formularioGruero.get('nombre')?.touched && formularioGruero.get('nombre')?.invalid">
-        <span *ngIf="formularioGruero.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioGruero.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGruero.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGruero.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
       </small>
     </div>
     
@@ -15,8 +15,8 @@
       <label for="telefono" class="form-label">Teléfono:</label>
       <input type="text" class="form-control" id="telefono" formControlName="telefono">
       <small class="error" *ngIf="formularioGruero.get('telefono')?.touched && formularioGruero.get('telefono')?.invalid">
-        <span *ngIf="formularioGruero.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioGruero.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGruero.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGruero.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
       </small>
     </div>
   </div>
@@ -29,8 +29,8 @@
       <label for="nombreModificar" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombreModificar" formControlName="nombre">
       <small class="error" *ngIf="formularioGrueroModificar.get('nombre')?.touched && formularioGrueroModificar.get('nombre')?.invalid">
-        <span *ngIf="formularioGrueroModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioGrueroModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGrueroModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGrueroModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
       </small>
     </div>
 
@@ -38,8 +38,8 @@
       <label for="telefonoModificar" class="form-label">Teléfono:</label>
       <input type="text" class="form-control" id="telefonoModificar" formControlName="telefono">
       <small class="error" *ngIf="formularioGrueroModificar.get('telefono')?.touched && formularioGrueroModificar.get('telefono')?.invalid">
-        <span *ngIf="formularioGrueroModificar.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioGrueroModificar.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGrueroModificar.get('telefono')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioGrueroModificar.get('telefono')?.hasError('minlength')">El teléfono debe tener al menos 10 caracteres.</span>
       </small>
     </div>
   </div>

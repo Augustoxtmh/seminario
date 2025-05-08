@@ -13,17 +13,15 @@ export class PedidogruaService {
   }
 
   async updatePedidoGrua(data: PedidoGrua): Promise<PedidoGrua> {
-    // Primero, actualizas el pedido de grúa específico
     const updatedPedidoGrua = await this.prisma.pedidoGrua.update({
       where: { PedidoID: data.PedidoID },
       data,
     });
   
-    // Luego, si la patente se actualiza, también debes actualizar todos los pedidos de grúa asociados
     if (data.Patente) {
       await this.prisma.pedidoGrua.updateMany({
         where: { Patente: data.Patente },
-        data: { Patente: data.Patente }, // Actualizas la patente de todos los pedidos asociados
+        data: { Patente: data.Patente },
       });
     }
   

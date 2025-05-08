@@ -26,8 +26,8 @@
       </div>
 
       <small class="error" *ngIf="formularioPGrua.get('gruero')?.touched && formularioPGrua.get('gruero')?.invalid">
-        <span *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('gruero')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('gruero')?.hasError('minlength')">El nombre del gruero debe tener al menos 5 caracteres.</span>
       </small>
     </div>
 
@@ -35,8 +35,8 @@
         <label for="nCliente" class="form-label">Nombre del cliente:</label>
         <input type="text" class="form-control" id="nCliente" name="nCliente" formControlName="nCliente">
         <small class="error" *ngIf="formularioPGrua.get('nCliente')?.touched && formularioPGrua.get('nCliente')?.invalid">
-          <span *ngIf="formularioPGrua.get('nCliente')?.hasError('required')">Este campo es obligatorio.</span>
-          <span *ngIf="formularioPGrua.get('nCliente')?.hasError('minlength')">El nombre del cliente debe tener al menos 7 caracteres.</span>
+          <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('nCliente')?.hasError('required')">Este campo es obligatorio.</span>
+          <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('nCliente')?.hasError('minlength')">El nombre del cliente debe tener al menos 7 caracteres.</span>
         </small>
     </div>
 
@@ -65,8 +65,8 @@
       </div>
 
       <small class="error" *ngIf="formularioPGrua.get('patente')?.touched && formularioPGrua.get('patente')?.invalid">
-        <span *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('patente')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('patente')?.hasError('minlength')">La patente debe tener al menos 6 caracteres.</span>
       </small>
     </div>
 
@@ -74,7 +74,7 @@
         <label for="fecha" class="form-label">Fecha de emisión:</label>
         <input type="date" class="form-control" id="fecha" formControlName="fecha">
         <small class="error" *ngIf="formularioPGrua.get('fecha')?.touched && formularioPGrua.get('fecha')?.invalid">
-          <span *ngIf="formularioPGrua.get('fecha')?.hasError('required')">Este campo es obligatorio.</span>
+          <br><span style="min-width: 100%; color:red" *ngIf="formularioPGrua.get('fecha')?.hasError('required')">Este campo es obligatorio.</span>
         </small>
     </div>
   </div>

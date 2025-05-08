@@ -8,8 +8,9 @@
             <label for="poliza" class="form-label">Num. de Poliza:</label>
             <input type="text" class="form-control" id="poliza" name="poliza" formControlName="poliza">
             <small class="error" *ngIf="formularioCuota.get('poliza')?.touched && formularioCuota.get('poliza')?.invalid">
-                <span *ngIf="formularioCuota.get('poliza')?.hasError('required')">Este campo es obligatorio.</span>
-                <span *ngIf="formularioCuota.get('poliza')?.hasError('minlength')">El número de póliza debe tener al menos 7 caracteres.</span>
+                <br><span style="color:red" *ngIf="formularioCuota.get('poliza')?.hasError('required')">Este campo es obligatorio.</span><br>
+                <br><span style="color:red"*ngIf="formularioCuota.get('poliza')?.hasError('minlength')">El número de póliza debe tener al menos 7 caracteres.</span><br>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('poliza')?.hasError('pattern')">El campo debe contener solamente numeros.</span><br>
             </small>
         </div>
         
@@ -17,8 +18,8 @@
             <label for="nCuota" class="form-label">Num de la cuota:</label>
             <input type="number" class="form-control" id="nCuota" name="nCuota" formControlName="nCuota" min="0" max="5">
             <small class="error" *ngIf="formularioCuota.get('nCuota')?.touched && formularioCuota.get('nCuota')?.invalid">
-                <span *ngIf="formularioCuota.get('nCuota')?.hasError('required')">Este campo es obligatorio.</span>
-                <span *ngIf="formularioCuota.get('nCuota')?.hasError('maxlength')">El número de cuota no puede tener más de 1 dígito.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('nCuota')?.hasError('required')">Este campo es obligatorio.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('nCuota')?.hasError('maxlength')">El número de cuota no puede tener más de 1 dígito.</span>
             </small>
         </div>
         
@@ -26,8 +27,8 @@
             <label for="Cantidad" class="form-label">Cantidad de pagos:</label>
             <input type="number" class="form-control" id="Cantidad" name="Cantidad" formControlName="Cantidad" min="1" max="6">
             <small class="error" *ngIf="formularioCuota.get('Cantidad')?.touched && formularioCuota.get('Cantidad')?.invalid">
-                <span *ngIf="formularioCuota.get('Cantidad')?.hasError('required')">Este campo es obligatorio.</span>
-                <span *ngIf="formularioCuota.get('Cantidad')?.hasError('maxlength')">La cantidad de pagos no puede ser mayor a 6.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('Cantidad')?.hasError('required')">Este campo es obligatorio.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('Cantidad')?.hasError('maxlength')">La cantidad de pagos no puede ser mayor a 6.</span>
             </small>
         </div>  
     </div>
@@ -36,7 +37,7 @@
             <label for="FechaV" class="form-label">Fecha de vencimiento:</label>
             <input type="text" class="form-control" id="FechaV" name="FechaV" formControlName="FechaV">
             <small class="error" *ngIf="formularioCuota.get('FechaV')?.touched && formularioCuota.get('FechaV')?.invalid">
-                <span *ngIf="formularioCuota.get('FechaV')?.hasError('required')">Este campo es obligatorio.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('FechaV')?.hasError('required')">Este campo es obligatorio.</span>
             </small>
         </div>
         
@@ -44,7 +45,7 @@
             <label for="Monto" class="form-label">Monto:</label>
             <input type="number" class="form-control" id="Monto" name="Monto" formControlName="Monto" min="0">
             <small class="error" *ngIf="formularioCuota.get('Monto')?.touched && formularioCuota.get('Monto')?.invalid">
-                <span *ngIf="formularioCuota.get('Monto')?.hasError('required')">Este campo es obligatorio.</span>
+                <br><span style="min-width: 100%; color:red" *ngIf="formularioCuota.get('Monto')?.hasError('required')">Este campo es obligatorio.</span>
             </small>
         </div>
     </div>

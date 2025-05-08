@@ -27,7 +27,7 @@
         <option value="A">Administrador</option>
       </select>
       <small class="error" *ngIf="formularioUsuario.get('autoridad')?.touched && formularioUsuario.get('autoridad')?.invalid">
-        <span *ngIf="formularioUsuario.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuario.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
       </small>
     </div>
   </div>
@@ -40,8 +40,8 @@
       <label for="nombreModificar" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombreModificar" formControlName="nombre">
       <small class="error" *ngIf="formularioUsuarioModificar.get('nombre')?.touched && formularioUsuarioModificar.get('nombre')?.invalid">
-        <span *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuarioModificar.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 5 caracteres.</span>
       </small>
     </div>
 
@@ -49,8 +49,8 @@
       <label for="contraModificar" class="form-label">Contraseña:</label>
       <input type="text" class="form-control" id="contraModificar" formControlName="contra">
       <small class="error" *ngIf="formularioUsuarioModificar.get('contra')?.touched && formularioUsuarioModificar.get('contra')?.invalid">
-        <span *ngIf="formularioUsuarioModificar.get('contra')?.hasError('required')">Este campo es obligatorio.</span>
-        <span *ngIf="formularioUsuarioModificar.get('contra')?.hasError('minlength')">La contraseña debe tener al menos 5 caracteres.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuarioModificar.get('contra')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuarioModificar.get('contra')?.hasError('minlength')">La contraseña debe tener al menos 5 caracteres.</span>
       </small>
     </div>
 
@@ -61,7 +61,7 @@
         <option value="A">Administrador</option>
       </select>
       <small class="error" *ngIf="formularioUsuarioModificar.get('autoridad')?.touched && formularioUsuarioModificar.get('autoridad')?.invalid">
-        <span *ngIf="formularioUsuarioModificar.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
+        <br><span style="min-width: 100%; color:red" *ngIf="formularioUsuarioModificar.get('autoridad')?.hasError('required')">Este campo es obligatorio.</span>
       </small>
     </div>
   </div>

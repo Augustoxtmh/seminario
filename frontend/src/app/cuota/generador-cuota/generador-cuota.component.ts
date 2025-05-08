@@ -22,7 +22,6 @@ export class GeneradorCuotaComponent implements OnInit {
   polizas: Poliza[] = []
   date: Date = new Date()
   doc = new jsPDF()
-  // Array para almacenar los datos de las cuotas
   cuotasData: any[] = []
 
   constructor(
@@ -99,7 +98,6 @@ export class GeneradorCuotaComponent implements OnInit {
       let tipo: String = ""
       let pedidosRealizados = 0
 
-      // Limpiar el array de cuotas al iniciar
       this.cuotasData = []
 
       try {
@@ -159,7 +157,6 @@ export class GeneradorCuotaComponent implements OnInit {
 
       const promises = []
 
-      // Obtener pedidos realizados primero
       const pedidosPromise = new Promise<void>((resolve, reject) => {
         this.pedidoGrua
           .getPedidogruaPorPatente(patente.valueOf())
@@ -194,7 +191,6 @@ export class GeneradorCuotaComponent implements OnInit {
 
       promises.push(pedidosPromise)
 
-      // Crear todas las cuotas
       for (let index = 0; index < cantidadTotal; index++) {
         const formato = FechaV.indexOf("/") !== -1 ? "/" : "-"
         const partesFecha = FechaV.split(formato)
@@ -203,7 +199,6 @@ export class GeneradorCuotaComponent implements OnInit {
         const anio = Number.parseInt(partesFecha[2])
         const fecha = new Date(anio, mes, dia)
 
-        // Capturar el valor actual de nCuota para esta iteración
         const cuotaActual = nCuota
 
         const promise = new Promise<void>((resolve, reject) => {
@@ -227,7 +222,6 @@ export class GeneradorCuotaComponent implements OnInit {
               }),
             )
             .subscribe(() => {
-              // Almacenar los datos de la cuota para generar el PDF después
               this.cuotasData.push({
                 nCuota: cuotaActual,
                 fecha: fecha,
@@ -244,7 +238,6 @@ export class GeneradorCuotaComponent implements OnInit {
 
         promises.push(promise)
 
-        // Incrementar para la siguiente iteración
         nCuota++
         FechaV = this.sumarUnMes(FechaV)
       }
@@ -252,7 +245,6 @@ export class GeneradorCuotaComponent implements OnInit {
       try {
         await Promise.all(promises)
 
-        // Generar el PDF con todas las cuotas
         this.generarPDFConCuotas(cantidadTotal, nombre, FechaV)
       } catch (error) {
         console.error("Error al procesar las cuotas:", error)
@@ -272,16 +264,12 @@ export class GeneradorCuotaComponent implements OnInit {
   generarPDFConCuotas(cantidadTotal: number, nombre: String, fechaUltima: string) {
     this.doc = new jsPDF()
 
-    // Ordenar las cuotas por número de cuota
     this.cuotasData.sort((a, b) => a.nCuota - b.nCuota)
 
-    // Procesar cuotas de dos en dos cuando sea posible
     for (let i = 0; i < this.cuotasData.length; i += 2) {
       if (i + 1 < this.cuotasData.length) {
-        // Tenemos un par de cuotas
         this.doc.addImage("../../../assets/cuotaDoble.jpg", "JPG", 0, 0, 210, 297)
 
-        // Primera cuota del par
         const cuota1 = this.cuotasData[i]
         this.colocarTexto(
           cuota1.nCuota,
@@ -297,7 +285,6 @@ export class GeneradorCuotaComponent implements OnInit {
           cuota1.tipo,
         )
 
-        // Segunda cuota del par
         const cuota2 = this.cuotasData[i + 1]
         this.colocarTexto(
           cuota2.nCuota,
@@ -313,12 +300,10 @@ export class GeneradorCuotaComponent implements OnInit {
           cuota2.tipo,
         )
 
-        // Añadir una nueva página si no estamos al final
         if (i + 2 < this.cuotasData.length) {
           this.doc.addPage()
         }
       } else {
-        // Tenemos una sola cuota restante
         this.doc.addImage("../../../assets/cuotaSola.jpg", "JPG", 0, 0, 210, 297)
 
         const cuota = this.cuotasData[i]
@@ -338,12 +323,10 @@ export class GeneradorCuotaComponent implements OnInit {
       }
     }
 
-    // Guardar el PDF
     this.generarDocumentoPDF(nombre, fechaUltima)
   }
 
   generarDocumentoPDF(nombre: String, fecha: string) {
-    // Verificar que los valores existan antes de acceder a ellos
     const nombreInicial = nombre && nombre.length > 0 ? nombre[0] : "C"
     const polizaInicial =
       this.polizaRecibida && this.polizaRecibida.NumeroPoliza && this.polizaRecibida.NumeroPoliza.length > 0
@@ -354,7 +337,6 @@ export class GeneradorCuotaComponent implements OnInit {
         ? this.polizaRecibida.Telefono[0]
         : "T"
 
-    // Crear un nombre de archivo seguro
     const nombreArchivo = `${nombreInicial}${polizaInicial}${telefonoInicial}${fecha}Cupon_Pago.pdf`
 
     this.doc.save(nombreArchivo)

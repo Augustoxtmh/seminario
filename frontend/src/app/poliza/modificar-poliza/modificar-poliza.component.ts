@@ -65,7 +65,7 @@ export class ModificarPolizaComponent {
         return;
       }
 
-      this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, date, this.polizaRecibida.UsuarioId), this.polizaRecibida.NumeroPoliza).pipe(
+      this.polizaServ.updatePoliza(new Poliza(poliza, telefono, patente, this.polizaRecibida.Vigencia, this.polizaRecibida.UsuarioId), this.polizaRecibida.NumeroPoliza).pipe(
         catchError(() => {
           Swal.fire({
             position: "top-end",

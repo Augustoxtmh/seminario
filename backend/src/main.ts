@@ -3,22 +3,24 @@ import { AppModule } from './app.module';
 import * as fs from 'fs';
 import { NestExpressApplication } from '@nestjs/platform-express/interfaces/nest-express-application.interface';
 import { join } from 'path';
-import { SeederService } from './seeder/seeder.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+  const uploadPath = join(process.cwd(), 'uploads');
+
+  app.useStaticAssets(uploadPath, {
     prefix: '/uploads/',
   });
 
   app.enableCors();
 
-  const uploadPath = './uploads';
   if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath);
   }
-  
+
+  console.log('Sirviendo archivos estáticos desde:', uploadPath);
+
   await app.listen(3000);
 }
 bootstrap();

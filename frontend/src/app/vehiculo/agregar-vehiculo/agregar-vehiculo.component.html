@@ -6,12 +6,12 @@
             <label for="Nombre" class="form-label">Nombre del titular:</label>
             <input type="text" class="form-control" id="Nombre" name="Nombre" formControlName="Nombre">
             <div *ngIf="formularioVehiculo.get('Nombre')?.touched && formularioVehiculo.get('Nombre')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('Nombre')?.hasError('required')">
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Nombre')?.hasError('required')">
                   El nombre es requerido.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('Nombre')?.hasError('minlength')">
+                </span>
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Nombre')?.hasError('minlength')">
                   El nombre debe tener al menos 8 caracteres.
-                </small>
+                </span>
             </div>
         </div>
 
@@ -19,12 +19,12 @@
             <label for="Patente" class="form-label">Patente:</label>
             <input type="text" class="form-control" id="Patente" name="Patente" formControlName="Patente">
             <div *ngIf="formularioVehiculo.get('Patente')?.touched && formularioVehiculo.get('Patente')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('Patente')?.hasError('required')">
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Patente')?.hasError('required')">
                   La patente es requerida.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('Patente')?.hasError('minlength')">
+                </span>
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Patente')?.hasError('minlength')">
                   La patente debe tener al menos 6 caracteres.
-                </small>
+                </span>
             </div>
         </div>
 
@@ -32,12 +32,12 @@
             <label for="Color" class="form-label">Color:</label>
             <input type="text" class="form-control" id="Color" name="Color" formControlName="Color">
             <div *ngIf="formularioVehiculo.get('Color')?.touched && formularioVehiculo.get('Color')?.invalid">
-                <small class="error" *ngIf="formularioVehiculo.get('Color')?.hasError('required')">
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Color')?.hasError('required')">
                   El color es requerido.
-                </small>
-                <small class="error" *ngIf="formularioVehiculo.get('Color')?.hasError('minlength')">
+                </span>
+                <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Color')?.hasError('minlength')">
                   El color debe tener al menos 3 caracteres.
-                </small>
+                </span>
             </div>
         </div>
     </div>
@@ -52,12 +52,12 @@
           <option value="3">3</option>
         </select>
         <div *ngIf="formularioVehiculo.get('TipoPlan')?.touched && formularioVehiculo.get('TipoPlan')?.invalid">
-          <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('required')">
+          <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('required')">
             El tipo de plan es requerido.
-          </small>
-          <small class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('maxlength')">
+          </span>
+          <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('TipoPlan')?.hasError('maxlength')">
             El tipo de plan debe tener como máximo 2 caracteres.
-          </small>
+          </span>
         </div>
       </div>
 
@@ -65,12 +65,12 @@
           <label for="Marca" class="form-label">Marca:</label>
           <input type="text" class="form-control" id="Marca" name="Marca" formControlName="Marca">
           <div *ngIf="formularioVehiculo.get('Marca')?.touched && formularioVehiculo.get('Marca')?.invalid">
-              <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('required')">
+              <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('required')">
                 La marca es requerida.
-              </small>
-              <small class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('minlength')">
+              </span>
+              <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Marca')?.hasError('minlength')">
                 La marca debe tener al menos 4 caracteres.
-              </small>
+              </span>
           </div>
       </div>
 
@@ -78,12 +78,12 @@
           <label for="Modelo" class="form-label">Modelo:</label>
           <input type="text" class="form-control" id="Modelo" name="Modelo" formControlName="Modelo">
           <div *ngIf="formularioVehiculo.get('Modelo')?.touched && formularioVehiculo.get('Modelo')?.invalid">
-              <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('required')">
+              <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('required')">
                 El modelo es requerido.
-              </small>
-              <small class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('minlength')">
+              </span>
+              <br><span style="min-width: 100%; color:red" class="error" *ngIf="formularioVehiculo.get('Modelo')?.hasError('minlength')">
                 El modelo debe tener al menos 4 caracteres.
-              </small>
+              </span>
           </div>
       </div>
     </div>
